@@ -93,6 +93,8 @@
 
 (.filterRepeatsE streamE))
 
+(def ifE js/ifE)
+
  
 
 (def receiverE js/receiverE)
@@ -270,7 +272,7 @@
 
 (defmulti extractValueB type)
 
-(defmethod extractValueB js/HTMLInputElement [in-obj]
+(defmethod extractValueB :default [in-obj]
   (js/extractValueB in-obj))
 
 (defmethod extractValueB cljs.core/Atom [atom-in]

@@ -3,11 +3,15 @@
             [flapjax.core :as F]
             [com.ewen.cle-usb-cljs.scripts :as scripts]
             [com.ewen.cle-usb-cljs.layouts :refer [layouts]]
-            [domina :refer [nodes single-node attr set-attr!]]
+            [domina :refer [nodes single-node attr set-attr! remove-attr!]]
             [domina.css :refer [sel]])
   (:require-macros [enfocus.macros :as em]))
 
 (def layout (:new-password layouts))
+
+(def validate-button-elt (.querySelector 
+                            layout 
+                            "#new-password-button"))
 
 (def switch-section-elt (.querySelector 
                             layout 
@@ -38,6 +42,31 @@
 (F/liftB set-attr! new-section-elt "active" is-active-new-section-B)
 
 (F/liftB #(.setAttribute existing-section-elt %1 %2) "active" is-active-existing-section-B)
+
+
+
+
+
+
+
+(def section-name-B
+  (F/ifB is-active-existing-section-B 
+         (F/extractValueB (.querySelector layout "#already-existing-sections"))
+         (F/extractValueB (.querySelector layout "#new-section"))))
+
+(def pwd-label-B (F/extractValueB (.querySelector layout "#password-label")))
+(def pwd-val-B (F/extractValueB (.querySelector layout "#password-value")))
+
+(def enable-validate-button-B
+  (F/liftB #(->> % (some empty?) (not)) (F/liftB vector section-name-B pwd-label-B pwd-val-B)))
+
+(F/liftB #(if % 
+            (remove-attr! validate-button-elt "disabled") 
+            (set-attr! validate-button-elt "disabled" "disabled")) 
+         enable-validate-button-B)
+
+
+
 
 
 
