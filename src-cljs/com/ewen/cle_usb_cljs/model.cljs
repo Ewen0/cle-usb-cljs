@@ -21,6 +21,13 @@ Ex. (get-sections @passwords)
 -> (\"section1\" \"section2\")"
   (map (comp name first) pwds))
 
+(defn get-pwd-labels [pwds section]
+  "Returns a list of the existing password labels for a given section
+Ex. (get-pwd-labels @passwords \"section2\")
+
+-> (\"password2\" \"password3\")"
+  (map :title ((keyword section) pwds)))
+
 
 
 

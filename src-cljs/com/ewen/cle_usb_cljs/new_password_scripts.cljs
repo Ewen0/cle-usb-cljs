@@ -3,6 +3,7 @@
             [flapjax.core :as F]
             [com.ewen.cle-usb-cljs.scripts :as scripts]
             [com.ewen.cle-usb-cljs.layouts :refer [layouts]]
+            [com.ewen.cle-usb-cljs.model :refer [passwords get-pwd-labels]]
             [domina :refer [nodes single-node attr set-attr! remove-attr!]]
             [domina.css :refer [sel]])
   (:require-macros [enfocus.macros :as em]))
@@ -89,6 +90,11 @@
 
 
 
+
+
+
+(defn validation [section pwd-label]
+  [(some (partial = pwd-label) (get-pwd-labels @passwords section)) "Password already exists !"])
 
 
 
