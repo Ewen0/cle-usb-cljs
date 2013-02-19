@@ -275,8 +275,20 @@
 (defmethod extractValueB :default [in-obj]
   (js/extractValueB in-obj))
 
-(defmethod extractValueB cljs.core/Atom [atom-in]
-  (let [receiv (receiverE)] 
-    (add-watch atom-in :get-behaviour 
-               (fn [k r o n] (sendEvent receiv n)))
-    (startsWith receiv @atom-in)))
+;; Implement `extractValueB` for clojurescript Atoms. We want the function to be memoized
+;; so it seems we cannot implement it directly with `defmethod` (maybe it is possible?).
+;; Instead we modify the `extractValueB` javascript object to add the function.
+
+(def extractValueB-Atom
+  "We want the function memoized so the beaviour returned is created only once. Otherwise, 
+problems occur ..."
+  (memoize 
+   (fn [atom-in] 
+     (let [receiv (receiverE)] 
+       (add-watch atom-in :get-behaviour 
+                  (fn [k r o n] (sendEvent receiv n)))
+       (startsWith receiv @atom-in)))))
+
+(swap! (.-method-table extractValueB) 
+       #(assoc % cljs.core/Atom 
+               extractValueB-Atom))

@@ -4,7 +4,7 @@ updating data or modifying the dom to switch the screen."
   (:require [com.ewen.cle-usb-cljs.utils :refer [log add-load-event]]
             [enfocus.core :as ef]
             [com.ewen.cle-usb-cljs.layouts :refer [layouts]]
-            [com.ewen.cle-usb-cljs.model :refer [passwords]]
+            [com.ewen.cle-usb-cljs.model :refer [passwords add-password]]
             [flapjax.core :as F]
             [com.ewen.cle-usb-cljs.passwords-scripts :as pwd-scripts]
             [com.ewen.cle-usb-cljs.edit-passwords-scripts :as 
@@ -40,6 +40,23 @@ from the different screens."
          (edit-pwd-scripts/get-new-password-events)
          (new-pwd-scripts/get-navigation-events)))
   (F/mapE #(apply change-layout %) change-layout-events))
+
+(init-change-layout-events)
+
+
+
+
+
+
+
+
+(def new-pwd-E (F/filterE new-pwd-scripts/validated-new-pwd-data-E 
+                                #(-> % (first) (false?) (not))))
+
+(F/mapE #(do 
+           (apply add-password %)
+           (change-layout :new-password :new-pwd-added)) 
+        (F/mapE #(subvec % 0 2) new-pwd-E))
 
 
 
@@ -78,6 +95,9 @@ from the different screens."
 (defmethod change-layout [:new-password :navigation-backward] [old-layout action]
   (build-layout (:edit-passwords layouts)))
 
+(defmethod change-layout [:new-password :new-pwd-added] [old-layout action]
+  (build-layout (:passwords layouts)))
+
 
 
 
@@ -88,8 +108,7 @@ from the different screens."
 
 
 (add-load-event
- #(do (build-layout (:passwords layouts))
-      (init-change-layout-events)))
+ #(build-layout (:passwords layouts)))
 
 
 

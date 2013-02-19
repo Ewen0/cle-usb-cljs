@@ -13316,6 +13316,7 @@ flapjax.core.notE = function(a) {
 flapjax.core.filterRepeatsE = function(a) {
   return a.filterRepeatsE()
 };
+flapjax.core.ifE = ifE;
 flapjax.core.receiverE = receiverE;
 flapjax.core.sendEvent = sendEvent;
 flapjax.core.sendE = function(a, b) {
@@ -13395,15 +13396,18 @@ flapjax.core.extractValueB = function() {
   var a = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY), b = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY), c = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY), d = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY), e = cljs.core._lookup.call(null, cljs.core.ObjMap.EMPTY, "\ufdd0'hierarchy", cljs.core.global_hierarchy);
   return new cljs.core.MultiFn("extractValueB", cljs.core.type, "\ufdd0'default", e, a, b, c, d)
 }();
-cljs.core._add_method.call(null, flapjax.core.extractValueB, HTMLInputElement, function(a) {
+cljs.core._add_method.call(null, flapjax.core.extractValueB, "\ufdd0'default", function(a) {
   return extractValueB(a)
 });
-cljs.core._add_method.call(null, flapjax.core.extractValueB, cljs.core.Atom, function(a) {
+flapjax.core.extractValueB_Atom = cljs.core.memoize.call(null, function(a) {
   var b = flapjax.core.receiverE.call(null);
   cljs.core.add_watch.call(null, a, "\ufdd0'get-behaviour", function(a, d, e, f) {
     return flapjax.core.sendEvent.call(null, b, f)
   });
   return flapjax.core.startsWith.call(null, b, cljs.core.deref.call(null, a))
+});
+cljs.core.swap_BANG_.call(null, flapjax.core.extractValueB.method_table, function(a) {
+  return cljs.core.assoc.call(null, a, cljs.core.Atom, flapjax.core.extractValueB_Atom)
 });
 com.ewen.cle_usb_cljs.scripts = {};
 com.ewen.cle_usb_cljs.scripts.get_events_with_value = function() {
@@ -16581,20 +16585,20 @@ goog.dom.forms.setSelectMultiple_ = function(a, b) {
     }
   }
 };
-var domina = {support:{}}, div__12838 = document.createElement("div"), test_html__12839 = "   <link/><table></table><a href='/a' style='top:1px;float:left;opacity:.55;'>a</a><input type='checkbox'/>";
-div__12838.innerHTML = test_html__12839;
-domina.support.leading_whitespace_QMARK_ = cljs.core._EQ_.call(null, div__12838.firstChild.nodeType, 3);
-domina.support.extraneous_tbody_QMARK_ = cljs.core._EQ_.call(null, div__12838.getElementsByTagName("tbody").length, 0);
-domina.support.unscoped_html_elements_QMARK_ = cljs.core._EQ_.call(null, div__12838.getElementsByTagName("link").length, 0);
+var domina = {support:{}}, div__12892 = document.createElement("div"), test_html__12893 = "   <link/><table></table><a href='/a' style='top:1px;float:left;opacity:.55;'>a</a><input type='checkbox'/>";
+div__12892.innerHTML = test_html__12893;
+domina.support.leading_whitespace_QMARK_ = cljs.core._EQ_.call(null, div__12892.firstChild.nodeType, 3);
+domina.support.extraneous_tbody_QMARK_ = cljs.core._EQ_.call(null, div__12892.getElementsByTagName("tbody").length, 0);
+domina.support.unscoped_html_elements_QMARK_ = cljs.core._EQ_.call(null, div__12892.getElementsByTagName("link").length, 0);
 domina.re_html = /<|&#?\w+;/;
 domina.re_leading_whitespace = /^\s+/;
 domina.re_xhtml_tag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/i;
 domina.re_tag_name = /<([\w:]+)/;
 domina.re_no_inner_html = /<(?:script|style)/i;
 domina.re_tbody = /<tbody/i;
-var opt_wrapper__12431 = cljs.core.PersistentVector.fromArray([1, "<select multiple='multiple'>", "</select>"], !0), table_section_wrapper__12432 = cljs.core.PersistentVector.fromArray([1, "<table>", "</table>"], !0), cell_wrapper__12433 = cljs.core.PersistentVector.fromArray([3, "<table><tbody><tr>", "</tr></tbody></table>"], !0);
-domina.wrap_map = cljs.core.ObjMap.fromObject("col \ufdd0'default tfoot caption optgroup legend area td thead th option tbody tr colgroup".split(" "), {col:cljs.core.PersistentVector.fromArray([2, "<table><tbody></tbody><colgroup>", "</colgroup></table>"], !0), "\ufdd0'default":cljs.core.PersistentVector.fromArray([0, "", ""], !0), tfoot:table_section_wrapper__12432, caption:table_section_wrapper__12432, optgroup:opt_wrapper__12431, legend:cljs.core.PersistentVector.fromArray([1, "<fieldset>", "</fieldset>"], 
-!0), area:cljs.core.PersistentVector.fromArray([1, "<map>", "</map>"], !0), td:cell_wrapper__12433, thead:table_section_wrapper__12432, th:cell_wrapper__12433, option:opt_wrapper__12431, tbody:table_section_wrapper__12432, tr:cljs.core.PersistentVector.fromArray([2, "<table><tbody>", "</tbody></table>"], !0), colgroup:table_section_wrapper__12432});
+var opt_wrapper__12485 = cljs.core.PersistentVector.fromArray([1, "<select multiple='multiple'>", "</select>"], !0), table_section_wrapper__12486 = cljs.core.PersistentVector.fromArray([1, "<table>", "</table>"], !0), cell_wrapper__12487 = cljs.core.PersistentVector.fromArray([3, "<table><tbody><tr>", "</tr></tbody></table>"], !0);
+domina.wrap_map = cljs.core.ObjMap.fromObject("col \ufdd0'default tfoot caption optgroup legend area td thead th option tbody tr colgroup".split(" "), {col:cljs.core.PersistentVector.fromArray([2, "<table><tbody></tbody><colgroup>", "</colgroup></table>"], !0), "\ufdd0'default":cljs.core.PersistentVector.fromArray([0, "", ""], !0), tfoot:table_section_wrapper__12486, caption:table_section_wrapper__12486, optgroup:opt_wrapper__12485, legend:cljs.core.PersistentVector.fromArray([1, "<fieldset>", "</fieldset>"], 
+!0), area:cljs.core.PersistentVector.fromArray([1, "<map>", "</map>"], !0), td:cell_wrapper__12487, thead:table_section_wrapper__12486, th:cell_wrapper__12487, option:opt_wrapper__12485, tbody:table_section_wrapper__12486, tr:cljs.core.PersistentVector.fromArray([2, "<table><tbody>", "</tbody></table>"], !0), colgroup:table_section_wrapper__12486});
 domina.remove_extraneous_tbody_BANG_ = function(a, b) {
   var c = cljs.core.not.call(null, cljs.core.re_find.call(null, domina.re_tbody, b)), d = function() {
     var a = cljs.core._EQ_.call(null, domina.tag_name, "table");
@@ -16710,24 +16714,24 @@ domina.by_id = function(a) {
   return goog.dom.getElement(cljs.core.name.call(null, a))
 };
 domina.by_class = function by_class(b) {
-  void 0 === domina.t12513 && (domina.t12513 = function(b, d, e) {
+  void 0 === domina.t12567 && (domina.t12567 = function(b, d, e) {
     this.class_name = b;
     this.by_class = d;
-    this.meta12514 = e;
+    this.meta12568 = e;
     this.cljs$lang$protocol_mask$partition1$ = 0;
     this.cljs$lang$protocol_mask$partition0$ = 393216
-  }, domina.t12513.cljs$lang$type = !0, domina.t12513.cljs$lang$ctorPrSeq = function() {
-    return cljs.core.list.call(null, "domina/t12513")
-  }, domina.t12513.prototype.domina$DomContent$ = !0, domina.t12513.prototype.domina$DomContent$nodes$arity$1 = function() {
+  }, domina.t12567.cljs$lang$type = !0, domina.t12567.cljs$lang$ctorPrSeq = function() {
+    return cljs.core.list.call(null, "domina/t12567")
+  }, domina.t12567.prototype.domina$DomContent$ = !0, domina.t12567.prototype.domina$DomContent$nodes$arity$1 = function() {
     return domina.normalize_seq.call(null, goog.dom.getElementsByClass(cljs.core.name.call(null, this.class_name)))
-  }, domina.t12513.prototype.domina$DomContent$single_node$arity$1 = function() {
+  }, domina.t12567.prototype.domina$DomContent$single_node$arity$1 = function() {
     return domina.normalize_seq.call(null, goog.dom.getElementByClass(cljs.core.name.call(null, this.class_name)))
-  }, domina.t12513.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
-    return this.meta12514
-  }, domina.t12513.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(b, d) {
-    return new domina.t12513(this.class_name, this.by_class, d)
-  }, domina.t12513);
-  return new domina.t12513(b, by_class, null)
+  }, domina.t12567.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
+    return this.meta12568
+  }, domina.t12567.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(b, d) {
+    return new domina.t12567(this.class_name, this.by_class, d)
+  }, domina.t12567);
+  return new domina.t12567(b, by_class, null)
 };
 domina.children = function(a) {
   return cljs.core.doall.call(null, cljs.core.mapcat.call(null, goog.dom.getChildren, domina.nodes.call(null, a)))
@@ -17224,25 +17228,25 @@ domina.xpath.xpath = function() {
   var a = null, b = function(b) {
     return a.call(null, domina.xpath.root_element.call(null), b)
   }, c = function(b, c) {
-    void 0 === domina.xpath.t13550 && (domina.xpath.t13550 = function(a, b, c, d) {
+    void 0 === domina.xpath.t13563 && (domina.xpath.t13563 = function(a, b, c, d) {
       this.expr = a;
       this.base = b;
       this.xpath = c;
-      this.meta13551 = d;
+      this.meta13564 = d;
       this.cljs$lang$protocol_mask$partition1$ = 0;
       this.cljs$lang$protocol_mask$partition0$ = 393216
-    }, domina.xpath.t13550.cljs$lang$type = !0, domina.xpath.t13550.cljs$lang$ctorPrSeq = function() {
-      return cljs.core.list.call(null, "domina.xpath/t13550")
-    }, domina.xpath.t13550.prototype.domina$DomContent$ = !0, domina.xpath.t13550.prototype.domina$DomContent$nodes$arity$1 = function() {
+    }, domina.xpath.t13563.cljs$lang$type = !0, domina.xpath.t13563.cljs$lang$ctorPrSeq = function() {
+      return cljs.core.list.call(null, "domina.xpath/t13563")
+    }, domina.xpath.t13563.prototype.domina$DomContent$ = !0, domina.xpath.t13563.prototype.domina$DomContent$nodes$arity$1 = function() {
       return cljs.core.mapcat.call(null, cljs.core.partial.call(null, domina.xpath.select_nodes, this.expr), domina.nodes.call(null, this.base))
-    }, domina.xpath.t13550.prototype.domina$DomContent$single_node$arity$1 = function() {
+    }, domina.xpath.t13563.prototype.domina$DomContent$single_node$arity$1 = function() {
       return cljs.core.first.call(null, cljs.core.filter.call(null, cljs.core.complement.call(null, cljs.core.nil_QMARK_), cljs.core.map.call(null, cljs.core.partial.call(null, domina.xpath.select_node, this.expr), domina.nodes.call(null, this.base))))
-    }, domina.xpath.t13550.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
-      return this.meta13551
-    }, domina.xpath.t13550.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(a, b) {
-      return new domina.xpath.t13550(this.expr, this.base, this.xpath, b)
-    }, domina.xpath.t13550);
-    return new domina.xpath.t13550(c, b, a, null)
+    }, domina.xpath.t13563.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
+      return this.meta13564
+    }, domina.xpath.t13563.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(a, b) {
+      return new domina.xpath.t13563(this.expr, this.base, this.xpath, b)
+    }, domina.xpath.t13563);
+    return new domina.xpath.t13563(c, b, a, null)
   }, a = function(a, e) {
     switch(arguments.length) {
       case 1:
@@ -19058,31 +19062,31 @@ domina.css.sel = function() {
   var a = null, b = function(b) {
     return a.call(null, domina.css.root_element.call(null), b)
   }, c = function(b, c) {
-    void 0 === domina.css.t12849 && (domina.css.t12849 = function(a, b, c, d) {
+    void 0 === domina.css.t12903 && (domina.css.t12903 = function(a, b, c, d) {
       this.expr = a;
       this.base = b;
       this.sel = c;
-      this.meta12850 = d;
+      this.meta12904 = d;
       this.cljs$lang$protocol_mask$partition1$ = 0;
       this.cljs$lang$protocol_mask$partition0$ = 393216
-    }, domina.css.t12849.cljs$lang$type = !0, domina.css.t12849.cljs$lang$ctorPrSeq = function() {
-      return cljs.core.list.call(null, "domina.css/t12849")
-    }, domina.css.t12849.prototype.domina$DomContent$ = !0, domina.css.t12849.prototype.domina$DomContent$nodes$arity$1 = function() {
+    }, domina.css.t12903.cljs$lang$type = !0, domina.css.t12903.cljs$lang$ctorPrSeq = function() {
+      return cljs.core.list.call(null, "domina.css/t12903")
+    }, domina.css.t12903.prototype.domina$DomContent$ = !0, domina.css.t12903.prototype.domina$DomContent$nodes$arity$1 = function() {
       var a = this;
       return cljs.core.mapcat.call(null, function(b) {
         return domina.normalize_seq.call(null, goog.dom.query(a.expr, b))
       }, domina.nodes.call(null, a.base))
-    }, domina.css.t12849.prototype.domina$DomContent$single_node$arity$1 = function() {
+    }, domina.css.t12903.prototype.domina$DomContent$single_node$arity$1 = function() {
       var a = this;
       return cljs.core.first.call(null, cljs.core.filter.call(null, cljs.core.complement.call(null, cljs.core.nil_QMARK_), cljs.core.mapcat.call(null, function(b) {
         return domina.normalize_seq.call(null, goog.dom.query(a.expr, b))
       }, domina.nodes.call(null, a.base))))
-    }, domina.css.t12849.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
-      return this.meta12850
-    }, domina.css.t12849.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(a, b) {
-      return new domina.css.t12849(this.expr, this.base, this.sel, b)
-    }, domina.css.t12849);
-    return new domina.css.t12849(c, b, a, null)
+    }, domina.css.t12903.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
+      return this.meta12904
+    }, domina.css.t12903.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(a, b) {
+      return new domina.css.t12903(this.expr, this.base, this.sel, b)
+    }, domina.css.t12903);
+    return new domina.css.t12903(c, b, a, null)
   }, a = function(a, e) {
     switch(arguments.length) {
       case 1:
@@ -20719,10 +20723,18 @@ com.ewen.cle_usb_cljs.model.map__GT_Passwords = function(a) {
   return new com.ewen.cle_usb_cljs.model.Passwords(null, cljs.core.dissoc.call(null, a))
 };
 com.ewen.cle_usb_cljs.model.Passwords;
-com.ewen.cle_usb_cljs.model.passwords_str = '{:section1 [{:title "password1" :logo ""}] :section2 [{:title "password2" :logo ""}{:title "password3" :logo ""}]}';
+com.ewen.cle_usb_cljs.model.passwords_str = '{:SECTION1 [{:title "password1" :logo ""}] :SECTION2 [{:title "password2" :logo ""}{:title "password3" :logo ""}]}';
 com.ewen.cle_usb_cljs.model.passwords = cljs.core.atom.call(null, com.ewen.cle_usb_cljs.model.map__GT_Passwords.call(null, cljs.reader.read_string.call(null, com.ewen.cle_usb_cljs.model.passwords_str)));
 com.ewen.cle_usb_cljs.model.get_sections = function(a) {
   return cljs.core.map.call(null, cljs.core.comp.call(null, cljs.core.name, cljs.core.first), a)
+};
+com.ewen.cle_usb_cljs.model.get_pwd_labels = function(a, b) {
+  return cljs.core.map.call(null, "\ufdd0'title", cljs.core.keyword.call(null, b).call(null, a))
+};
+com.ewen.cle_usb_cljs.model.add_password = function(a, b) {
+  return cljs.core.swap_BANG_.call(null, com.ewen.cle_usb_cljs.model.passwords, function(c) {
+    return cljs.core.update_in.call(null, c, cljs.core.PersistentVector.fromArray([cljs.core.keyword.call(null, a)], !0), cljs.core.conj, cljs.core.ObjMap.fromObject(["\ufdd0'title", "\ufdd0'logo"], {"\ufdd0'title":"" + cljs.core.str(b), "\ufdd0'logo":""}))
+  })
 };
 com.ewen.cle_usb_cljs.layouts = {};
 domina.array_like_QMARK_ = function(a) {
@@ -20733,9 +20745,9 @@ domina.array_like_QMARK_ = function(a) {
   return a
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
-  var vec__8077__8078 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body"><p><img class="section-body-logo"></div></div></div></section></body></html>'), 
-  sym__6436__auto____8079 = cljs.core.nth.call(null, vec__8077__8078, 0, null), txt__6437__auto____8080 = cljs.core.nth.call(null, vec__8077__8078, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "section-bodyresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____8079, txt__6437__auto____8080], !0))
+  var vec__209873__209874 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body"><p /><img class="section-body-logo" /></div></div></div></section></body></html>'), 
+  sym__6436__auto____209875 = cljs.core.nth.call(null, vec__209873__209874, 0, null), txt__6437__auto____209876 = cljs.core.nth.call(null, vec__209873__209874, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "section-bodyresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____209875, txt__6437__auto____209876], !0))
 }
 com.ewen.cle_usb_cljs.layouts.section_body = function(a) {
   var b = cljs.core.seq_QMARK_.call(null, a) ? cljs.core.apply.call(null, cljs.core.hash_map, a) : a, a = cljs.core._lookup.call(null, b, "\ufdd0'title", null), b = cljs.core._lookup.call(null, b, "\ufdd0'logo", null), c = function() {
@@ -20746,9 +20758,9 @@ com.ewen.cle_usb_cljs.layouts.section_body = function(a) {
   return enfocus.core.remove_node_return_child.call(null, c)
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
-  var vec__8105__8106 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body"><p><img class="section-body-logo"></div></div></div></section></body></html>'), 
-  sym__6436__auto____8107 = cljs.core.nth.call(null, vec__8105__8106, 0, null), txt__6437__auto____8108 = cljs.core.nth.call(null, vec__8105__8106, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "sectionresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____8107, txt__6437__auto____8108], !0))
+  var vec__209901__209902 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body"><p /><img class="section-body-logo" /></div></div></div></section></body></html>'), 
+  sym__6436__auto____209903 = cljs.core.nth.call(null, vec__209901__209902, 0, null), txt__6437__auto____209904 = cljs.core.nth.call(null, vec__209901__209902, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "sectionresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____209903, txt__6437__auto____209904], !0))
 }
 com.ewen.cle_usb_cljs.layouts.section = function(a, b) {
   var c = function() {
@@ -20760,9 +20772,9 @@ com.ewen.cle_usb_cljs.layouts.section = function(a, b) {
   return enfocus.core.remove_node_return_child.call(null, c)
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
-  var vec__8121__8122 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body"><p><img class="section-body-logo"></div></div></div></section></body></html>'), 
-  sym__6436__auto____8123 = cljs.core.nth.call(null, vec__8121__8122, 0, null), txt__6437__auto____8124 = cljs.core.nth.call(null, vec__8121__8122, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "list-pwdresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____8123, txt__6437__auto____8124], !0))
+  var vec__209917__209918 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body"><p /><img class="section-body-logo" /></div></div></div></section></body></html>'), 
+  sym__6436__auto____209919 = cljs.core.nth.call(null, vec__209917__209918, 0, null), txt__6437__auto____209920 = cljs.core.nth.call(null, vec__209917__209918, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "list-pwdresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____209919, txt__6437__auto____209920], !0))
 }
 com.ewen.cle_usb_cljs.layouts.list_pwd = function(a) {
   var b = function() {
@@ -20775,9 +20787,9 @@ com.ewen.cle_usb_cljs.layouts.list_pwd = function(a) {
   return enfocus.core.remove_node_return_child.call(null, b)
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
-  var vec__8137__8138 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body"><p><img class="section-body-logo"></div></div></div></section></body></html>'), 
-  sym__6436__auto____8139 = cljs.core.nth.call(null, vec__8137__8138, 0, null), txt__6437__auto____8140 = cljs.core.nth.call(null, vec__8137__8138, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-passwordsresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____8139, txt__6437__auto____8140], !0))
+  var vec__209933__209934 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body"><p /><img class="section-body-logo" /></div></div></div></section></body></html>'), 
+  sym__6436__auto____209935 = cljs.core.nth.call(null, vec__209933__209934, 0, null), txt__6437__auto____209936 = cljs.core.nth.call(null, vec__209933__209934, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-passwordsresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____209935, txt__6437__auto____209936], !0))
 }
 com.ewen.cle_usb_cljs.layouts.template_passwords = function(a) {
   var b = function() {
@@ -20788,9 +20800,9 @@ com.ewen.cle_usb_cljs.layouts.template_passwords = function(a) {
   return enfocus.core.remove_node_return_child.call(null, b)
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/edit-passwords.html")) {
-  var vec__8153__8154 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="edit-passwords"><div class="section-header"><h2>Edit passwords</h2></div><div class="section-body" id="new-password"><p>New password</p><img class="section-body-logo"></div></div></div></section></body></html>'), 
-  sym__6436__auto____8155 = cljs.core.nth.call(null, vec__8153__8154, 0, null), txt__6437__auto____8156 = cljs.core.nth.call(null, vec__8153__8154, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-edit-passwordsresources/public/edit-passwords.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____8155, txt__6437__auto____8156], !0))
+  var vec__209949__209950 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="edit-passwords"><div class="section-header"><h2>Edit passwords</h2></div><div class="section-body" id="new-password"><p>New password</p><img class="section-body-logo"></div></div></div></section></body></html>'), 
+  sym__6436__auto____209951 = cljs.core.nth.call(null, vec__209949__209950, 0, null), txt__6437__auto____209952 = cljs.core.nth.call(null, vec__209949__209950, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-edit-passwordsresources/public/edit-passwords.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____209951, txt__6437__auto____209952], !0))
 }
 com.ewen.cle_usb_cljs.layouts.template_edit_passwords = function() {
   var a = function() {
@@ -20801,9 +20813,9 @@ com.ewen.cle_usb_cljs.layouts.template_edit_passwords = function() {
   return enfocus.core.remove_node_return_child.call(null, a)
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/new-password.html")) {
-  var vec__8169__8170 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
-  sym__6436__auto____8171 = cljs.core.nth.call(null, vec__8169__8170, 0, null), txt__6437__auto____8172 = cljs.core.nth.call(null, vec__8169__8170, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "section-optresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____8171, txt__6437__auto____8172], !0))
+  var vec__209965__209966 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
+  sym__6436__auto____209967 = cljs.core.nth.call(null, vec__209965__209966, 0, null), txt__6437__auto____209968 = cljs.core.nth.call(null, vec__209965__209966, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "section-optresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____209967, txt__6437__auto____209968], !0))
 }
 com.ewen.cle_usb_cljs.layouts.section_opt = function(a) {
   var b = function() {
@@ -20814,9 +20826,9 @@ com.ewen.cle_usb_cljs.layouts.section_opt = function(a) {
   return enfocus.core.remove_node_return_child.call(null, b)
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/new-password.html")) {
-  var vec__8185__8186 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
-  sym__6436__auto____8187 = cljs.core.nth.call(null, vec__8185__8186, 0, null), txt__6437__auto____8188 = cljs.core.nth.call(null, vec__8185__8186, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "list-sections-optresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____8187, txt__6437__auto____8188], !0))
+  var vec__209981__209982 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
+  sym__6436__auto____209983 = cljs.core.nth.call(null, vec__209981__209982, 0, null), txt__6437__auto____209984 = cljs.core.nth.call(null, vec__209981__209982, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "list-sections-optresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____209983, txt__6437__auto____209984], !0))
 }
 com.ewen.cle_usb_cljs.layouts.list_sections_opt = function(a) {
   var b = function() {
@@ -20827,9 +20839,9 @@ com.ewen.cle_usb_cljs.layouts.list_sections_opt = function(a) {
   return enfocus.core.remove_node_return_child.call(null, b)
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/new-password.html")) {
-  var vec__8201__8202 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
-  sym__6436__auto____8203 = cljs.core.nth.call(null, vec__8201__8202, 0, null), txt__6437__auto____8204 = cljs.core.nth.call(null, vec__8201__8202, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-new-passwordresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____8203, txt__6437__auto____8204], !0))
+  var vec__209997__209998 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
+  sym__6436__auto____209999 = cljs.core.nth.call(null, vec__209997__209998, 0, null), txt__6437__auto____210000 = cljs.core.nth.call(null, vec__209997__209998, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-new-passwordresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____209999, txt__6437__auto____210000], !0))
 }
 com.ewen.cle_usb_cljs.layouts.template_new_password = function(a) {
   var b = function() {
@@ -22515,7 +22527,12 @@ clojure.browser.net.xpc_connection = function() {
 }();
 com.ewen.cle_usb_cljs.new_password_scripts = {};
 com.ewen.cle_usb_cljs.new_password_scripts.layout = (new cljs.core.Keyword("\ufdd0'new-password")).call(null, com.ewen.cle_usb_cljs.layouts.layouts);
+com.ewen.cle_usb_cljs.new_password_scripts.canonicalize = function(a) {
+  return clojure.string.upper_case.call(null, com.ewen.cle_usb_cljs.utils.space_to_dash.call(null, "" + cljs.core.str(a)))
+};
+com.ewen.cle_usb_cljs.new_password_scripts.validate_button_elt = com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#new-password-button");
 com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt = com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#switch-section-selection");
+com.ewen.cle_usb_cljs.new_password_scripts.validate_button_E = flapjax.core.extractValueE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validate_button_elt);
 com.ewen.cle_usb_cljs.new_password_scripts.switch_section_E = flapjax.core.extractValueE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt);
 com.ewen.cle_usb_cljs.new_password_scripts.is_active_existing_section_B = flapjax.core.startsWith.call(null, flapjax.core.mapE.call(null, cljs.core.partial.call(null, cljs.core._EQ_, "Choose existing section"), com.ewen.cle_usb_cljs.new_password_scripts.switch_section_E), !0);
 com.ewen.cle_usb_cljs.new_password_scripts.is_active_new_section_B = flapjax.core.startsWith.call(null, flapjax.core.mapE.call(null, cljs.core.partial.call(null, cljs.core._EQ_, "Create a new section"), com.ewen.cle_usb_cljs.new_password_scripts.switch_section_E), !1);
@@ -22525,11 +22542,32 @@ flapjax.core.liftB.call(null, domina.set_attr_BANG_, com.ewen.cle_usb_cljs.new_p
 flapjax.core.liftB.call(null, function(a, b) {
   return com.ewen.cle_usb_cljs.new_password_scripts.existing_section_elt.setAttribute(a, b)
 }, "active", com.ewen.cle_usb_cljs.new_password_scripts.is_active_existing_section_B);
+com.ewen.cle_usb_cljs.new_password_scripts.section_name_B = flapjax.core.liftB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.canonicalize, flapjax.core.ifB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.is_active_existing_section_B, flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#already-existing-sections")), flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#new-section"))));
+com.ewen.cle_usb_cljs.new_password_scripts.pwd_label_B = flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#password-label"));
+com.ewen.cle_usb_cljs.new_password_scripts.pwd_val_B = flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#password-value"));
+com.ewen.cle_usb_cljs.new_password_scripts.enable_validate_button_B = flapjax.core.liftB.call(null, function(a) {
+  return cljs.core.not.call(null, cljs.core.some.call(null, cljs.core.empty_QMARK_, a))
+}, flapjax.core.liftB.call(null, cljs.core.vector, com.ewen.cle_usb_cljs.new_password_scripts.section_name_B, com.ewen.cle_usb_cljs.new_password_scripts.pwd_label_B, com.ewen.cle_usb_cljs.new_password_scripts.pwd_val_B));
+flapjax.core.liftB.call(null, function(a) {
+  return cljs.core.truth_(a) ? domina.remove_attr_BANG_.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validate_button_elt, "disabled") : domina.set_attr_BANG_.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validate_button_elt, "disabled", "disabled")
+}, com.ewen.cle_usb_cljs.new_password_scripts.enable_validate_button_B);
 com.ewen.cle_usb_cljs.new_password_scripts.change_button_val = function() {
   return cljs.core._EQ_.call(null, domina.attr.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt, "\ufdd0'value"), "Choose existing section") ? domina.set_attr_BANG_.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt, "\ufdd0'value", "Create a new section") : cljs.core._EQ_.call(null, domina.attr.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt, "\ufdd0'value"), "Create a new section") ? domina.set_attr_BANG_.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt, 
   "\ufdd0'value", "Choose existing section") : null
 };
 flapjax.core.mapE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.change_button_val, flapjax.core.clicksE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt));
+com.ewen.cle_usb_cljs.new_password_scripts.validation = function(a, b) {
+  var c = com.ewen.cle_usb_cljs.new_password_scripts.canonicalize.call(null, a), d = com.ewen.cle_usb_cljs.new_password_scripts.canonicalize.call(null, b);
+  return cljs.core.every_QMARK_.call(null, cljs.core.partial.call(null, cljs.core.not_EQ_, d), cljs.core.map.call(null, com.ewen.cle_usb_cljs.new_password_scripts.canonicalize, com.ewen.cle_usb_cljs.model.get_pwd_labels.call(null, cljs.core.deref.call(null, com.ewen.cle_usb_cljs.model.passwords), c))) ? cljs.core.PersistentVector.fromArray([!0], !0) : cljs.core.PersistentVector.fromArray([!1, "Password already exists !"], !0)
+};
+com.ewen.cle_usb_cljs.new_password_scripts.validation_filter = function(a, b, c) {
+  var d = com.ewen.cle_usb_cljs.new_password_scripts.validation.call(null, a, b);
+  return cljs.core.truth_(cljs.core.first.call(null, d)) ? cljs.core.PersistentVector.fromArray([a, b, c], !0) : d
+};
+com.ewen.cle_usb_cljs.new_password_scripts.new_pwd_data_E = flapjax.core.snapshotE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validate_button_E, flapjax.core.liftB.call(null, cljs.core.vector, com.ewen.cle_usb_cljs.new_password_scripts.section_name_B, com.ewen.cle_usb_cljs.new_password_scripts.pwd_label_B, com.ewen.cle_usb_cljs.new_password_scripts.pwd_val_B));
+com.ewen.cle_usb_cljs.new_password_scripts.validated_new_pwd_data_E = flapjax.core.mapE.call(null, function(a) {
+  return cljs.core.apply.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validation_filter, a)
+}, com.ewen.cle_usb_cljs.new_password_scripts.new_pwd_data_E);
 com.ewen.cle_usb_cljs.new_password_scripts.get_navigation_events = function() {
   return com.ewen.cle_usb_cljs.scripts.get_events_with_value.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout, "#navigation-backward", cljs.core.PersistentVector.fromArray(["\ufdd0'new-password", "\ufdd0'navigation-backward"], !0), "click")
 };
@@ -22541,6 +22579,16 @@ com.ewen.cle_usb_cljs.controller.init_change_layout_events = function() {
     return cljs.core.apply.call(null, com.ewen.cle_usb_cljs.controller.change_layout, a)
   }, com.ewen.cle_usb_cljs.controller.change_layout_events)
 };
+com.ewen.cle_usb_cljs.controller.init_change_layout_events.call(null);
+com.ewen.cle_usb_cljs.controller.new_pwd_E = flapjax.core.filterE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validated_new_pwd_data_E, function(a) {
+  return!1 !== cljs.core.first.call(null, a)
+});
+flapjax.core.mapE.call(null, function(a) {
+  cljs.core.apply.call(null, com.ewen.cle_usb_cljs.model.add_password, a);
+  return com.ewen.cle_usb_cljs.controller.change_layout.call(null, "\ufdd0'new-password", "\ufdd0'new-pwd-added")
+}, flapjax.core.mapE.call(null, function(a) {
+  return cljs.core.subvec.call(null, a, 0, 2)
+}, com.ewen.cle_usb_cljs.controller.new_pwd_E));
 com.ewen.cle_usb_cljs.controller.prepare_layout_header = function() {
   return enfocus.core.at.call(null, document, cljs.core.PersistentVector.fromArray(["head .page-only-css"], !0), enfocus.core.en_content.call(null, null))
 };
@@ -22569,9 +22617,11 @@ cljs.core._add_method.call(null, com.ewen.cle_usb_cljs.controller.change_layout,
 cljs.core._add_method.call(null, com.ewen.cle_usb_cljs.controller.change_layout, cljs.core.PersistentVector.fromArray(["\ufdd0'new-password", "\ufdd0'navigation-backward"], !0), function() {
   return com.ewen.cle_usb_cljs.controller.build_layout.call(null, (new cljs.core.Keyword("\ufdd0'edit-passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts))
 });
+cljs.core._add_method.call(null, com.ewen.cle_usb_cljs.controller.change_layout, cljs.core.PersistentVector.fromArray(["\ufdd0'new-password", "\ufdd0'new-pwd-added"], !0), function() {
+  return com.ewen.cle_usb_cljs.controller.build_layout.call(null, (new cljs.core.Keyword("\ufdd0'passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts))
+});
 com.ewen.cle_usb_cljs.utils.add_load_event.call(null, function() {
-  com.ewen.cle_usb_cljs.controller.build_layout.call(null, (new cljs.core.Keyword("\ufdd0'passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts));
-  return com.ewen.cle_usb_cljs.controller.init_change_layout_events.call(null)
+  return com.ewen.cle_usb_cljs.controller.build_layout.call(null, (new cljs.core.Keyword("\ufdd0'passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts))
 });
 clojure.browser.repl = {};
 clojure.browser.repl.xpc_connection = cljs.core.atom.call(null, null);

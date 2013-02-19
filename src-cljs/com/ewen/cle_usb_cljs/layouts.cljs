@@ -97,14 +97,13 @@ We use `(second (.-childNodes frag))` because `(first (.-childNodes frag))` does
 contain anything interesting."
   (second (.-childNodes frag)))
 
+
+
 (def layouts 
   "Layouts are created once during application bootstrapping and stored in this map.
 We don't need to rebuild layouts after data update since data are manipulated as
 \"time varying values\"" 
-
-
-
-  {:passwords (tml-frag->node
+  {:passwords (tml-frag->node 
                (template-passwords 
                 (F/extractValueB passwords))) 
    :edit-passwords (tml-frag->node

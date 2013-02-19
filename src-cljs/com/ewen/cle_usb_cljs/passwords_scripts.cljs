@@ -13,7 +13,7 @@
     (F/mapE #(add-class! (single-node sections) "active") (F/extractEventE (single-node sections) "touchstart"))))
 
 
-(defn get-navigation-events []
+(defn get-navigation-events []  
   (scripts/get-events-with-value layout "#navigation-forward" 
     [:passwords :navigation-forward] "click"))
 

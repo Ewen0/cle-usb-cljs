@@ -1,14 +1,26 @@
 (ns com.ewen.cle-usb-cljs.new-password-scripts
-  (:require [com.ewen.cle-usb-cljs.utils :refer [log add-load-event]]
+  (:require [com.ewen.cle-usb-cljs.utils :refer [log add-load-event space-to-dash]]
             [flapjax.core :as F]
             [com.ewen.cle-usb-cljs.scripts :as scripts]
             [com.ewen.cle-usb-cljs.layouts :refer [layouts]]
             [com.ewen.cle-usb-cljs.model :refer [passwords get-pwd-labels]]
             [domina :refer [nodes single-node attr set-attr! remove-attr!]]
-            [domina.css :refer [sel]])
+            [domina.css :refer [sel]]
+            [clojure.string :refer [upper-case]])
   (:require-macros [enfocus.macros :as em]))
 
 (def layout (:new-password layouts))
+
+
+
+
+
+(defn canonicalize [in]
+  (-> in (str) (space-to-dash) (upper-case)))
+
+
+
+
 
 (def validate-button-elt (.querySelector 
                             layout 
@@ -17,6 +29,9 @@
 (def switch-section-elt (.querySelector 
                             layout 
                             "#switch-section-selection"))
+
+(def validate-button-E (F/extractValueE 
+                        validate-button-elt))
 
 (def switch-section-E (F/extractValueE 
                        switch-section-elt))
@@ -51,9 +66,10 @@
 
 
 (def section-name-B
-  (F/ifB is-active-existing-section-B 
-         (F/extractValueB (.querySelector layout "#already-existing-sections"))
-         (F/extractValueB (.querySelector layout "#new-section"))))
+  (F/liftB canonicalize 
+           (F/ifB is-active-existing-section-B 
+                  (F/extractValueB (.querySelector layout "#already-existing-sections"))
+                  (F/extractValueB (.querySelector layout "#new-section")))))
 
 (def pwd-label-B (F/extractValueB (.querySelector layout "#password-label")))
 (def pwd-val-B (F/extractValueB (.querySelector layout "#password-value")))
@@ -93,8 +109,41 @@
 
 
 
-(defn validation [section pwd-label]
-  [(some (partial = pwd-label) (get-pwd-labels @passwords section)) "Password already exists !"])
+
+(defn- validation [section pwd-label]
+  (let [section (canonicalize section)
+        pwd-label (canonicalize pwd-label)
+        valid (every? (partial not= pwd-label) 
+                      (->> (get-pwd-labels @passwords section) (map canonicalize)))]
+    (if valid
+      [true]
+      [false "Password already exists !"])))
+
+(defn validation-filter [section pwd-label pwd-value]
+    (let [valid (validation section pwd-label)]
+       (if (first valid)
+         [section pwd-label pwd-value]
+         valid)))
+
+
+
+
+(def new-pwd-data-E 
+  (F/snapshotE validate-button-E 
+               (F/liftB vector section-name-B pwd-label-B pwd-val-B)))
+
+(def validated-new-pwd-data-E 
+  (F/mapE #(apply validation-filter %) new-pwd-data-E))
+
+
+
+
+
+
+
+
+
+
 
 
 
