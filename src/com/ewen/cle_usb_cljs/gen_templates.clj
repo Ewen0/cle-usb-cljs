@@ -5,18 +5,18 @@
 
 (defelem action-bar [& forms] [:div#action-bar forms])
 
-(defn pwd-tml [] (html5 
-                  [:body 
-                   [:section
-                    (action-bar        
-                     [:img#logo-action-bar {:src "img/logo_action_bar.png"}]
-                     [:img#action-bar-divider {:src "img/action_bar_divider.png"}]
-                     [:img#action-bar-title {:src "img/action_bar_title.png"}]
-                     [:img#navigation-forward.navigation {:src "img/1_navigation_forward.png"}])
-                    [:div#list-pwd.list
-                     [:div.section 
-                      [:div.section-header [:h2]]
-                      [:div.section-body [:p] [:img.section-body-logo]]]]]]))
+(defn pwd-tml [] (html5 (html
+                         [:body 
+                          [:section
+                           (action-bar        
+                            [:img#logo-action-bar {:src "img/logo_action_bar.png"}]
+                            [:img#action-bar-divider {:src "img/action_bar_divider.png"}]
+                            [:img#action-bar-title {:src "img/action_bar_title.png"}]
+                            [:img#navigation-forward.navigation {:src "img/1_navigation_forward.png"}])
+                           [:div#list-pwd.list
+                            [:div.section 
+                             [:div.section-header [:h2]]
+                             [:div.section-body [:p] [:img.section-body-logo]]]]]])))
 
 (defn edit-pwd-tml [] (html5 [:body   
                               [:section                            
