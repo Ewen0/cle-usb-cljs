@@ -5,7 +5,7 @@
   (:import [javax.imageio ImageIO]
            [java.io File]))
 
-(defn to-css-url 
+(defn to-css-url
   "Wrap the provided string into a url(...) call. Usefull to build CSS properties.
 
 Ex. `(to-css-url \"path\")`
@@ -160,7 +160,20 @@ Ex : (.-outerHTML (css [:#myId {:background-image \"url(../img/image.jpeg)\"}][:
                     :padding-top "15px"
                     :padding-bottom "5px"}]
    [:.section-body 'p {:margin-top "0px"}]
-   [:.section-body.active {:background-color "#33b5e5"}]])
+   [:.section-body.active {:background-color "#33b5e5"}]
+   [".section-body[draggable=\"draggable\"][is-enabled-drag=\"true\"]" {:position "absolute"}]
+
+
+
+   [:#pwd-trash {:position "fixed"
+                 :bottom "0"
+                 :left "10%"
+                 :width "80%" 
+                 :background-color "#e6e6e6"}]
+   ["#pwd-trash[enabled=\"true\"]" {:display "block"}]
+   ["#pwd-trash[enabled=\"false\"]" {:display "none"}]
+   [:#pwd-trash "#pwd-trash-logo" {:display "block" 
+                                   :margin "auto"}]])
 
 (def css-rules-passwords
   [])

@@ -379,6 +379,13 @@ goog.base = function(a, b, c) {
 goog.scope = function(a) {
   a.call(goog.global)
 };
+goog.debug = {};
+goog.debug.Error = function(a) {
+  this.stack = Error().stack || "";
+  a && (this.message = "" + a)
+};
+goog.inherits(goog.debug.Error, Error);
+goog.debug.Error.prototype.name = "CustomError";
 goog.string = {};
 goog.string.Unicode = {NBSP:"\u00a0"};
 goog.string.startsWith = function(a, b) {
@@ -654,11 +661,11 @@ goog.string.compareVersions = function(a, b) {
   for(var c = 0, d = goog.string.trim("" + a).split("."), e = goog.string.trim("" + b).split("."), f = Math.max(d.length, e.length), g = 0;0 == c && g < f;g++) {
     var h = d[g] || "", i = e[g] || "", j = RegExp("(\\d*)(\\D*)", "g"), k = RegExp("(\\d*)(\\D*)", "g");
     do {
-      var m = j.exec(h) || ["", "", ""], l = k.exec(i) || ["", "", ""];
-      if(0 == m[0].length && 0 == l[0].length) {
+      var l = j.exec(h) || ["", "", ""], m = k.exec(i) || ["", "", ""];
+      if(0 == l[0].length && 0 == m[0].length) {
         break
       }
-      var c = 0 == m[1].length ? 0 : parseInt(m[1], 10), o = 0 == l[1].length ? 0 : parseInt(l[1], 10), c = goog.string.compareElements_(c, o) || goog.string.compareElements_(0 == m[2].length, 0 == l[2].length) || goog.string.compareElements_(m[2], l[2])
+      var c = 0 == l[1].length ? 0 : parseInt(l[1], 10), o = 0 == m[1].length ? 0 : parseInt(m[1], 10), c = goog.string.compareElements_(c, o) || goog.string.compareElements_(0 == l[2].length, 0 == m[2].length) || goog.string.compareElements_(l[2], m[2])
     }while(0 == c)
   }
   return c
@@ -691,13 +698,6 @@ goog.string.toSelectorCaseCache_ = {};
 goog.string.toSelectorCase = function(a) {
   return goog.string.toSelectorCaseCache_[a] || (goog.string.toSelectorCaseCache_[a] = ("" + a).replace(/([A-Z])/g, "-$1").toLowerCase())
 };
-goog.debug = {};
-goog.debug.Error = function(a) {
-  this.stack = Error().stack || "";
-  a && (this.message = "" + a)
-};
-goog.inherits(goog.debug.Error, Error);
-goog.debug.Error.prototype.name = "CustomError";
 goog.asserts = {};
 goog.asserts.ENABLE_ASSERTS = goog.DEBUG;
 goog.asserts.AssertionError = function(a, b) {
@@ -1291,15 +1291,15 @@ goog.string.format = function(a, b) {
   if("undefined" == typeof d) {
     throw Error("[goog.string.format] Template required");
   }
-  return d.replace(/%([0\-\ \+]*)(\d+)?(\.(\d+))?([%sfdiu])/g, function(a, b, d, h, i, j, k, m) {
+  return d.replace(/%([0\-\ \+]*)(\d+)?(\.(\d+))?([%sfdiu])/g, function(a, b, d, h, i, j, k, l) {
     if("%" == j) {
       return"%"
     }
-    var l = c.shift();
-    if("undefined" == typeof l) {
+    var m = c.shift();
+    if("undefined" == typeof m) {
       throw Error("[goog.string.format] Not enough arguments");
     }
-    arguments[0] = l;
+    arguments[0] = m;
     return goog.string.format.demuxes_[j].apply(null, arguments)
   })
 };
@@ -1583,116 +1583,116 @@ cljs.core._invoke = function() {
       throw cljs.core.missing_protocol.call(null, "IFn.-invoke", a);
     }
     return k.call(null, a, b, c, d, e, f, g, h, i, j)
-  }, m = function(a, b, c, d, e, f, g, h, i, j, k) {
+  }, l = function(a, b, c, d, e, f, g, h, i, j, k) {
     if(a ? a.cljs$core$IFn$_invoke$arity$11 : a) {
       return a.cljs$core$IFn$_invoke$arity$11(a, b, c, d, e, f, g, h, i, j, k)
-    }
-    var l;
-    l = cljs.core._invoke[goog.typeOf(null == a ? null : a)];
-    if(!l && (l = cljs.core._invoke._, !l)) {
-      throw cljs.core.missing_protocol.call(null, "IFn.-invoke", a);
-    }
-    return l.call(null, a, b, c, d, e, f, g, h, i, j, k)
-  }, l = function(a, b, c, d, e, f, g, h, i, j, k, l) {
-    if(a ? a.cljs$core$IFn$_invoke$arity$12 : a) {
-      return a.cljs$core$IFn$_invoke$arity$12(a, b, c, d, e, f, g, h, i, j, k, l)
     }
     var m;
     m = cljs.core._invoke[goog.typeOf(null == a ? null : a)];
     if(!m && (m = cljs.core._invoke._, !m)) {
       throw cljs.core.missing_protocol.call(null, "IFn.-invoke", a);
     }
-    return m.call(null, a, b, c, d, e, f, g, h, i, j, k, l)
-  }, o = function(a, b, c, d, e, f, g, h, i, j, k, l, m) {
+    return m.call(null, a, b, c, d, e, f, g, h, i, j, k)
+  }, m = function(a, b, c, d, e, f, g, h, i, j, k, m) {
+    if(a ? a.cljs$core$IFn$_invoke$arity$12 : a) {
+      return a.cljs$core$IFn$_invoke$arity$12(a, b, c, d, e, f, g, h, i, j, k, m)
+    }
+    var l;
+    l = cljs.core._invoke[goog.typeOf(null == a ? null : a)];
+    if(!l && (l = cljs.core._invoke._, !l)) {
+      throw cljs.core.missing_protocol.call(null, "IFn.-invoke", a);
+    }
+    return l.call(null, a, b, c, d, e, f, g, h, i, j, k, m)
+  }, o = function(a, b, c, d, e, f, g, h, i, j, k, m, l) {
     if(a ? a.cljs$core$IFn$_invoke$arity$13 : a) {
-      return a.cljs$core$IFn$_invoke$arity$13(a, b, c, d, e, f, g, h, i, j, k, l, m)
+      return a.cljs$core$IFn$_invoke$arity$13(a, b, c, d, e, f, g, h, i, j, k, m, l)
     }
     var o;
     o = cljs.core._invoke[goog.typeOf(null == a ? null : a)];
     if(!o && (o = cljs.core._invoke._, !o)) {
       throw cljs.core.missing_protocol.call(null, "IFn.-invoke", a);
     }
-    return o.call(null, a, b, c, d, e, f, g, h, i, j, k, l, m)
-  }, n = function(a, b, c, d, e, f, g, h, i, j, k, l, m, o) {
+    return o.call(null, a, b, c, d, e, f, g, h, i, j, k, m, l)
+  }, n = function(a, b, c, d, e, f, g, h, i, j, k, m, l, o) {
     if(a ? a.cljs$core$IFn$_invoke$arity$14 : a) {
-      return a.cljs$core$IFn$_invoke$arity$14(a, b, c, d, e, f, g, h, i, j, k, l, m, o)
+      return a.cljs$core$IFn$_invoke$arity$14(a, b, c, d, e, f, g, h, i, j, k, m, l, o)
     }
     var n;
     n = cljs.core._invoke[goog.typeOf(null == a ? null : a)];
     if(!n && (n = cljs.core._invoke._, !n)) {
       throw cljs.core.missing_protocol.call(null, "IFn.-invoke", a);
     }
-    return n.call(null, a, b, c, d, e, f, g, h, i, j, k, l, m, o)
-  }, q = function(a, b, c, d, e, f, g, h, i, j, k, l, m, o, n) {
+    return n.call(null, a, b, c, d, e, f, g, h, i, j, k, m, l, o)
+  }, q = function(a, b, c, d, e, f, g, h, i, j, k, m, l, o, n) {
     if(a ? a.cljs$core$IFn$_invoke$arity$15 : a) {
-      return a.cljs$core$IFn$_invoke$arity$15(a, b, c, d, e, f, g, h, i, j, k, l, m, o, n)
+      return a.cljs$core$IFn$_invoke$arity$15(a, b, c, d, e, f, g, h, i, j, k, m, l, o, n)
     }
     var q;
     q = cljs.core._invoke[goog.typeOf(null == a ? null : a)];
     if(!q && (q = cljs.core._invoke._, !q)) {
       throw cljs.core.missing_protocol.call(null, "IFn.-invoke", a);
     }
-    return q.call(null, a, b, c, d, e, f, g, h, i, j, k, l, m, o, n)
-  }, p = function(a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q) {
+    return q.call(null, a, b, c, d, e, f, g, h, i, j, k, m, l, o, n)
+  }, p = function(a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q) {
     if(a ? a.cljs$core$IFn$_invoke$arity$16 : a) {
-      return a.cljs$core$IFn$_invoke$arity$16(a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q)
+      return a.cljs$core$IFn$_invoke$arity$16(a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q)
     }
     var u;
     u = cljs.core._invoke[goog.typeOf(null == a ? null : a)];
     if(!u && (u = cljs.core._invoke._, !u)) {
       throw cljs.core.missing_protocol.call(null, "IFn.-invoke", a);
     }
-    return u.call(null, a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q)
-  }, s = function(a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q, u) {
+    return u.call(null, a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q)
+  }, s = function(a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q, u) {
     if(a ? a.cljs$core$IFn$_invoke$arity$17 : a) {
-      return a.cljs$core$IFn$_invoke$arity$17(a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q, u)
+      return a.cljs$core$IFn$_invoke$arity$17(a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q, u)
     }
     var x;
     x = cljs.core._invoke[goog.typeOf(null == a ? null : a)];
     if(!x && (x = cljs.core._invoke._, !x)) {
       throw cljs.core.missing_protocol.call(null, "IFn.-invoke", a);
     }
-    return x.call(null, a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q, u)
-  }, t = function(a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q, u, x) {
+    return x.call(null, a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q, u)
+  }, t = function(a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q, u, x) {
     if(a ? a.cljs$core$IFn$_invoke$arity$18 : a) {
-      return a.cljs$core$IFn$_invoke$arity$18(a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q, u, x)
+      return a.cljs$core$IFn$_invoke$arity$18(a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q, u, x)
     }
     var p;
     p = cljs.core._invoke[goog.typeOf(null == a ? null : a)];
     if(!p && (p = cljs.core._invoke._, !p)) {
       throw cljs.core.missing_protocol.call(null, "IFn.-invoke", a);
     }
-    return p.call(null, a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q, u, x)
-  }, r = function(a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q, u, x, p) {
+    return p.call(null, a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q, u, x)
+  }, r = function(a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q, u, x, p) {
     if(a ? a.cljs$core$IFn$_invoke$arity$19 : a) {
-      return a.cljs$core$IFn$_invoke$arity$19(a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q, u, x, p)
+      return a.cljs$core$IFn$_invoke$arity$19(a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q, u, x, p)
     }
     var r;
     r = cljs.core._invoke[goog.typeOf(null == a ? null : a)];
     if(!r && (r = cljs.core._invoke._, !r)) {
       throw cljs.core.missing_protocol.call(null, "IFn.-invoke", a);
     }
-    return r.call(null, a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q, u, x, p)
-  }, H = function(a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q, u, x, p, r) {
+    return r.call(null, a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q, u, x, p)
+  }, H = function(a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q, u, x, p, r) {
     if(a ? a.cljs$core$IFn$_invoke$arity$20 : a) {
-      return a.cljs$core$IFn$_invoke$arity$20(a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q, u, x, p, r)
+      return a.cljs$core$IFn$_invoke$arity$20(a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q, u, x, p, r)
     }
     var t;
     t = cljs.core._invoke[goog.typeOf(null == a ? null : a)];
     if(!t && (t = cljs.core._invoke._, !t)) {
       throw cljs.core.missing_protocol.call(null, "IFn.-invoke", a);
     }
-    return t.call(null, a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q, u, x, p, r)
-  }, N = function(a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q, u, x, p, r, t) {
+    return t.call(null, a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q, u, x, p, r)
+  }, N = function(a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q, u, x, p, r, t) {
     if(a ? a.cljs$core$IFn$_invoke$arity$21 : a) {
-      return a.cljs$core$IFn$_invoke$arity$21(a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q, u, x, p, r, t)
+      return a.cljs$core$IFn$_invoke$arity$21(a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q, u, x, p, r, t)
     }
     var s;
     s = cljs.core._invoke[goog.typeOf(null == a ? null : a)];
     if(!s && (s = cljs.core._invoke._, !s)) {
       throw cljs.core.missing_protocol.call(null, "IFn.-invoke", a);
     }
-    return s.call(null, a, b, c, d, e, f, g, h, i, j, k, l, m, o, n, q, u, x, p, r, t)
+    return s.call(null, a, b, c, d, e, f, g, h, i, j, k, m, l, o, n, q, u, x, p, r, t)
   }, a = function(a, v, w, y, C, D, E, F, G, z, J, I, K, L, M, O, u, x, Q, R, T) {
     switch(arguments.length) {
       case 1:
@@ -1716,9 +1716,9 @@ cljs.core._invoke = function() {
       case 10:
         return k.call(this, a, v, w, y, C, D, E, F, G, z);
       case 11:
-        return m.call(this, a, v, w, y, C, D, E, F, G, z, J);
+        return l.call(this, a, v, w, y, C, D, E, F, G, z, J);
       case 12:
-        return l.call(this, a, v, w, y, C, D, E, F, G, z, J, I);
+        return m.call(this, a, v, w, y, C, D, E, F, G, z, J, I);
       case 13:
         return o.call(this, a, v, w, y, C, D, E, F, G, z, J, I, K);
       case 14:
@@ -1750,8 +1750,8 @@ cljs.core._invoke = function() {
   a.cljs$lang$arity$8 = i;
   a.cljs$lang$arity$9 = j;
   a.cljs$lang$arity$10 = k;
-  a.cljs$lang$arity$11 = m;
-  a.cljs$lang$arity$12 = l;
+  a.cljs$lang$arity$11 = l;
+  a.cljs$lang$arity$12 = m;
   a.cljs$lang$arity$13 = o;
   a.cljs$lang$arity$14 = n;
   a.cljs$lang$arity$15 = q;
@@ -5249,10 +5249,10 @@ cljs.core.concat = function() {
     }, null)
   }, e = function() {
     var b = function(b, c, d) {
-      return function m(a, b) {
+      return function l(a, b) {
         return new cljs.core.LazySeq(null, !1, function() {
           var c = cljs.core.seq.call(null, a);
-          return c ? cljs.core.chunked_seq_QMARK_.call(null, c) ? cljs.core.chunk_cons.call(null, cljs.core.chunk_first.call(null, c), m.call(null, cljs.core.chunk_rest.call(null, c), b)) : cljs.core.cons.call(null, cljs.core.first.call(null, c), m.call(null, cljs.core.rest.call(null, c), b)) : cljs.core.truth_(b) ? m.call(null, cljs.core.first.call(null, b), cljs.core.next.call(null, b)) : null
+          return c ? cljs.core.chunked_seq_QMARK_.call(null, c) ? cljs.core.chunk_cons.call(null, cljs.core.chunk_first.call(null, c), l.call(null, cljs.core.chunk_rest.call(null, c), b)) : cljs.core.cons.call(null, cljs.core.first.call(null, c), l.call(null, cljs.core.rest.call(null, c), b)) : cljs.core.truth_(b) ? l.call(null, cljs.core.first.call(null, b), cljs.core.next.call(null, b)) : null
         }, null)
       }.call(null, a.call(null, b, c), d)
     }, c = function(a, c, d) {
@@ -5395,55 +5395,55 @@ cljs.core.apply_to = function(a, b, c) {
   if(8 === b) {
     return a.cljs$lang$arity$8 ? a.cljs$lang$arity$8(c, d, e, f, g, a, h, i) : a.call(null, c, d, e, f, g, a, h, i)
   }
-  var j = cljs.core._first.call(null, k), m = cljs.core._rest.call(null, k);
+  var j = cljs.core._first.call(null, k), l = cljs.core._rest.call(null, k);
   if(9 === b) {
     return a.cljs$lang$arity$9 ? a.cljs$lang$arity$9(c, d, e, f, g, a, h, i, j) : a.call(null, c, d, e, f, g, a, h, i, j)
   }
-  var k = cljs.core._first.call(null, m), l = cljs.core._rest.call(null, m);
+  var k = cljs.core._first.call(null, l), m = cljs.core._rest.call(null, l);
   if(10 === b) {
     return a.cljs$lang$arity$10 ? a.cljs$lang$arity$10(c, d, e, f, g, a, h, i, j, k) : a.call(null, c, d, e, f, g, a, h, i, j, k)
   }
-  var m = cljs.core._first.call(null, l), o = cljs.core._rest.call(null, l);
+  var l = cljs.core._first.call(null, m), o = cljs.core._rest.call(null, m);
   if(11 === b) {
-    return a.cljs$lang$arity$11 ? a.cljs$lang$arity$11(c, d, e, f, g, a, h, i, j, k, m) : a.call(null, c, d, e, f, g, a, h, i, j, k, m)
+    return a.cljs$lang$arity$11 ? a.cljs$lang$arity$11(c, d, e, f, g, a, h, i, j, k, l) : a.call(null, c, d, e, f, g, a, h, i, j, k, l)
   }
-  var l = cljs.core._first.call(null, o), n = cljs.core._rest.call(null, o);
+  var m = cljs.core._first.call(null, o), n = cljs.core._rest.call(null, o);
   if(12 === b) {
-    return a.cljs$lang$arity$12 ? a.cljs$lang$arity$12(c, d, e, f, g, a, h, i, j, k, m, l) : a.call(null, c, d, e, f, g, a, h, i, j, k, m, l)
+    return a.cljs$lang$arity$12 ? a.cljs$lang$arity$12(c, d, e, f, g, a, h, i, j, k, l, m) : a.call(null, c, d, e, f, g, a, h, i, j, k, l, m)
   }
   var o = cljs.core._first.call(null, n), q = cljs.core._rest.call(null, n);
   if(13 === b) {
-    return a.cljs$lang$arity$13 ? a.cljs$lang$arity$13(c, d, e, f, g, a, h, i, j, k, m, l, o) : a.call(null, c, d, e, f, g, a, h, i, j, k, m, l, o)
+    return a.cljs$lang$arity$13 ? a.cljs$lang$arity$13(c, d, e, f, g, a, h, i, j, k, l, m, o) : a.call(null, c, d, e, f, g, a, h, i, j, k, l, m, o)
   }
   var n = cljs.core._first.call(null, q), p = cljs.core._rest.call(null, q);
   if(14 === b) {
-    return a.cljs$lang$arity$14 ? a.cljs$lang$arity$14(c, d, e, f, g, a, h, i, j, k, m, l, o, n) : a.call(null, c, d, e, f, g, a, h, i, j, k, m, l, o, n)
+    return a.cljs$lang$arity$14 ? a.cljs$lang$arity$14(c, d, e, f, g, a, h, i, j, k, l, m, o, n) : a.call(null, c, d, e, f, g, a, h, i, j, k, l, m, o, n)
   }
   var q = cljs.core._first.call(null, p), s = cljs.core._rest.call(null, p);
   if(15 === b) {
-    return a.cljs$lang$arity$15 ? a.cljs$lang$arity$15(c, d, e, f, g, a, h, i, j, k, m, l, o, n, q) : a.call(null, c, d, e, f, g, a, h, i, j, k, m, l, o, n, q)
+    return a.cljs$lang$arity$15 ? a.cljs$lang$arity$15(c, d, e, f, g, a, h, i, j, k, l, m, o, n, q) : a.call(null, c, d, e, f, g, a, h, i, j, k, l, m, o, n, q)
   }
   var p = cljs.core._first.call(null, s), t = cljs.core._rest.call(null, s);
   if(16 === b) {
-    return a.cljs$lang$arity$16 ? a.cljs$lang$arity$16(c, d, e, f, g, a, h, i, j, k, m, l, o, n, q, p) : a.call(null, c, d, e, f, g, a, h, i, j, k, m, l, o, n, q, p)
+    return a.cljs$lang$arity$16 ? a.cljs$lang$arity$16(c, d, e, f, g, a, h, i, j, k, l, m, o, n, q, p) : a.call(null, c, d, e, f, g, a, h, i, j, k, l, m, o, n, q, p)
   }
   var s = cljs.core._first.call(null, t), r = cljs.core._rest.call(null, t);
   if(17 === b) {
-    return a.cljs$lang$arity$17 ? a.cljs$lang$arity$17(c, d, e, f, g, a, h, i, j, k, m, l, o, n, q, p, s) : a.call(null, c, d, e, f, g, a, h, i, j, k, m, l, o, n, q, p, s)
+    return a.cljs$lang$arity$17 ? a.cljs$lang$arity$17(c, d, e, f, g, a, h, i, j, k, l, m, o, n, q, p, s) : a.call(null, c, d, e, f, g, a, h, i, j, k, l, m, o, n, q, p, s)
   }
   var t = cljs.core._first.call(null, r), H = cljs.core._rest.call(null, r);
   if(18 === b) {
-    return a.cljs$lang$arity$18 ? a.cljs$lang$arity$18(c, d, e, f, g, a, h, i, j, k, m, l, o, n, q, p, s, t) : a.call(null, c, d, e, f, g, a, h, i, j, k, m, l, o, n, q, p, s, t)
+    return a.cljs$lang$arity$18 ? a.cljs$lang$arity$18(c, d, e, f, g, a, h, i, j, k, l, m, o, n, q, p, s, t) : a.call(null, c, d, e, f, g, a, h, i, j, k, l, m, o, n, q, p, s, t)
   }
   r = cljs.core._first.call(null, H);
   H = cljs.core._rest.call(null, H);
   if(19 === b) {
-    return a.cljs$lang$arity$19 ? a.cljs$lang$arity$19(c, d, e, f, g, a, h, i, j, k, m, l, o, n, q, p, s, t, r) : a.call(null, c, d, e, f, g, a, h, i, j, k, m, l, o, n, q, p, s, t, r)
+    return a.cljs$lang$arity$19 ? a.cljs$lang$arity$19(c, d, e, f, g, a, h, i, j, k, l, m, o, n, q, p, s, t, r) : a.call(null, c, d, e, f, g, a, h, i, j, k, l, m, o, n, q, p, s, t, r)
   }
   var N = cljs.core._first.call(null, H);
   cljs.core._rest.call(null, H);
   if(20 === b) {
-    return a.cljs$lang$arity$20 ? a.cljs$lang$arity$20(c, d, e, f, g, a, h, i, j, k, m, l, o, n, q, p, s, t, r, N) : a.call(null, c, d, e, f, g, a, h, i, j, k, m, l, o, n, q, p, s, t, r, N)
+    return a.cljs$lang$arity$20 ? a.cljs$lang$arity$20(c, d, e, f, g, a, h, i, j, k, l, m, o, n, q, p, s, t, r, N) : a.call(null, c, d, e, f, g, a, h, i, j, k, l, m, o, n, q, p, s, t, r, N)
   }
   throw Error("Only up to 20 arguments supported on functions");
 };
@@ -5488,7 +5488,7 @@ cljs.core.apply = function() {
     };
     b.cljs$lang$arity$variadic = a;
     return b
-  }(), a = function(a, h, i, j, k, m) {
+  }(), a = function(a, h, i, j, k, l) {
     switch(arguments.length) {
       case 2:
         return b.call(this, a, h);
@@ -5684,7 +5684,7 @@ cljs.core.comp = function() {
         };
         d.cljs$lang$arity$variadic = c;
         return d
-      }(), c = function(c, e, h, l) {
+      }(), c = function(c, e, h, m) {
         switch(arguments.length) {
           case 0:
             return a.call(null, b.call(null));
@@ -5720,7 +5720,7 @@ cljs.core.comp = function() {
         };
         e.cljs$lang$arity$variadic = d;
         return e
-      }(), d = function(d, i, l, o) {
+      }(), d = function(d, i, m, o) {
         switch(arguments.length) {
           case 0:
             return a.call(null, b.call(null, c.call(null)));
@@ -5729,9 +5729,9 @@ cljs.core.comp = function() {
           case 2:
             return a.call(null, b.call(null, c.call(null, d, i)));
           case 3:
-            return a.call(null, b.call(null, c.call(null, d, i, l)));
+            return a.call(null, b.call(null, c.call(null, d, i, m)));
           default:
-            return e.cljs$lang$arity$variadic(d, i, l, cljs.core.array_seq(arguments, 3))
+            return e.cljs$lang$arity$variadic(d, i, m, cljs.core.array_seq(arguments, 3))
         }
         throw"Invalid arity: " + arguments.length;
       };
@@ -5873,9 +5873,9 @@ cljs.core.partial = function() {
         return g
       }()
     }, b = function(b, c, d, e, g) {
-      var l = null;
-      goog.isDef(g) && (l = cljs.core.array_seq(Array.prototype.slice.call(arguments, 4), 0));
-      return a.call(this, b, c, d, e, l)
+      var m = null;
+      goog.isDef(g) && (m = cljs.core.array_seq(Array.prototype.slice.call(arguments, 4), 0));
+      return a.call(this, b, c, d, e, m)
     };
     b.cljs$lang$maxFixedArity = 4;
     b.cljs$lang$applyTo = function(b) {
@@ -5923,7 +5923,7 @@ cljs.core.fnil = function() {
         };
         d.cljs$lang$arity$variadic = c;
         return d
-      }(), c = function(c, g, k, m) {
+      }(), c = function(c, g, k, l) {
         switch(arguments.length) {
           case 1:
             return a.call(null, null == c ? b : c);
@@ -5957,14 +5957,14 @@ cljs.core.fnil = function() {
         };
         h.cljs$lang$arity$variadic = d;
         return h
-      }(), d = function(d, h, m, l) {
+      }(), d = function(d, h, l, m) {
         switch(arguments.length) {
           case 2:
             return a.call(null, null == d ? b : d, null == h ? c : h);
           case 3:
-            return a.call(null, null == d ? b : d, null == h ? c : h, m);
+            return a.call(null, null == d ? b : d, null == h ? c : h, l);
           default:
-            return i.cljs$lang$arity$variadic(d, h, m, cljs.core.array_seq(arguments, 3))
+            return i.cljs$lang$arity$variadic(d, h, l, cljs.core.array_seq(arguments, 3))
         }
         throw"Invalid arity: " + arguments.length;
       };
@@ -5975,8 +5975,8 @@ cljs.core.fnil = function() {
   }, d = function(a, b, c, d) {
     return function() {
       var i = null, j = function() {
-        var i = function(i, j, k, m) {
-          return cljs.core.apply.call(null, a, null == i ? b : i, null == j ? c : j, null == k ? d : k, m)
+        var i = function(i, j, k, l) {
+          return cljs.core.apply.call(null, a, null == i ? b : i, null == j ? c : j, null == k ? d : k, l)
         }, j = function(a, b, c, d) {
           var e = null;
           goog.isDef(d) && (e = cljs.core.array_seq(Array.prototype.slice.call(arguments, 3), 0));
@@ -5989,14 +5989,14 @@ cljs.core.fnil = function() {
         };
         j.cljs$lang$arity$variadic = i;
         return j
-      }(), i = function(i, m, l, o) {
+      }(), i = function(i, l, m, o) {
         switch(arguments.length) {
           case 2:
-            return a.call(null, null == i ? b : i, null == m ? c : m);
+            return a.call(null, null == i ? b : i, null == l ? c : l);
           case 3:
-            return a.call(null, null == i ? b : i, null == m ? c : m, null == l ? d : l);
+            return a.call(null, null == i ? b : i, null == l ? c : l, null == m ? d : m);
           default:
-            return j.cljs$lang$arity$variadic(i, m, l, cljs.core.array_seq(arguments, 3))
+            return j.cljs$lang$arity$variadic(i, l, m, cljs.core.array_seq(arguments, 3))
         }
         throw"Invalid arity: " + arguments.length;
       };
@@ -6072,8 +6072,8 @@ cljs.core.keep_indexed = function(a, b) {
         if(cljs.core.chunked_seq_QMARK_.call(null, g)) {
           for(var h = cljs.core.chunk_first.call(null, g), i = cljs.core.count.call(null, h), j = cljs.core.chunk_buffer.call(null, i), k = 0;;) {
             if(k < i) {
-              var m = a.call(null, b + k, cljs.core._nth.call(null, h, k));
-              m != null && cljs.core.chunk_append.call(null, j, m);
+              var l = a.call(null, b + k, cljs.core._nth.call(null, h, k));
+              l != null && cljs.core.chunk_append.call(null, j, l);
               k = k + 1
             }else {
               break
@@ -6164,7 +6164,7 @@ cljs.core.every_pred = function() {
           var h = a.call(null, c);
           return cljs.core.truth_(h) && (h = a.call(null, d), cljs.core.truth_(h) && (h = a.call(null, e), cljs.core.truth_(h) && (h = b.call(null, c), cljs.core.truth_(h)))) ? (h = b.call(null, d), cljs.core.truth_(h) ? b.call(null, e) : h) : h
         }())
-      }, m = function() {
+      }, l = function() {
         var d = function(d, e, i, j) {
           return cljs.core.boolean$.call(null, function() {
             var k = c.call(null, d, e, i);
@@ -6196,19 +6196,19 @@ cljs.core.every_pred = function() {
           case 3:
             return k.call(this, a, b, c);
           default:
-            return m.cljs$lang$arity$variadic(a, b, c, cljs.core.array_seq(arguments, 3))
+            return l.cljs$lang$arity$variadic(a, b, c, cljs.core.array_seq(arguments, 3))
         }
         throw"Invalid arity: " + arguments.length;
       };
       c.cljs$lang$maxFixedArity = 3;
-      c.cljs$lang$applyTo = m.cljs$lang$applyTo;
+      c.cljs$lang$applyTo = l.cljs$lang$applyTo;
       c.cljs$lang$arity$0 = function() {
         return!0
       };
       c.cljs$lang$arity$1 = d;
       c.cljs$lang$arity$2 = e;
       c.cljs$lang$arity$3 = k;
-      c.cljs$lang$arity$variadic = m.cljs$lang$arity$variadic;
+      c.cljs$lang$arity$variadic = l.cljs$lang$arity$variadic;
       return c
     }()
   }, d = function(a, b, c) {
@@ -6223,19 +6223,19 @@ cljs.core.every_pred = function() {
           var i = a.call(null, d);
           return cljs.core.truth_(i) && (i = b.call(null, d), cljs.core.truth_(i) && (i = c.call(null, d), cljs.core.truth_(i) && (i = a.call(null, e), cljs.core.truth_(i)))) ? (i = b.call(null, e), cljs.core.truth_(i) ? c.call(null, e) : i) : i
         }())
-      }, m = function(d, e, i) {
+      }, l = function(d, e, i) {
         return cljs.core.boolean$.call(null, function() {
           var j = a.call(null, d);
           return cljs.core.truth_(j) && (j = b.call(null, d), cljs.core.truth_(j) && (j = c.call(null, d), cljs.core.truth_(j) && (j = a.call(null, e), cljs.core.truth_(j) && (j = b.call(null, e), cljs.core.truth_(j) && (j = c.call(null, e), cljs.core.truth_(j) && (j = a.call(null, i), cljs.core.truth_(j))))))) ? (j = b.call(null, i), cljs.core.truth_(j) ? c.call(null, i) : j) : j
         }())
-      }, l = function() {
-        var e = function(e, j, k, l) {
+      }, m = function() {
+        var e = function(e, j, k, m) {
           return cljs.core.boolean$.call(null, function() {
-            var m = d.call(null, e, j, k);
-            return cljs.core.truth_(m) ? cljs.core.every_QMARK_.call(null, function(d) {
+            var l = d.call(null, e, j, k);
+            return cljs.core.truth_(l) ? cljs.core.every_QMARK_.call(null, function(d) {
               var e = a.call(null, d);
               return cljs.core.truth_(e) ? (e = b.call(null, d), cljs.core.truth_(e) ? c.call(null, d) : e) : e
-            }, l) : m
+            }, m) : l
           }())
         }, j = function(a, b, c, d) {
           var f = null;
@@ -6258,21 +6258,21 @@ cljs.core.every_pred = function() {
           case 2:
             return k.call(this, a, b);
           case 3:
-            return m.call(this, a, b, c);
+            return l.call(this, a, b, c);
           default:
-            return l.cljs$lang$arity$variadic(a, b, c, cljs.core.array_seq(arguments, 3))
+            return m.cljs$lang$arity$variadic(a, b, c, cljs.core.array_seq(arguments, 3))
         }
         throw"Invalid arity: " + arguments.length;
       };
       d.cljs$lang$maxFixedArity = 3;
-      d.cljs$lang$applyTo = l.cljs$lang$applyTo;
+      d.cljs$lang$applyTo = m.cljs$lang$applyTo;
       d.cljs$lang$arity$0 = function() {
         return!0
       };
       d.cljs$lang$arity$1 = e;
       d.cljs$lang$arity$2 = k;
-      d.cljs$lang$arity$3 = m;
-      d.cljs$lang$arity$variadic = l.cljs$lang$arity$variadic;
+      d.cljs$lang$arity$3 = l;
+      d.cljs$lang$arity$variadic = m.cljs$lang$arity$variadic;
       return d
     }()
   }, e = function() {
@@ -6464,7 +6464,7 @@ cljs.core.some_fn = function() {
         }
         d = b.call(null, d);
         return cljs.core.truth_(d) ? d : b.call(null, e)
-      }, m = function() {
+      }, l = function() {
         var d = function(d, e, i, j) {
           d = c.call(null, d, e, i);
           return cljs.core.truth_(d) ? d : cljs.core.some.call(null, function(c) {
@@ -6494,19 +6494,19 @@ cljs.core.some_fn = function() {
           case 3:
             return k.call(this, a, b, c);
           default:
-            return m.cljs$lang$arity$variadic(a, b, c, cljs.core.array_seq(arguments, 3))
+            return l.cljs$lang$arity$variadic(a, b, c, cljs.core.array_seq(arguments, 3))
         }
         throw"Invalid arity: " + arguments.length;
       };
       c.cljs$lang$maxFixedArity = 3;
-      c.cljs$lang$applyTo = m.cljs$lang$applyTo;
+      c.cljs$lang$applyTo = l.cljs$lang$applyTo;
       c.cljs$lang$arity$0 = function() {
         return null
       };
       c.cljs$lang$arity$1 = d;
       c.cljs$lang$arity$2 = e;
       c.cljs$lang$arity$3 = k;
-      c.cljs$lang$arity$variadic = m.cljs$lang$arity$variadic;
+      c.cljs$lang$arity$variadic = l.cljs$lang$arity$variadic;
       return c
     }()
   }, d = function(a, b, c) {
@@ -6537,7 +6537,7 @@ cljs.core.some_fn = function() {
         }
         i = b.call(null, e);
         return cljs.core.truth_(i) ? i : c.call(null, e)
-      }, m = function(d, e, i) {
+      }, l = function(d, e, i) {
         var j = a.call(null, d);
         if(cljs.core.truth_(j)) {
           return j
@@ -6568,8 +6568,8 @@ cljs.core.some_fn = function() {
         }
         e = b.call(null, i);
         return cljs.core.truth_(e) ? e : c.call(null, i)
-      }, l = function() {
-        var e = function(e, j, k, m) {
+      }, m = function() {
+        var e = function(e, j, k, l) {
           e = d.call(null, e, j, k);
           return cljs.core.truth_(e) ? e : cljs.core.some.call(null, function(d) {
             var e = a.call(null, d);
@@ -6578,7 +6578,7 @@ cljs.core.some_fn = function() {
             }
             e = b.call(null, d);
             return cljs.core.truth_(e) ? e : c.call(null, d)
-          }, m)
+          }, l)
         }, j = function(a, b, c, d) {
           var f = null;
           goog.isDef(d) && (f = cljs.core.array_seq(Array.prototype.slice.call(arguments, 3), 0));
@@ -6600,21 +6600,21 @@ cljs.core.some_fn = function() {
           case 2:
             return k.call(this, a, b);
           case 3:
-            return m.call(this, a, b, c);
+            return l.call(this, a, b, c);
           default:
-            return l.cljs$lang$arity$variadic(a, b, c, cljs.core.array_seq(arguments, 3))
+            return m.cljs$lang$arity$variadic(a, b, c, cljs.core.array_seq(arguments, 3))
         }
         throw"Invalid arity: " + arguments.length;
       };
       d.cljs$lang$maxFixedArity = 3;
-      d.cljs$lang$applyTo = l.cljs$lang$applyTo;
+      d.cljs$lang$applyTo = m.cljs$lang$applyTo;
       d.cljs$lang$arity$0 = function() {
         return null
       };
       d.cljs$lang$arity$1 = e;
       d.cljs$lang$arity$2 = k;
-      d.cljs$lang$arity$3 = m;
-      d.cljs$lang$arity$variadic = l.cljs$lang$arity$variadic;
+      d.cljs$lang$arity$3 = l;
+      d.cljs$lang$arity$variadic = m.cljs$lang$arity$variadic;
       return d
     }()
   }, e = function() {
@@ -6722,10 +6722,10 @@ cljs.core.map = function() {
       var d = cljs.core.seq.call(null, c);
       if(d) {
         if(cljs.core.chunked_seq_QMARK_.call(null, d)) {
-          for(var e = cljs.core.chunk_first.call(null, d), j = cljs.core.count.call(null, e), k = cljs.core.chunk_buffer.call(null, j), m = 0;;) {
-            if(m < j) {
-              cljs.core.chunk_append.call(null, k, b.call(null, cljs.core._nth.call(null, e, m)));
-              m = m + 1
+          for(var e = cljs.core.chunk_first.call(null, d), j = cljs.core.count.call(null, e), k = cljs.core.chunk_buffer.call(null, j), l = 0;;) {
+            if(l < j) {
+              cljs.core.chunk_append.call(null, k, b.call(null, cljs.core._nth.call(null, e, l)));
+              l = l + 1
             }else {
               break
             }
@@ -6743,8 +6743,8 @@ cljs.core.map = function() {
     }, null)
   }, d = function(b, c, d, e) {
     return new cljs.core.LazySeq(null, !1, function() {
-      var j = cljs.core.seq.call(null, c), k = cljs.core.seq.call(null, d), m = cljs.core.seq.call(null, e);
-      return(j ? k ? m : k : j) ? cljs.core.cons.call(null, b.call(null, cljs.core.first.call(null, j), cljs.core.first.call(null, k), cljs.core.first.call(null, m)), a.call(null, b, cljs.core.rest.call(null, j), cljs.core.rest.call(null, k), cljs.core.rest.call(null, m))) : null
+      var j = cljs.core.seq.call(null, c), k = cljs.core.seq.call(null, d), l = cljs.core.seq.call(null, e);
+      return(j ? k ? l : k : j) ? cljs.core.cons.call(null, b.call(null, cljs.core.first.call(null, j), cljs.core.first.call(null, k), cljs.core.first.call(null, l)), a.call(null, b, cljs.core.rest.call(null, j), cljs.core.rest.call(null, k), cljs.core.rest.call(null, l))) : null
     }, null)
   }, e = function() {
     var b = function(b, c, d, e, f) {
@@ -6757,9 +6757,9 @@ cljs.core.map = function() {
         }, null)
       }.call(null, cljs.core.conj.call(null, f, e, d, c)))
     }, c = function(a, c, d, e, g) {
-      var l = null;
-      goog.isDef(g) && (l = cljs.core.array_seq(Array.prototype.slice.call(arguments, 4), 0));
-      return b.call(this, a, c, d, e, l)
+      var m = null;
+      goog.isDef(g) && (m = cljs.core.array_seq(Array.prototype.slice.call(arguments, 4), 0));
+      return b.call(this, a, c, d, e, m)
     };
     c.cljs$lang$maxFixedArity = 4;
     c.cljs$lang$applyTo = function(a) {
@@ -7058,9 +7058,9 @@ cljs.core.mapv = function() {
     var a = function(a, b, c, d, e) {
       return cljs.core.into.call(null, cljs.core.PersistentVector.EMPTY, cljs.core.apply.call(null, cljs.core.map, a, b, c, d, e))
     }, b = function(b, c, d, e, g) {
-      var l = null;
-      goog.isDef(g) && (l = cljs.core.array_seq(Array.prototype.slice.call(arguments, 4), 0));
-      return a.call(this, b, c, d, e, l)
+      var m = null;
+      goog.isDef(g) && (m = cljs.core.array_seq(Array.prototype.slice.call(arguments, 4), 0));
+      return a.call(this, b, c, d, e, m)
     };
     b.cljs$lang$maxFixedArity = 4;
     b.cljs$lang$applyTo = function(b) {
@@ -9001,8 +9001,8 @@ cljs.core.create_node = function() {
     if(k === h) {
       return new cljs.core.HashCollisionNode(null, k, 2, [c, g, i, j])
     }
-    var m = new cljs.core.Box(!1);
-    return cljs.core.BitmapIndexedNode.EMPTY.inode_assoc_BANG_(a, b, k, c, g, m).inode_assoc_BANG_(a, b, h, i, j, m)
+    var l = new cljs.core.Box(!1);
+    return cljs.core.BitmapIndexedNode.EMPTY.inode_assoc_BANG_(a, b, k, c, g, l).inode_assoc_BANG_(a, b, h, i, j, l)
   }, a = function(a, e, f, g, h, i, j) {
     switch(arguments.length) {
       case 6:
@@ -10816,7 +10816,7 @@ cljs.core.juxt = function() {
         };
         d.cljs$lang$arity$variadic = c;
         return d
-      }(), c = function(c, e, h, l) {
+      }(), c = function(c, e, h, m) {
         switch(arguments.length) {
           case 0:
             return cljs.core.vector.call(null, a.call(null), b.call(null));
@@ -10852,7 +10852,7 @@ cljs.core.juxt = function() {
         };
         e.cljs$lang$arity$variadic = d;
         return e
-      }(), d = function(d, i, l, o) {
+      }(), d = function(d, i, m, o) {
         switch(arguments.length) {
           case 0:
             return cljs.core.vector.call(null, a.call(null), b.call(null), c.call(null));
@@ -10861,9 +10861,9 @@ cljs.core.juxt = function() {
           case 2:
             return cljs.core.vector.call(null, a.call(null, d, i), b.call(null, d, i), c.call(null, d, i));
           case 3:
-            return cljs.core.vector.call(null, a.call(null, d, i, l), b.call(null, d, i, l), c.call(null, d, i, l));
+            return cljs.core.vector.call(null, a.call(null, d, i, m), b.call(null, d, i, m), c.call(null, d, i, m));
           default:
-            return e.cljs$lang$arity$variadic(d, i, l, cljs.core.array_seq(arguments, 3))
+            return e.cljs$lang$arity$variadic(d, i, m, cljs.core.array_seq(arguments, 3))
         }
         throw"Invalid arity: " + arguments.length;
       };
@@ -11571,7 +11571,7 @@ cljs.core.swap_BANG_ = function() {
     };
     b.cljs$lang$arity$variadic = a;
     return b
-  }(), a = function(a, h, i, j, k, m) {
+  }(), a = function(a, h, i, j, k, l) {
     switch(arguments.length) {
       case 2:
         return b.call(this, a, h);
@@ -12266,147 +12266,6 @@ cljs.core.UUID.prototype.toString = function() {
   return cljs.core.pr_str.call(null, this)
 };
 cljs.core.UUID;
-var clojure = {string:{}};
-clojure.string.seq_reverse = function(a) {
-  return cljs.core.reduce.call(null, cljs.core.conj, cljs.core.List.EMPTY, a)
-};
-clojure.string.reverse = function(a) {
-  return a.split("").reverse().join("")
-};
-clojure.string.replace = function(a, b, c) {
-  if(cljs.core.string_QMARK_.call(null, b)) {
-    return a.replace(RegExp(goog.string.regExpEscape(b), "g"), c)
-  }
-  if(cljs.core.truth_(b.hasOwnProperty("source"))) {
-    return a.replace(RegExp(b.source, "g"), c)
-  }
-  throw[cljs.core.str("Invalid match arg: "), cljs.core.str(b)].join("");
-};
-clojure.string.replace_first = function(a, b, c) {
-  return a.replace(b, c)
-};
-clojure.string.join = function() {
-  var a = null, b = function(a) {
-    return cljs.core.apply.call(null, cljs.core.str, a)
-  }, c = function(a, b) {
-    return cljs.core.apply.call(null, cljs.core.str, cljs.core.interpose.call(null, a, b))
-  }, a = function(a, e) {
-    switch(arguments.length) {
-      case 1:
-        return b.call(this, a);
-      case 2:
-        return c.call(this, a, e)
-    }
-    throw"Invalid arity: " + arguments.length;
-  };
-  a.cljs$lang$arity$1 = b;
-  a.cljs$lang$arity$2 = c;
-  return a
-}();
-clojure.string.upper_case = function(a) {
-  return a.toUpperCase()
-};
-clojure.string.lower_case = function(a) {
-  return a.toLowerCase()
-};
-clojure.string.capitalize = function(a) {
-  return 2 > cljs.core.count.call(null, a) ? clojure.string.upper_case.call(null, a) : [cljs.core.str(clojure.string.upper_case.call(null, cljs.core.subs.call(null, a, 0, 1))), cljs.core.str(clojure.string.lower_case.call(null, cljs.core.subs.call(null, a, 1)))].join("")
-};
-clojure.string.split = function() {
-  var a = null, b = function(a, b) {
-    return cljs.core.vec.call(null, ("" + cljs.core.str(a)).split(b))
-  }, c = function(a, b, c) {
-    if(1 > c) {
-      return cljs.core.vec.call(null, ("" + cljs.core.str(a)).split(b))
-    }
-    for(var g = cljs.core.PersistentVector.EMPTY;;) {
-      if(cljs.core._EQ_.call(null, c, 1)) {
-        return cljs.core.conj.call(null, g, a)
-      }
-      var h = cljs.core.re_find.call(null, b, a);
-      if(cljs.core.truth_(h)) {
-        var i = h, h = a.indexOf(i), i = a.substring(h + cljs.core.count.call(null, i)), c = c - 1, g = cljs.core.conj.call(null, g, a.substring(0, h)), a = i
-      }else {
-        return cljs.core.conj.call(null, g, a)
-      }
-    }
-  }, a = function(a, e, f) {
-    switch(arguments.length) {
-      case 2:
-        return b.call(this, a, e);
-      case 3:
-        return c.call(this, a, e, f)
-    }
-    throw"Invalid arity: " + arguments.length;
-  };
-  a.cljs$lang$arity$2 = b;
-  a.cljs$lang$arity$3 = c;
-  return a
-}();
-clojure.string.split_lines = function(a) {
-  return clojure.string.split.call(null, a, /\n|\r\n/)
-};
-clojure.string.trim = function(a) {
-  return goog.string.trim(a)
-};
-clojure.string.triml = function(a) {
-  return goog.string.trimLeft(a)
-};
-clojure.string.trimr = function(a) {
-  return goog.string.trimRight(a)
-};
-clojure.string.trim_newline = function(a) {
-  for(var b = a.length;;) {
-    if(0 === b) {
-      return""
-    }
-    var c = cljs.core._lookup.call(null, a, b - 1, null);
-    var d = cljs.core._EQ_.call(null, c, "\n"), c = d ? d : cljs.core._EQ_.call(null, c, "\r");
-    if(c) {
-      b -= 1
-    }else {
-      return a.substring(0, b)
-    }
-  }
-};
-clojure.string.blank_QMARK_ = function(a) {
-  var b = "" + cljs.core.str(a);
-  return cljs.core.truth_(function() {
-    var a = cljs.core.not.call(null, b);
-    return a ? a : (a = cljs.core._EQ_.call(null, "", b)) ? a : cljs.core.re_matches.call(null, /\s+/, b)
-  }()) ? !0 : !1
-};
-clojure.string.escape = function(a, b) {
-  for(var c = new goog.string.StringBuffer, d = a.length, e = 0;;) {
-    if(cljs.core._EQ_.call(null, d, e)) {
-      return c.toString()
-    }
-    var f = a.charAt(e), g = cljs.core._lookup.call(null, b, f, null);
-    cljs.core.truth_(g) ? c.append("" + cljs.core.str(g)) : c.append(f);
-    e += 1
-  }
-};
-var com = {ewen:{}};
-com.ewen.cle_usb_cljs = {};
-com.ewen.cle_usb_cljs.utils = {};
-com.ewen.cle_usb_cljs.utils.log = function(a) {
-  return console.log(a)
-};
-com.ewen.cle_usb_cljs.utils.space_to_dash = function(a) {
-  return clojure.string.replace.call(null, a, " ", "-")
-};
-com.ewen.cle_usb_cljs.utils.get_load_fn = function() {
-  return"function" === goog.typeOf(window.onload) ? window.onload : function() {
-    return cljs.core.List.EMPTY
-  }
-};
-com.ewen.cle_usb_cljs.utils.add_load_event = function(a) {
-  var b = com.ewen.cle_usb_cljs.utils.get_load_fn.call(null);
-  return window.onload = function() {
-    b.call(null);
-    return a.call(null)
-  }
-};
 goog.userAgent.ASSUME_IE = !1;
 goog.userAgent.ASSUME_GECKO = !1;
 goog.userAgent.ASSUME_WEBKIT = !1;
@@ -13370,6 +13229,7 @@ flapjax.core.calmB = function(a, b) {
 };
 flapjax.core.insertDomB = insertDomB;
 flapjax.core.insertValueB = insertValueB;
+flapjax.core.insertValueE = insertValueE;
 flapjax.core.TEXT2 = TEXT2;
 flapjax.core.DIV = DIV;
 flapjax.core.B__GT_Node = function(a) {
@@ -13409,28 +13269,536 @@ flapjax.core.extractValueB_Atom = cljs.core.memoize.call(null, function(a) {
 cljs.core.swap_BANG_.call(null, flapjax.core.extractValueB.method_table, function(a) {
   return cljs.core.assoc.call(null, a, cljs.core.Atom, flapjax.core.extractValueB_Atom)
 });
-com.ewen.cle_usb_cljs.scripts = {};
-com.ewen.cle_usb_cljs.scripts.get_events_with_value = function() {
-  var a = null, b = function(b, c, f) {
-    return a.call(null, dom.getElementsByTagNameAndClass.call(null, "html")[0], b, c, f)
-  }, c = function(a, b, c, g) {
-    a = a.querySelector(b);
-    g = flapjax.core.extractEventE.call(null, a, g);
-    c = flapjax.core.constantB.call(null, c);
-    return flapjax.core.snapshotE.call(null, g, c)
-  }, a = function(a, e, f, g) {
-    switch(arguments.length) {
-      case 3:
-        return b.call(this, a, e, f);
-      case 4:
-        return c.call(this, a, e, f, g)
-    }
-    throw"Invalid arity: " + arguments.length;
-  };
-  a.cljs$lang$arity$3 = b;
-  a.cljs$lang$arity$4 = c;
+goog.functions = {};
+goog.functions.constant = function(a) {
+  return function() {
+    return a
+  }
+};
+goog.functions.FALSE = goog.functions.constant(!1);
+goog.functions.TRUE = goog.functions.constant(!0);
+goog.functions.NULL = goog.functions.constant(null);
+goog.functions.identity = function(a) {
   return a
+};
+goog.functions.error = function(a) {
+  return function() {
+    throw Error(a);
+  }
+};
+goog.functions.lock = function(a) {
+  return function() {
+    return a.call(this)
+  }
+};
+goog.functions.withReturnValue = function(a, b) {
+  return goog.functions.sequence(a, goog.functions.constant(b))
+};
+goog.functions.compose = function(a) {
+  var b = arguments, c = b.length;
+  return function() {
+    var a;
+    c && (a = b[c - 1].apply(this, arguments));
+    for(var e = c - 2;0 <= e;e--) {
+      a = b[e].call(this, a)
+    }
+    return a
+  }
+};
+goog.functions.sequence = function(a) {
+  var b = arguments, c = b.length;
+  return function() {
+    for(var a, e = 0;e < c;e++) {
+      a = b[e].apply(this, arguments)
+    }
+    return a
+  }
+};
+goog.functions.and = function(a) {
+  var b = arguments, c = b.length;
+  return function() {
+    for(var a = 0;a < c;a++) {
+      if(!b[a].apply(this, arguments)) {
+        return!1
+      }
+    }
+    return!0
+  }
+};
+goog.functions.or = function(a) {
+  var b = arguments, c = b.length;
+  return function() {
+    for(var a = 0;a < c;a++) {
+      if(b[a].apply(this, arguments)) {
+        return!0
+      }
+    }
+    return!1
+  }
+};
+goog.functions.not = function(a) {
+  return function() {
+    return!a.apply(this, arguments)
+  }
+};
+goog.functions.create = function(a, b) {
+  var c = function() {
+  };
+  c.prototype = a.prototype;
+  c = new c;
+  a.apply(c, Array.prototype.slice.call(arguments, 1));
+  return c
+};
+/*
+ Portions of this code are from the Dojo Toolkit, received by
+ The Closure Library Authors under the BSD license. All other code is
+ Copyright 2005-2009 The Closure Library Authors. All Rights Reserved.
+
+The "New" BSD License:
+
+Copyright (c) 2005-2009, The Dojo Foundation
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+ Redistributions of source code must retain the above copyright notice, this
+    list of conditions and the following disclaimer.
+ Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+ Neither the name of the Dojo Foundation nor the names of its contributors
+    may be used to endorse or promote products derived from this software
+    without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+goog.dom.query = function() {
+  function a(a, b) {
+    var c = b || [];
+    a && c.push(a);
+    return c
+  }
+  var b = goog.userAgent.WEBKIT && "BackCompat" == goog.dom.getDocument().compatMode, c = goog.dom.getDocument().firstChild.children ? "children" : "childNodes", d = !1, e = function(a) {
+    for(var a = 0 <= ">~+".indexOf(a.slice(-1)) ? a + " * " : a + " ", b = function(b, c) {
+      return goog.string.trim(a.slice(b, c))
+    }, c = [], e = -1, f = -1, g = -1, h = -1, i = -1, j = -1, k = -1, m = "", l = "", o, n = 0, q = a.length, p = null, r = null, s = function() {
+      0 <= j && (p.id = b(j, n).replace(/\\/g, ""), j = -1);
+      if(0 <= k) {
+        var a = k == n ? null : b(k, n);
+        0 > ">~+".indexOf(a) ? p.tag = a : p.oper = a;
+        k = -1
+      }
+      0 <= i && (p.classes.push(b(i + 1, n).replace(/\\/g, "")), i = -1)
+    };m = l, l = a.charAt(n), n < q;n++) {
+      if("\\" != m) {
+        if(p || (o = n, p = {query:null, pseudos:[], attrs:[], classes:[], tag:null, oper:null, id:null, getTag:function() {
+          return d ? this.otag : this.tag
+        }}, k = n), 0 <= e) {
+          if("]" == l) {
+            r.attr ? r.matchFor = b(g || e + 1, n) : r.attr = b(e + 1, n);
+            if((e = r.matchFor) && ('"' == e.charAt(0) || "'" == e.charAt(0))) {
+              r.matchFor = e.slice(1, -1)
+            }
+            p.attrs.push(r);
+            r = null;
+            e = g = -1
+          }else {
+            "=" == l && (g = 0 <= "|~^$*".indexOf(m) ? m : "", r.type = g + l, r.attr = b(e + 1, n - g.length), g = n + 1)
+          }
+        }else {
+          0 <= f ? ")" == l && (0 <= h && (r.value = b(f + 1, n)), h = f = -1) : "#" == l ? (s(), j = n + 1) : "." == l ? (s(), i = n) : ":" == l ? (s(), h = n) : "[" == l ? (s(), e = n, r = {}) : "(" == l ? (0 <= h && (r = {name:b(h + 1, n), value:null}, p.pseudos.push(r)), f = n) : " " == l && m != l && (s(), 0 <= h && p.pseudos.push({name:b(h + 1, n)}), p.loops = p.pseudos.length || p.attrs.length || p.classes.length, p.oquery = p.query = b(o, n), p.otag = p.tag = p.oper ? null : p.tag || "*", 
+          p.tag && (p.tag = p.tag.toUpperCase()), c.length && c[c.length - 1].oper && (p.infixOper = c.pop(), p.query = p.infixOper.query + " " + p.query), c.push(p), p = null)
+        }
+      }
+    }
+    return c
+  }, f = function(a, b) {
+    return!a ? b : !b ? a : function() {
+      return a.apply(window, arguments) && b.apply(window, arguments)
+    }
+  }, g = function(a) {
+    return 1 == a.nodeType
+  }, h = function(a, b) {
+    return!a ? "" : "class" == b ? a.className || "" : "for" == b ? a.htmlFor || "" : "style" == b ? a.style.cssText || "" : (d ? a.getAttribute(b) : a.getAttribute(b, 2)) || ""
+  }, i = {"*=":function(a, b) {
+    return function(c) {
+      return 0 <= h(c, a).indexOf(b)
+    }
+  }, "^=":function(a, b) {
+    return function(c) {
+      return 0 == h(c, a).indexOf(b)
+    }
+  }, "$=":function(a, b) {
+    return function(c) {
+      c = " " + h(c, a);
+      return c.lastIndexOf(b) == c.length - b.length
+    }
+  }, "~=":function(a, b) {
+    var c = " " + b + " ";
+    return function(b) {
+      return 0 <= (" " + h(b, a) + " ").indexOf(c)
+    }
+  }, "|=":function(a, b) {
+    b = " " + b;
+    return function(c) {
+      c = " " + h(c, a);
+      return c == b || 0 == c.indexOf(b + "-")
+    }
+  }, "=":function(a, b) {
+    return function(c) {
+      return h(c, a) == b
+    }
+  }}, j = "undefined" == typeof goog.dom.getDocument().firstChild.nextElementSibling, k = !j ? "nextElementSibling" : "nextSibling", l = !j ? "previousElementSibling" : "previousSibling", m = j ? g : goog.functions.TRUE, o = function(a) {
+    for(;a = a[l];) {
+      if(m(a)) {
+        return!1
+      }
+    }
+    return!0
+  }, n = function(a) {
+    for(;a = a[k];) {
+      if(m(a)) {
+        return!1
+      }
+    }
+    return!0
+  }, q = function(a) {
+    var b = a.parentNode, d = 0, e = b[c], f = a._i || -1, g = b._l || -1;
+    if(!e) {
+      return-1
+    }
+    e = e.length;
+    if(g == e && 0 <= f && 0 <= g) {
+      return f
+    }
+    b._l = e;
+    f = -1;
+    for(b = b.firstElementChild || b.firstChild;b;b = b[k]) {
+      m(b) && (b._i = ++d, a === b && (f = d))
+    }
+    return f
+  }, p = function(a) {
+    return!(q(a) % 2)
+  }, s = function(a) {
+    return q(a) % 2
+  }, t = {checked:function() {
+    return function(a) {
+      return a.checked || a.attributes.checked
+    }
+  }, "first-child":function() {
+    return o
+  }, "last-child":function() {
+    return n
+  }, "only-child":function() {
+    return function(a) {
+      return!o(a) || !n(a) ? !1 : !0
+    }
+  }, empty:function() {
+    return function(a) {
+      for(var b = a.childNodes, a = a.childNodes.length - 1;0 <= a;a--) {
+        var c = b[a].nodeType;
+        if(1 === c || 3 == c) {
+          return!1
+        }
+      }
+      return!0
+    }
+  }, contains:function(a, b) {
+    var c = b.charAt(0);
+    if('"' == c || "'" == c) {
+      b = b.slice(1, -1)
+    }
+    return function(a) {
+      return 0 <= a.innerHTML.indexOf(b)
+    }
+  }, not:function(a, b) {
+    var c = e(b)[0], d = {el:1};
+    "*" != c.tag && (d.tag = 1);
+    c.classes.length || (d.classes = 1);
+    var f = H(c, d);
+    return function(a) {
+      return!f(a)
+    }
+  }, "nth-child":function(a, b) {
+    if("odd" == b) {
+      return s
+    }
+    if("even" == b) {
+      return p
+    }
+    if(-1 != b.indexOf("n")) {
+      var c = b.split("n", 2), d = c[0] ? "-" == c[0] ? -1 : parseInt(c[0], 10) : 1, e = c[1] ? parseInt(c[1], 10) : 0, f = 0, g = -1;
+      0 < d ? 0 > e ? e = e % d && d + e % d : 0 < e && (e >= d && (f = e - e % d), e %= d) : 0 > d && (d *= -1, 0 < e && (g = e, e %= d));
+      if(0 < d) {
+        return function(a) {
+          a = q(a);
+          return a >= f && (g < 0 || a <= g) && a % d == e
+        }
+      }
+      b = e
+    }
+    var h = parseInt(b, 10);
+    return function(a) {
+      return q(a) == h
+    }
+  }}, r = goog.userAgent.IE ? function(a) {
+    var b = a.toLowerCase();
+    "class" == b && (a = "className");
+    return function(c) {
+      return d ? c.getAttribute(a) : c[a] || c[b]
+    }
+  } : function(a) {
+    return function(b) {
+      return b && b.getAttribute && b.hasAttribute(a)
+    }
+  }, H = function(a, b) {
+    if(!a) {
+      return goog.functions.TRUE
+    }
+    var b = b || {}, c = null;
+    b.el || (c = f(c, g));
+    b.tag || "*" != a.tag && (c = f(c, function(b) {
+      return b && b.tagName == a.getTag()
+    }));
+    b.classes || goog.array.forEach(a.classes, function(a, b) {
+      var d = RegExp("(?:^|\\s)" + a + "(?:\\s|$)");
+      c = f(c, function(a) {
+        return d.test(a.className)
+      });
+      c.count = b
+    });
+    b.pseudos || goog.array.forEach(a.pseudos, function(a) {
+      var b = a.name;
+      t[b] && (c = f(c, t[b](b, a.value)))
+    });
+    b.attrs || goog.array.forEach(a.attrs, function(a) {
+      var b, d = a.attr;
+      a.type && i[a.type] ? b = i[a.type](d, a.matchFor) : d.length && (b = r(d));
+      b && (c = f(c, b))
+    });
+    b.id || a.id && (c = f(c, function(b) {
+      return!!b && b.id == a.id
+    }));
+    !c && !("default" in b) && (c = goog.functions.TRUE);
+    return c
+  }, N = function(a) {
+    return function(b, c, d) {
+      for(;b = b[k];) {
+        if(!j || g(b)) {
+          (!d || I(b, d)) && a(b) && c.push(b);
+          break
+        }
+      }
+      return c
+    }
+  }, S = function(a) {
+    return function(b, c, d) {
+      for(b = b[k];b;) {
+        if(m(b)) {
+          if(d && !I(b, d)) {
+            break
+          }
+          a(b) && c.push(b)
+        }
+        b = b[k]
+      }
+      return c
+    }
+  }, v = function(a) {
+    a = a || goog.functions.TRUE;
+    return function(b, d, e) {
+      for(var f = 0, g = b[c];b = g[f++];) {
+        m(b) && ((!e || I(b, e)) && a(b, f)) && d.push(b)
+      }
+      return d
+    }
+  }, w = {}, y = function(c) {
+    var d = w[c.query];
+    if(d) {
+      return d
+    }
+    var e = c.infixOper, e = e ? e.oper : "", f = H(c, {el:1}), g = "*" == c.tag, h = goog.dom.getDocument().getElementsByClassName;
+    if(e) {
+      h = {el:1}, g && (h.tag = 1), f = H(c, h), "+" == e ? d = N(f) : "~" == e ? d = S(f) : ">" == e && (d = v(f))
+    }else {
+      if(c.id) {
+        f = !c.loops && g ? goog.functions.TRUE : H(c, {el:1, id:1}), d = function(b, d) {
+          var e = goog.dom.getDomHelper(b).getElement(c.id);
+          if(e && f(e)) {
+            if(9 == b.nodeType) {
+              return a(e, d)
+            }
+            for(var g = e.parentNode;g && g != b;) {
+              g = g.parentNode
+            }
+            if(g) {
+              return a(e, d)
+            }
+          }
+        }
+      }else {
+        if(h && /\{\s*\[native code\]\s*\}/.test("" + h) && c.classes.length && !b) {
+          var f = H(c, {el:1, classes:1, id:1}), i = c.classes.join(" "), d = function(b, c) {
+            for(var d = a(0, c), e, g = 0, h = b.getElementsByClassName(i);e = h[g++];) {
+              f(e, b) && d.push(e)
+            }
+            return d
+          }
+        }else {
+          !g && !c.loops ? d = function(b, d) {
+            for(var e = a(0, d), f, g = 0, h = b.getElementsByTagName(c.getTag());f = h[g++];) {
+              e.push(f)
+            }
+            return e
+          } : (f = H(c, {el:1, tag:1, id:1}), d = function(b, d) {
+            for(var e = a(0, d), g, h = 0, i = b.getElementsByTagName(c.getTag());g = i[h++];) {
+              f(g, b) && e.push(g)
+            }
+            return e
+          })
+        }
+      }
+    }
+    return w[c.query] = d
+  }, C = {}, D = {}, E = function(b) {
+    var c = e(goog.string.trim(b));
+    if(1 == c.length) {
+      var d = y(c[0]);
+      return function(a) {
+        if(a = d(a, [])) {
+          a.nozip = !0
+        }
+        return a
+      }
+    }
+    return function(b) {
+      for(var b = a(b), d, e, f = c.length, g, h, i = 0;i < f;i++) {
+        h = [];
+        d = c[i];
+        e = b.length - 1;
+        0 < e && (g = {}, h.nozip = !0);
+        e = y(d);
+        for(var j = 0;d = b[j];j++) {
+          e(d, h, g)
+        }
+        if(!h.length) {
+          break
+        }
+        b = h
+      }
+      return h
+    }
+  }, F = !!goog.dom.getDocument().querySelectorAll && (!goog.userAgent.WEBKIT || goog.userAgent.isVersion("526")), G = function(a, c) {
+    if(F) {
+      var d = D[a];
+      if(d && !c) {
+        return d
+      }
+    }
+    if(d = C[a]) {
+      return d
+    }
+    var d = a.charAt(0), e = -1 == a.indexOf(" ");
+    0 <= a.indexOf("#") && e && (c = !0);
+    if(F && !c && -1 == ">~+".indexOf(d) && (!goog.userAgent.IE || -1 == a.indexOf(":")) && !(b && 0 <= a.indexOf(".")) && -1 == a.indexOf(":contains") && -1 == a.indexOf("|=")) {
+      var f = 0 <= ">~+".indexOf(a.charAt(a.length - 1)) ? a + " *" : a;
+      return D[a] = function(b) {
+        try {
+          if(!(9 == b.nodeType || e)) {
+            throw"";
+          }
+          var c = b.querySelectorAll(f);
+          goog.userAgent.IE ? c.commentStrip = !0 : c.nozip = !0;
+          return c
+        }catch(d) {
+          return G(a, !0)(b)
+        }
+      }
+    }
+    var g = a.split(/\s*,\s*/);
+    return C[a] = 2 > g.length ? E(a) : function(a) {
+      for(var b = 0, c = [], d;d = g[b++];) {
+        c = c.concat(E(d)(a))
+      }
+      return c
+    }
+  }, z = 0, J = goog.userAgent.IE ? function(a) {
+    return d ? a.getAttribute("_uid") || a.setAttribute("_uid", ++z) || z : a.uniqueID
+  } : function(a) {
+    return a._uid || (a._uid = ++z)
+  }, I = function(a, b) {
+    if(!b) {
+      return 1
+    }
+    var c = J(a);
+    return!b[c] ? b[c] = 1 : 0
+  }, K = function(a) {
+    if(a && a.nozip) {
+      return a
+    }
+    var b = [];
+    if(!a || !a.length) {
+      return b
+    }
+    a[0] && b.push(a[0]);
+    if(2 > a.length) {
+      return b
+    }
+    z++;
+    if(goog.userAgent.IE && d) {
+      var c = z + "";
+      a[0].setAttribute("_zipIdx", c);
+      for(var e = 1, f;f = a[e];e++) {
+        a[e].getAttribute("_zipIdx") != c && b.push(f), f.setAttribute("_zipIdx", c)
+      }
+    }else {
+      if(goog.userAgent.IE && a.commentStrip) {
+        try {
+          for(e = 1;f = a[e];e++) {
+            g(f) && b.push(f)
+          }
+        }catch(h) {
+        }
+      }else {
+        a[0] && (a[0]._zipIdx = z);
+        for(e = 1;f = a[e];e++) {
+          a[e]._zipIdx != z && b.push(f), f._zipIdx = z
+        }
+      }
+    }
+    return b
+  }, L = function(a, b) {
+    if(!a) {
+      return[]
+    }
+    if(a.constructor == Array) {
+      return a
+    }
+    if(!goog.isString(a)) {
+      return[a]
+    }
+    if(goog.isString(b) && (b = goog.dom.getElement(b), !b)) {
+      return[]
+    }
+    var b = b || goog.dom.getDocument(), c = b.ownerDocument || b.documentElement;
+    d = b.contentType && "application/xml" == b.contentType || goog.userAgent.OPERA && (b.doctype || "[object XMLDocument]" == c.toString()) || !!c && (goog.userAgent.IE ? c.xml : b.xmlVersion || c.xmlVersion);
+    return(c = G(a)(b)) && c.nozip ? c : K(c)
+  };
+  L.pseudos = t;
+  return L
 }();
+goog.exportSymbol("goog.dom.query", goog.dom.query);
+goog.exportSymbol("goog.dom.query.pseudos", goog.dom.query.pseudos);
 goog.disposable = {};
 goog.disposable.IDisposable = function() {
 };
@@ -13757,10 +14125,10 @@ goog.events.ASSUME_GOOD_GC = !1;
       k.releaseObject(a)
     };
     goog.events.pools.getEvent = function() {
-      return m.getObject()
+      return l.getObject()
     };
     goog.events.pools.releaseEvent = function(a) {
-      m.releaseObject(a)
+      l.releaseObject(a)
     };
     var h = new goog.structs.SimplePool(0, 600);
     h.setCreateObjectFn(a);
@@ -13770,8 +14138,8 @@ goog.events.ASSUME_GOOD_GC = !1;
     j.setCreateObjectFn(c);
     var k = new goog.structs.SimplePool(0, 600);
     k.setCreateObjectFn(d);
-    var m = new goog.structs.SimplePool(0, 600);
-    m.setCreateObjectFn(e)
+    var l = new goog.structs.SimplePool(0, 600);
+    l.setCreateObjectFn(e)
   }else {
     goog.events.pools.getObject = a, goog.events.pools.releaseObject = goog.nullFunction, goog.events.pools.getArray = b, goog.events.pools.releaseArray = goog.nullFunction, goog.events.pools.getProxy = c, goog.events.pools.releaseProxy = goog.nullFunction, goog.events.pools.getListener = d, goog.events.pools.releaseListener = goog.nullFunction, goog.events.pools.getEvent = e, goog.events.pools.releaseEvent = goog.nullFunction
   }
@@ -14059,19 +14427,19 @@ goog.events.handleBrowserEvent_ = function(a, b) {
     f = !0;
     try {
       if(h) {
-        for(var k = goog.events.pools.getArray(), m = j.currentTarget;m;m = m.parentNode) {
-          k.push(m)
+        for(var k = goog.events.pools.getArray(), l = j.currentTarget;l;l = l.parentNode) {
+          k.push(l)
         }
         g = e[!0];
         g.remaining_ = g.count_;
-        for(var l = k.length - 1;!j.propagationStopped_ && 0 <= l && g.remaining_;l--) {
-          j.currentTarget = k[l], f &= goog.events.fireListeners_(g, k[l], d, !0, j)
+        for(var m = k.length - 1;!j.propagationStopped_ && 0 <= m && g.remaining_;m--) {
+          j.currentTarget = k[m], f &= goog.events.fireListeners_(g, k[m], d, !0, j)
         }
         if(i) {
           g = e[!1];
           g.remaining_ = g.count_;
-          for(l = 0;!j.propagationStopped_ && l < k.length && g.remaining_;l++) {
-            j.currentTarget = k[l], f &= goog.events.fireListeners_(g, k[l], d, !1, j)
+          for(m = 0;!j.propagationStopped_ && m < k.length && g.remaining_;m++) {
+            j.currentTarget = k[m], f &= goog.events.fireListeners_(g, k[m], d, !1, j)
           }
         }
       }else {
@@ -14203,6 +14571,82 @@ goog.Timer.callOnce = function(a, b, c) {
 };
 goog.Timer.clear = function(a) {
   goog.Timer.defaultTimerObject.clearTimeout(a)
+};
+goog.async = {};
+goog.async.Delay = function(a, b, c) {
+  goog.Disposable.call(this);
+  this.listener_ = a;
+  this.interval_ = b || 0;
+  this.handler_ = c;
+  this.callback_ = goog.bind(this.doAction_, this)
+};
+goog.inherits(goog.async.Delay, goog.Disposable);
+goog.Delay = goog.async.Delay;
+goog.async.Delay.prototype.id_ = 0;
+goog.async.Delay.prototype.disposeInternal = function() {
+  goog.async.Delay.superClass_.disposeInternal.call(this);
+  this.stop();
+  delete this.listener_;
+  delete this.handler_
+};
+goog.async.Delay.prototype.start = function(a) {
+  this.stop();
+  this.id_ = goog.Timer.callOnce(this.callback_, goog.isDef(a) ? a : this.interval_)
+};
+goog.async.Delay.prototype.stop = function() {
+  this.isActive() && goog.Timer.clear(this.id_);
+  this.id_ = 0
+};
+goog.async.Delay.prototype.fire = function() {
+  this.stop();
+  this.doAction_()
+};
+goog.async.Delay.prototype.fireIfActive = function() {
+  this.isActive() && this.fire()
+};
+goog.async.Delay.prototype.isActive = function() {
+  return 0 != this.id_
+};
+goog.async.Delay.prototype.doAction_ = function() {
+  this.id_ = 0;
+  this.listener_ && this.listener_.call(this.handler_)
+};
+goog.dom.ViewportSizeMonitor = function(a) {
+  goog.events.EventTarget.call(this);
+  this.window_ = a || window;
+  this.listenerKey_ = goog.events.listen(this.window_, goog.events.EventType.RESIZE, this.handleResize_, !1, this);
+  this.size_ = goog.dom.getViewportSize(this.window_);
+  this.isPollingRequired_() && (this.windowSizePollInterval_ = window.setInterval(goog.bind(this.checkForSizeChange_, this), goog.dom.ViewportSizeMonitor.WINDOW_SIZE_POLL_RATE))
+};
+goog.inherits(goog.dom.ViewportSizeMonitor, goog.events.EventTarget);
+goog.dom.ViewportSizeMonitor.getInstanceForWindow = function(a) {
+  var a = a || window, b = goog.getUid(a);
+  return goog.dom.ViewportSizeMonitor.windowInstanceMap_[b] = goog.dom.ViewportSizeMonitor.windowInstanceMap_[b] || new goog.dom.ViewportSizeMonitor(a)
+};
+goog.dom.ViewportSizeMonitor.windowInstanceMap_ = {};
+goog.dom.ViewportSizeMonitor.WINDOW_SIZE_POLL_RATE = 500;
+goog.dom.ViewportSizeMonitor.prototype.listenerKey_ = null;
+goog.dom.ViewportSizeMonitor.prototype.window_ = null;
+goog.dom.ViewportSizeMonitor.prototype.size_ = null;
+goog.dom.ViewportSizeMonitor.prototype.windowSizePollInterval_ = null;
+goog.dom.ViewportSizeMonitor.prototype.isPollingRequired_ = function() {
+  return goog.userAgent.WEBKIT && goog.userAgent.WINDOWS || goog.userAgent.OPERA && this.window_.self != this.window_.top
+};
+goog.dom.ViewportSizeMonitor.prototype.getSize = function() {
+  return this.size_ ? this.size_.clone() : null
+};
+goog.dom.ViewportSizeMonitor.prototype.disposeInternal = function() {
+  goog.dom.ViewportSizeMonitor.superClass_.disposeInternal.call(this);
+  this.listenerKey_ && (goog.events.unlistenByKey(this.listenerKey_), this.listenerKey_ = null);
+  this.windowSizePollInterval_ && (window.clearInterval(this.windowSizePollInterval_), this.windowSizePollInterval_ = null);
+  this.size_ = this.window_ = null
+};
+goog.dom.ViewportSizeMonitor.prototype.handleResize_ = function() {
+  this.checkForSizeChange_()
+};
+goog.dom.ViewportSizeMonitor.prototype.checkForSizeChange_ = function() {
+  var a = goog.dom.getViewportSize(this.window_);
+  goog.math.Size.equals(a, this.size_) || (this.size_ = a, this.dispatchEvent(goog.events.EventType.RESIZE))
 };
 var enfocus = {enlive:{}};
 enfocus.enlive.syntax = {};
@@ -14442,249 +14886,125 @@ enfocus.enlive.syntax.but = function() {
   b.cljs$lang$arity$variadic = a;
   return b
 }();
-goog.dom.ViewportSizeMonitor = function(a) {
-  goog.events.EventTarget.call(this);
-  this.window_ = a || window;
-  this.listenerKey_ = goog.events.listen(this.window_, goog.events.EventType.RESIZE, this.handleResize_, !1, this);
-  this.size_ = goog.dom.getViewportSize(this.window_);
-  this.isPollingRequired_() && (this.windowSizePollInterval_ = window.setInterval(goog.bind(this.checkForSizeChange_, this), goog.dom.ViewportSizeMonitor.WINDOW_SIZE_POLL_RATE))
+var clojure = {string:{}};
+clojure.string.seq_reverse = function(a) {
+  return cljs.core.reduce.call(null, cljs.core.conj, cljs.core.List.EMPTY, a)
 };
-goog.inherits(goog.dom.ViewportSizeMonitor, goog.events.EventTarget);
-goog.dom.ViewportSizeMonitor.getInstanceForWindow = function(a) {
-  var a = a || window, b = goog.getUid(a);
-  return goog.dom.ViewportSizeMonitor.windowInstanceMap_[b] = goog.dom.ViewportSizeMonitor.windowInstanceMap_[b] || new goog.dom.ViewportSizeMonitor(a)
+clojure.string.reverse = function(a) {
+  return a.split("").reverse().join("")
 };
-goog.dom.ViewportSizeMonitor.windowInstanceMap_ = {};
-goog.dom.ViewportSizeMonitor.WINDOW_SIZE_POLL_RATE = 500;
-goog.dom.ViewportSizeMonitor.prototype.listenerKey_ = null;
-goog.dom.ViewportSizeMonitor.prototype.window_ = null;
-goog.dom.ViewportSizeMonitor.prototype.size_ = null;
-goog.dom.ViewportSizeMonitor.prototype.windowSizePollInterval_ = null;
-goog.dom.ViewportSizeMonitor.prototype.isPollingRequired_ = function() {
-  return goog.userAgent.WEBKIT && goog.userAgent.WINDOWS || goog.userAgent.OPERA && this.window_.self != this.window_.top
-};
-goog.dom.ViewportSizeMonitor.prototype.getSize = function() {
-  return this.size_ ? this.size_.clone() : null
-};
-goog.dom.ViewportSizeMonitor.prototype.disposeInternal = function() {
-  goog.dom.ViewportSizeMonitor.superClass_.disposeInternal.call(this);
-  this.listenerKey_ && (goog.events.unlistenByKey(this.listenerKey_), this.listenerKey_ = null);
-  this.windowSizePollInterval_ && (window.clearInterval(this.windowSizePollInterval_), this.windowSizePollInterval_ = null);
-  this.size_ = this.window_ = null
-};
-goog.dom.ViewportSizeMonitor.prototype.handleResize_ = function() {
-  this.checkForSizeChange_()
-};
-goog.dom.ViewportSizeMonitor.prototype.checkForSizeChange_ = function() {
-  var a = goog.dom.getViewportSize(this.window_);
-  goog.math.Size.equals(a, this.size_) || (this.size_ = a, this.dispatchEvent(goog.events.EventType.RESIZE))
-};
-goog.fx = {};
-goog.fx.Animation = function(a, b, c, d) {
-  goog.events.EventTarget.call(this);
-  if(!goog.isArray(a) || !goog.isArray(b)) {
-    throw Error("Start and end parameters must be arrays");
+clojure.string.replace = function(a, b, c) {
+  if(cljs.core.string_QMARK_.call(null, b)) {
+    return a.replace(RegExp(goog.string.regExpEscape(b), "g"), c)
   }
-  if(a.length != b.length) {
-    throw Error("Start and end points must be the same length");
+  if(cljs.core.truth_(b.hasOwnProperty("source"))) {
+    return a.replace(RegExp(b.source, "g"), c)
   }
-  this.startPoint = a;
-  this.endPoint = b;
-  this.duration = c;
-  this.accel_ = d;
-  this.coords = []
+  throw[cljs.core.str("Invalid match arg: "), cljs.core.str(b)].join("");
 };
-goog.inherits(goog.fx.Animation, goog.events.EventTarget);
-goog.fx.Animation.EventType = {PLAY:"play", BEGIN:"begin", RESUME:"resume", END:"end", STOP:"stop", FINISH:"finish", PAUSE:"pause", ANIMATE:"animate", DESTROY:"destroy"};
-goog.fx.Animation.State = {STOPPED:0, PAUSED:-1, PLAYING:1};
-goog.fx.Animation.TIMEOUT = 20;
-goog.fx.Animation.activeAnimations_ = {};
-goog.fx.Animation.globalTimer_ = null;
-goog.fx.Animation.cycleAnimations_ = function() {
-  goog.Timer.defaultTimerObject.clearTimeout(goog.fx.Animation.globalTimer_);
-  var a = goog.now(), b;
-  for(b in goog.fx.Animation.activeAnimations_) {
-    goog.fx.Animation.activeAnimations_[b].cycle(a)
-  }
-  goog.fx.Animation.globalTimer_ = goog.object.isEmpty(goog.fx.Animation.activeAnimations_) ? null : goog.Timer.defaultTimerObject.setTimeout(goog.fx.Animation.cycleAnimations_, goog.fx.Animation.TIMEOUT)
+clojure.string.replace_first = function(a, b, c) {
+  return a.replace(b, c)
 };
-goog.fx.Animation.registerAnimation = function(a) {
-  var b = goog.getUid(a);
-  b in goog.fx.Animation.activeAnimations_ || (goog.fx.Animation.activeAnimations_[b] = a);
-  goog.fx.Animation.globalTimer_ || (goog.fx.Animation.globalTimer_ = goog.Timer.defaultTimerObject.setTimeout(goog.fx.Animation.cycleAnimations_, goog.fx.Animation.TIMEOUT))
-};
-goog.fx.Animation.unregisterAnimation = function(a) {
-  a = goog.getUid(a);
-  delete goog.fx.Animation.activeAnimations_[a];
-  goog.fx.Animation.globalTimer_ && goog.object.isEmpty(goog.fx.Animation.activeAnimations_) && (goog.Timer.defaultTimerObject.clearTimeout(goog.fx.Animation.globalTimer_), goog.fx.Animation.globalTimer_ = null)
-};
-goog.fx.Animation.prototype.state_ = goog.fx.Animation.State.STOPPED;
-goog.fx.Animation.prototype.fps_ = 0;
-goog.fx.Animation.prototype.progress = 0;
-goog.fx.Animation.prototype.startTime = null;
-goog.fx.Animation.prototype.endTime = null;
-goog.fx.Animation.prototype.lastFrame = null;
-goog.fx.Animation.prototype.getStateInternal = function() {
-  return this.state_
-};
-goog.fx.Animation.prototype.play = function(a) {
-  if(a || this.state_ == goog.fx.Animation.State.STOPPED) {
-    this.progress = 0, this.coords = this.startPoint
-  }else {
-    if(this.state_ == goog.fx.Animation.State.PLAYING) {
-      return!1
+clojure.string.join = function() {
+  var a = null, b = function(a) {
+    return cljs.core.apply.call(null, cljs.core.str, a)
+  }, c = function(a, b) {
+    return cljs.core.apply.call(null, cljs.core.str, cljs.core.interpose.call(null, a, b))
+  }, a = function(a, e) {
+    switch(arguments.length) {
+      case 1:
+        return b.call(this, a);
+      case 2:
+        return c.call(this, a, e)
     }
-  }
-  goog.fx.Animation.unregisterAnimation(this);
-  this.startTime = goog.now();
-  this.state_ == goog.fx.Animation.State.PAUSED && (this.startTime -= this.duration * this.progress);
-  this.endTime = this.startTime + this.duration;
-  this.lastFrame = this.startTime;
-  if(!this.progress) {
-    this.onBegin()
-  }
-  this.onPlay();
-  if(this.state_ == goog.fx.Animation.State.PAUSED) {
-    this.onResume()
-  }
-  this.state_ = goog.fx.Animation.State.PLAYING;
-  goog.fx.Animation.registerAnimation(this);
-  this.cycle(this.startTime);
-  return!0
+    throw"Invalid arity: " + arguments.length;
+  };
+  a.cljs$lang$arity$1 = b;
+  a.cljs$lang$arity$2 = c;
+  return a
+}();
+clojure.string.upper_case = function(a) {
+  return a.toUpperCase()
 };
-goog.fx.Animation.prototype.stop = function(a) {
-  goog.fx.Animation.unregisterAnimation(this);
-  this.state_ = goog.fx.Animation.State.STOPPED;
-  a && (this.progress = 1);
-  this.updateCoords_(this.progress);
-  this.onStop();
-  this.onEnd()
+clojure.string.lower_case = function(a) {
+  return a.toLowerCase()
 };
-goog.fx.Animation.prototype.pause = function() {
-  this.state_ == goog.fx.Animation.State.PLAYING && (goog.fx.Animation.unregisterAnimation(this), this.state_ = goog.fx.Animation.State.PAUSED, this.onPause())
+clojure.string.capitalize = function(a) {
+  return 2 > cljs.core.count.call(null, a) ? clojure.string.upper_case.call(null, a) : [cljs.core.str(clojure.string.upper_case.call(null, cljs.core.subs.call(null, a, 0, 1))), cljs.core.str(clojure.string.lower_case.call(null, cljs.core.subs.call(null, a, 1)))].join("")
 };
-goog.fx.Animation.prototype.disposeInternal = function() {
-  this.state_ != goog.fx.Animation.State.STOPPED && this.stop(!1);
-  this.onDestroy();
-  goog.fx.Animation.superClass_.disposeInternal.call(this)
+clojure.string.split = function() {
+  var a = null, b = function(a, b) {
+    return cljs.core.vec.call(null, ("" + cljs.core.str(a)).split(b))
+  }, c = function(a, b, c) {
+    if(1 > c) {
+      return cljs.core.vec.call(null, ("" + cljs.core.str(a)).split(b))
+    }
+    for(var g = cljs.core.PersistentVector.EMPTY;;) {
+      if(cljs.core._EQ_.call(null, c, 1)) {
+        return cljs.core.conj.call(null, g, a)
+      }
+      var h = cljs.core.re_find.call(null, b, a);
+      if(cljs.core.truth_(h)) {
+        var i = h, h = a.indexOf(i), i = a.substring(h + cljs.core.count.call(null, i)), c = c - 1, g = cljs.core.conj.call(null, g, a.substring(0, h)), a = i
+      }else {
+        return cljs.core.conj.call(null, g, a)
+      }
+    }
+  }, a = function(a, e, f) {
+    switch(arguments.length) {
+      case 2:
+        return b.call(this, a, e);
+      case 3:
+        return c.call(this, a, e, f)
+    }
+    throw"Invalid arity: " + arguments.length;
+  };
+  a.cljs$lang$arity$2 = b;
+  a.cljs$lang$arity$3 = c;
+  return a
+}();
+clojure.string.split_lines = function(a) {
+  return clojure.string.split.call(null, a, /\n|\r\n/)
 };
-goog.fx.Animation.prototype.destroy = function() {
-  this.dispose()
+clojure.string.trim = function(a) {
+  return goog.string.trim(a)
 };
-goog.fx.Animation.prototype.cycle = function(a) {
-  this.progress = (a - this.startTime) / (this.endTime - this.startTime);
-  1 <= this.progress && (this.progress = 1);
-  this.fps_ = 1E3 / (a - this.lastFrame);
-  this.lastFrame = a;
-  goog.isFunction(this.accel_) ? this.updateCoords_(this.accel_(this.progress)) : this.updateCoords_(this.progress);
-  if(1 == this.progress) {
-    this.state_ = goog.fx.Animation.State.STOPPED, goog.fx.Animation.unregisterAnimation(this), this.onFinish(), this.onEnd()
-  }else {
-    if(this.state_ == goog.fx.Animation.State.PLAYING) {
-      this.onAnimate()
+clojure.string.triml = function(a) {
+  return goog.string.trimLeft(a)
+};
+clojure.string.trimr = function(a) {
+  return goog.string.trimRight(a)
+};
+clojure.string.trim_newline = function(a) {
+  for(var b = a.length;;) {
+    if(0 === b) {
+      return""
+    }
+    var c = cljs.core._lookup.call(null, a, b - 1, null);
+    var d = cljs.core._EQ_.call(null, c, "\n"), c = d ? d : cljs.core._EQ_.call(null, c, "\r");
+    if(c) {
+      b -= 1
+    }else {
+      return a.substring(0, b)
     }
   }
 };
-goog.fx.Animation.prototype.updateCoords_ = function(a) {
-  this.coords = Array(this.startPoint.length);
-  for(var b = 0;b < this.startPoint.length;b++) {
-    this.coords[b] = (this.endPoint[b] - this.startPoint[b]) * a + this.startPoint[b]
+clojure.string.blank_QMARK_ = function(a) {
+  var b = "" + cljs.core.str(a);
+  return cljs.core.truth_(function() {
+    var a = cljs.core.not.call(null, b);
+    return a ? a : (a = cljs.core._EQ_.call(null, "", b)) ? a : cljs.core.re_matches.call(null, /\s+/, b)
+  }()) ? !0 : !1
+};
+clojure.string.escape = function(a, b) {
+  for(var c = new goog.string.StringBuffer, d = a.length, e = 0;;) {
+    if(cljs.core._EQ_.call(null, d, e)) {
+      return c.toString()
+    }
+    var f = a.charAt(e), g = cljs.core._lookup.call(null, b, f, null);
+    cljs.core.truth_(g) ? c.append("" + cljs.core.str(g)) : c.append(f);
+    e += 1
   }
-};
-goog.fx.Animation.prototype.onAnimate = function() {
-  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.ANIMATE)
-};
-goog.fx.Animation.prototype.onBegin = function() {
-  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.BEGIN)
-};
-goog.fx.Animation.prototype.onDestroy = function() {
-  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.DESTROY)
-};
-goog.fx.Animation.prototype.onEnd = function() {
-  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.END)
-};
-goog.fx.Animation.prototype.onFinish = function() {
-  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.FINISH)
-};
-goog.fx.Animation.prototype.onPause = function() {
-  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.PAUSE)
-};
-goog.fx.Animation.prototype.onPlay = function() {
-  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.PLAY)
-};
-goog.fx.Animation.prototype.onResume = function() {
-  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.RESUME)
-};
-goog.fx.Animation.prototype.onStop = function() {
-  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.STOP)
-};
-goog.fx.Animation.prototype.dispatchAnimationEvent_ = function(a) {
-  this.dispatchEvent(new goog.fx.AnimationEvent(a, this))
-};
-goog.fx.AnimationEvent = function(a, b) {
-  goog.events.Event.call(this, a);
-  this.coords = b.coords;
-  this.x = b.coords[0];
-  this.y = b.coords[1];
-  this.z = b.coords[2];
-  this.duration = b.duration;
-  this.progress = b.progress;
-  this.fps = b.fps_;
-  this.state = b.state_;
-  this.anim = b
-};
-goog.inherits(goog.fx.AnimationEvent, goog.events.Event);
-goog.fx.AnimationEvent.prototype.coordsAsInts = function() {
-  return goog.array.map(this.coords, Math.round)
-};
-goog.fx.easing = {};
-goog.fx.easing.easeIn = function(a) {
-  return a * a * a
-};
-goog.fx.easing.easeOut = function(a) {
-  return 1 - Math.pow(1 - a, 3)
-};
-goog.fx.easing.inAndOut = function(a) {
-  return 3 * a * a - 2 * a * a * a
-};
-goog.async = {};
-goog.async.Delay = function(a, b, c) {
-  goog.Disposable.call(this);
-  this.listener_ = a;
-  this.interval_ = b || 0;
-  this.handler_ = c;
-  this.callback_ = goog.bind(this.doAction_, this)
-};
-goog.inherits(goog.async.Delay, goog.Disposable);
-goog.Delay = goog.async.Delay;
-goog.async.Delay.prototype.id_ = 0;
-goog.async.Delay.prototype.disposeInternal = function() {
-  goog.async.Delay.superClass_.disposeInternal.call(this);
-  this.stop();
-  delete this.listener_;
-  delete this.handler_
-};
-goog.async.Delay.prototype.start = function(a) {
-  this.stop();
-  this.id_ = goog.Timer.callOnce(this.callback_, goog.isDef(a) ? a : this.interval_)
-};
-goog.async.Delay.prototype.stop = function() {
-  this.isActive() && goog.Timer.clear(this.id_);
-  this.id_ = 0
-};
-goog.async.Delay.prototype.fire = function() {
-  this.stop();
-  this.doAction_()
-};
-goog.async.Delay.prototype.fireIfActive = function() {
-  this.isActive() && this.fire()
-};
-goog.async.Delay.prototype.isActive = function() {
-  return 0 != this.id_
-};
-goog.async.Delay.prototype.doAction_ = function() {
-  this.id_ = 0;
-  this.listener_ && this.listener_.call(this.handler_)
 };
 goog.color = {};
 goog.color.names = {aliceblue:"#f0f8ff", antiquewhite:"#faebd7", aqua:"#00ffff", aquamarine:"#7fffd4", azure:"#f0ffff", beige:"#f5f5dc", bisque:"#ffe4c4", black:"#000000", blanchedalmond:"#ffebcd", blue:"#0000ff", blueviolet:"#8a2be2", brown:"#a52a2a", burlywood:"#deb887", cadetblue:"#5f9ea0", chartreuse:"#7fff00", chocolate:"#d2691e", coral:"#ff7f50", cornflowerblue:"#6495ed", cornsilk:"#fff8dc", crimson:"#dc143c", cyan:"#00ffff", darkblue:"#00008b", darkcyan:"#008b8b", darkgoldenrod:"#b8860b", 
@@ -14996,6 +15316,164 @@ goog.color.yiqBrightnessDiff_ = function(a, b) {
 };
 goog.color.colorDiff_ = function(a, b) {
   return Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs(a[2] - b[2])
+};
+goog.fx = {};
+goog.fx.Animation = function(a, b, c, d) {
+  goog.events.EventTarget.call(this);
+  if(!goog.isArray(a) || !goog.isArray(b)) {
+    throw Error("Start and end parameters must be arrays");
+  }
+  if(a.length != b.length) {
+    throw Error("Start and end points must be the same length");
+  }
+  this.startPoint = a;
+  this.endPoint = b;
+  this.duration = c;
+  this.accel_ = d;
+  this.coords = []
+};
+goog.inherits(goog.fx.Animation, goog.events.EventTarget);
+goog.fx.Animation.EventType = {PLAY:"play", BEGIN:"begin", RESUME:"resume", END:"end", STOP:"stop", FINISH:"finish", PAUSE:"pause", ANIMATE:"animate", DESTROY:"destroy"};
+goog.fx.Animation.State = {STOPPED:0, PAUSED:-1, PLAYING:1};
+goog.fx.Animation.TIMEOUT = 20;
+goog.fx.Animation.activeAnimations_ = {};
+goog.fx.Animation.globalTimer_ = null;
+goog.fx.Animation.cycleAnimations_ = function() {
+  goog.Timer.defaultTimerObject.clearTimeout(goog.fx.Animation.globalTimer_);
+  var a = goog.now(), b;
+  for(b in goog.fx.Animation.activeAnimations_) {
+    goog.fx.Animation.activeAnimations_[b].cycle(a)
+  }
+  goog.fx.Animation.globalTimer_ = goog.object.isEmpty(goog.fx.Animation.activeAnimations_) ? null : goog.Timer.defaultTimerObject.setTimeout(goog.fx.Animation.cycleAnimations_, goog.fx.Animation.TIMEOUT)
+};
+goog.fx.Animation.registerAnimation = function(a) {
+  var b = goog.getUid(a);
+  b in goog.fx.Animation.activeAnimations_ || (goog.fx.Animation.activeAnimations_[b] = a);
+  goog.fx.Animation.globalTimer_ || (goog.fx.Animation.globalTimer_ = goog.Timer.defaultTimerObject.setTimeout(goog.fx.Animation.cycleAnimations_, goog.fx.Animation.TIMEOUT))
+};
+goog.fx.Animation.unregisterAnimation = function(a) {
+  a = goog.getUid(a);
+  delete goog.fx.Animation.activeAnimations_[a];
+  goog.fx.Animation.globalTimer_ && goog.object.isEmpty(goog.fx.Animation.activeAnimations_) && (goog.Timer.defaultTimerObject.clearTimeout(goog.fx.Animation.globalTimer_), goog.fx.Animation.globalTimer_ = null)
+};
+goog.fx.Animation.prototype.state_ = goog.fx.Animation.State.STOPPED;
+goog.fx.Animation.prototype.fps_ = 0;
+goog.fx.Animation.prototype.progress = 0;
+goog.fx.Animation.prototype.startTime = null;
+goog.fx.Animation.prototype.endTime = null;
+goog.fx.Animation.prototype.lastFrame = null;
+goog.fx.Animation.prototype.getStateInternal = function() {
+  return this.state_
+};
+goog.fx.Animation.prototype.play = function(a) {
+  if(a || this.state_ == goog.fx.Animation.State.STOPPED) {
+    this.progress = 0, this.coords = this.startPoint
+  }else {
+    if(this.state_ == goog.fx.Animation.State.PLAYING) {
+      return!1
+    }
+  }
+  goog.fx.Animation.unregisterAnimation(this);
+  this.startTime = goog.now();
+  this.state_ == goog.fx.Animation.State.PAUSED && (this.startTime -= this.duration * this.progress);
+  this.endTime = this.startTime + this.duration;
+  this.lastFrame = this.startTime;
+  if(!this.progress) {
+    this.onBegin()
+  }
+  this.onPlay();
+  if(this.state_ == goog.fx.Animation.State.PAUSED) {
+    this.onResume()
+  }
+  this.state_ = goog.fx.Animation.State.PLAYING;
+  goog.fx.Animation.registerAnimation(this);
+  this.cycle(this.startTime);
+  return!0
+};
+goog.fx.Animation.prototype.stop = function(a) {
+  goog.fx.Animation.unregisterAnimation(this);
+  this.state_ = goog.fx.Animation.State.STOPPED;
+  a && (this.progress = 1);
+  this.updateCoords_(this.progress);
+  this.onStop();
+  this.onEnd()
+};
+goog.fx.Animation.prototype.pause = function() {
+  this.state_ == goog.fx.Animation.State.PLAYING && (goog.fx.Animation.unregisterAnimation(this), this.state_ = goog.fx.Animation.State.PAUSED, this.onPause())
+};
+goog.fx.Animation.prototype.disposeInternal = function() {
+  this.state_ != goog.fx.Animation.State.STOPPED && this.stop(!1);
+  this.onDestroy();
+  goog.fx.Animation.superClass_.disposeInternal.call(this)
+};
+goog.fx.Animation.prototype.destroy = function() {
+  this.dispose()
+};
+goog.fx.Animation.prototype.cycle = function(a) {
+  this.progress = (a - this.startTime) / (this.endTime - this.startTime);
+  1 <= this.progress && (this.progress = 1);
+  this.fps_ = 1E3 / (a - this.lastFrame);
+  this.lastFrame = a;
+  goog.isFunction(this.accel_) ? this.updateCoords_(this.accel_(this.progress)) : this.updateCoords_(this.progress);
+  if(1 == this.progress) {
+    this.state_ = goog.fx.Animation.State.STOPPED, goog.fx.Animation.unregisterAnimation(this), this.onFinish(), this.onEnd()
+  }else {
+    if(this.state_ == goog.fx.Animation.State.PLAYING) {
+      this.onAnimate()
+    }
+  }
+};
+goog.fx.Animation.prototype.updateCoords_ = function(a) {
+  this.coords = Array(this.startPoint.length);
+  for(var b = 0;b < this.startPoint.length;b++) {
+    this.coords[b] = (this.endPoint[b] - this.startPoint[b]) * a + this.startPoint[b]
+  }
+};
+goog.fx.Animation.prototype.onAnimate = function() {
+  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.ANIMATE)
+};
+goog.fx.Animation.prototype.onBegin = function() {
+  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.BEGIN)
+};
+goog.fx.Animation.prototype.onDestroy = function() {
+  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.DESTROY)
+};
+goog.fx.Animation.prototype.onEnd = function() {
+  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.END)
+};
+goog.fx.Animation.prototype.onFinish = function() {
+  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.FINISH)
+};
+goog.fx.Animation.prototype.onPause = function() {
+  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.PAUSE)
+};
+goog.fx.Animation.prototype.onPlay = function() {
+  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.PLAY)
+};
+goog.fx.Animation.prototype.onResume = function() {
+  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.RESUME)
+};
+goog.fx.Animation.prototype.onStop = function() {
+  this.dispatchAnimationEvent_(goog.fx.Animation.EventType.STOP)
+};
+goog.fx.Animation.prototype.dispatchAnimationEvent_ = function(a) {
+  this.dispatchEvent(new goog.fx.AnimationEvent(a, this))
+};
+goog.fx.AnimationEvent = function(a, b) {
+  goog.events.Event.call(this, a);
+  this.coords = b.coords;
+  this.x = b.coords[0];
+  this.y = b.coords[1];
+  this.z = b.coords[2];
+  this.duration = b.duration;
+  this.progress = b.progress;
+  this.fps = b.fps_;
+  this.state = b.state_;
+  this.anim = b
+};
+goog.inherits(goog.fx.AnimationEvent, goog.events.Event);
+goog.fx.AnimationEvent.prototype.coordsAsInts = function() {
+  return goog.array.map(this.coords, Math.round)
 };
 goog.math.Box = function(a, b, c, d) {
   this.top = a;
@@ -15809,6 +16287,11 @@ goog.fx.dom.ColorTransform.prototype.updateStyle = function() {
   }
   this.element.style.color = "rgb(" + a.join(",") + ")"
 };
+var domina = {support:{}}, div__12903 = document.createElement("div"), test_html__12904 = "   <link/><table></table><a href='/a' style='top:1px;float:left;opacity:.55;'>a</a><input type='checkbox'/>";
+div__12903.innerHTML = test_html__12904;
+domina.support.leading_whitespace_QMARK_ = cljs.core._EQ_.call(null, div__12903.firstChild.nodeType, 3);
+domina.support.extraneous_tbody_QMARK_ = cljs.core._EQ_.call(null, div__12903.getElementsByTagName("tbody").length, 0);
+domina.support.unscoped_html_elements_QMARK_ = cljs.core._EQ_.call(null, div__12903.getElementsByTagName("link").length, 0);
 goog.dom.xml = {};
 goog.dom.xml.MAX_XML_SIZE_KB = 2048;
 goog.dom.xml.MAX_ELEMENT_DEPTH = 256;
@@ -16585,20 +17068,15 @@ goog.dom.forms.setSelectMultiple_ = function(a, b) {
     }
   }
 };
-var domina = {support:{}}, div__12892 = document.createElement("div"), test_html__12893 = "   <link/><table></table><a href='/a' style='top:1px;float:left;opacity:.55;'>a</a><input type='checkbox'/>";
-div__12892.innerHTML = test_html__12893;
-domina.support.leading_whitespace_QMARK_ = cljs.core._EQ_.call(null, div__12892.firstChild.nodeType, 3);
-domina.support.extraneous_tbody_QMARK_ = cljs.core._EQ_.call(null, div__12892.getElementsByTagName("tbody").length, 0);
-domina.support.unscoped_html_elements_QMARK_ = cljs.core._EQ_.call(null, div__12892.getElementsByTagName("link").length, 0);
 domina.re_html = /<|&#?\w+;/;
 domina.re_leading_whitespace = /^\s+/;
 domina.re_xhtml_tag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/i;
 domina.re_tag_name = /<([\w:]+)/;
 domina.re_no_inner_html = /<(?:script|style)/i;
 domina.re_tbody = /<tbody/i;
-var opt_wrapper__12485 = cljs.core.PersistentVector.fromArray([1, "<select multiple='multiple'>", "</select>"], !0), table_section_wrapper__12486 = cljs.core.PersistentVector.fromArray([1, "<table>", "</table>"], !0), cell_wrapper__12487 = cljs.core.PersistentVector.fromArray([3, "<table><tbody><tr>", "</tr></tbody></table>"], !0);
-domina.wrap_map = cljs.core.ObjMap.fromObject("col \ufdd0'default tfoot caption optgroup legend area td thead th option tbody tr colgroup".split(" "), {col:cljs.core.PersistentVector.fromArray([2, "<table><tbody></tbody><colgroup>", "</colgroup></table>"], !0), "\ufdd0'default":cljs.core.PersistentVector.fromArray([0, "", ""], !0), tfoot:table_section_wrapper__12486, caption:table_section_wrapper__12486, optgroup:opt_wrapper__12485, legend:cljs.core.PersistentVector.fromArray([1, "<fieldset>", "</fieldset>"], 
-!0), area:cljs.core.PersistentVector.fromArray([1, "<map>", "</map>"], !0), td:cell_wrapper__12487, thead:table_section_wrapper__12486, th:cell_wrapper__12487, option:opt_wrapper__12485, tbody:table_section_wrapper__12486, tr:cljs.core.PersistentVector.fromArray([2, "<table><tbody>", "</tbody></table>"], !0), colgroup:table_section_wrapper__12486});
+var opt_wrapper__12496 = cljs.core.PersistentVector.fromArray([1, "<select multiple='multiple'>", "</select>"], !0), table_section_wrapper__12497 = cljs.core.PersistentVector.fromArray([1, "<table>", "</table>"], !0), cell_wrapper__12498 = cljs.core.PersistentVector.fromArray([3, "<table><tbody><tr>", "</tr></tbody></table>"], !0);
+domina.wrap_map = cljs.core.ObjMap.fromObject("col \ufdd0'default tfoot caption optgroup legend area td thead th option tbody tr colgroup".split(" "), {col:cljs.core.PersistentVector.fromArray([2, "<table><tbody></tbody><colgroup>", "</colgroup></table>"], !0), "\ufdd0'default":cljs.core.PersistentVector.fromArray([0, "", ""], !0), tfoot:table_section_wrapper__12497, caption:table_section_wrapper__12497, optgroup:opt_wrapper__12496, legend:cljs.core.PersistentVector.fromArray([1, "<fieldset>", "</fieldset>"], 
+!0), area:cljs.core.PersistentVector.fromArray([1, "<map>", "</map>"], !0), td:cell_wrapper__12498, thead:table_section_wrapper__12497, th:cell_wrapper__12498, option:opt_wrapper__12496, tbody:table_section_wrapper__12497, tr:cljs.core.PersistentVector.fromArray([2, "<table><tbody>", "</tbody></table>"], !0), colgroup:table_section_wrapper__12497});
 domina.remove_extraneous_tbody_BANG_ = function(a, b) {
   var c = cljs.core.not.call(null, cljs.core.re_find.call(null, domina.re_tbody, b)), d = function() {
     var a = cljs.core._EQ_.call(null, domina.tag_name, "table");
@@ -16714,24 +17192,24 @@ domina.by_id = function(a) {
   return goog.dom.getElement(cljs.core.name.call(null, a))
 };
 domina.by_class = function by_class(b) {
-  void 0 === domina.t12567 && (domina.t12567 = function(b, d, e) {
+  void 0 === domina.t12578 && (domina.t12578 = function(b, d, e) {
     this.class_name = b;
     this.by_class = d;
-    this.meta12568 = e;
+    this.meta12579 = e;
     this.cljs$lang$protocol_mask$partition1$ = 0;
     this.cljs$lang$protocol_mask$partition0$ = 393216
-  }, domina.t12567.cljs$lang$type = !0, domina.t12567.cljs$lang$ctorPrSeq = function() {
-    return cljs.core.list.call(null, "domina/t12567")
-  }, domina.t12567.prototype.domina$DomContent$ = !0, domina.t12567.prototype.domina$DomContent$nodes$arity$1 = function() {
+  }, domina.t12578.cljs$lang$type = !0, domina.t12578.cljs$lang$ctorPrSeq = function() {
+    return cljs.core.list.call(null, "domina/t12578")
+  }, domina.t12578.prototype.domina$DomContent$ = !0, domina.t12578.prototype.domina$DomContent$nodes$arity$1 = function() {
     return domina.normalize_seq.call(null, goog.dom.getElementsByClass(cljs.core.name.call(null, this.class_name)))
-  }, domina.t12567.prototype.domina$DomContent$single_node$arity$1 = function() {
+  }, domina.t12578.prototype.domina$DomContent$single_node$arity$1 = function() {
     return domina.normalize_seq.call(null, goog.dom.getElementByClass(cljs.core.name.call(null, this.class_name)))
-  }, domina.t12567.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
-    return this.meta12568
-  }, domina.t12567.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(b, d) {
-    return new domina.t12567(this.class_name, this.by_class, d)
-  }, domina.t12567);
-  return new domina.t12567(b, by_class, null)
+  }, domina.t12578.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
+    return this.meta12579
+  }, domina.t12578.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(b, d) {
+    return new domina.t12578(this.class_name, this.by_class, d)
+  }, domina.t12578);
+  return new domina.t12578(b, by_class, null)
 };
 domina.children = function(a) {
   return cljs.core.doall.call(null, cljs.core.mapcat.call(null, goog.dom.getChildren, domina.nodes.call(null, a)))
@@ -17016,11 +17494,11 @@ domina.set_inner_html_BANG_ = function(a, b) {
           }
         }
       }
-    }catch(m) {
-      if(cljs.core.instance_QMARK_.call(null, domina.Exception, m)) {
+    }catch(l) {
+      if(cljs.core.instance_QMARK_.call(null, domina.Exception, l)) {
         domina.replace_children_BANG_.call(null, a, e)
       }else {
-        throw m;
+        throw l;
       }
     }
   }else {
@@ -17187,79 +17665,6 @@ cljs.core.truth_("undefined" != typeof HTMLCollection) && (HTMLCollection.protot
 }, HTMLCollection.prototype.cljs$core$ICounted$ = !0, HTMLCollection.prototype.cljs$core$ICounted$_count$arity$1 = function(a) {
   return a.length
 });
-domina.xpath = {};
-domina.xpath.select_node_STAR_ = function(a, b, c, d) {
-  var e = goog.dom.getOwnerDocument(b);
-  if(cljs.core.truth_(function() {
-    var a = b.selectSingleNode;
-    return cljs.core.truth_(a) ? e.setProperty : a
-  }())) {
-    return e.setProperty("SelectionLanguage", "XPath"), c.call(null, b, a)
-  }
-  if(cljs.core.truth_(e.evaluate)) {
-    return d.call(null, null, e, b, a)
-  }
-  throw Error("Could not find XPath support in this browser.");
-};
-domina.xpath.select_node = function(a, b) {
-  return domina.xpath.select_node_STAR_.call(null, a, b, function(a, b) {
-    return a.selectSingleNode(b)
-  }, function(a, b, e, f) {
-    return b.evaluate(f, e, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue
-  })
-};
-domina.xpath.select_nodes = function(a, b) {
-  return domina.xpath.select_node_STAR_.call(null, a, b, function(a, b) {
-    return a.selectNodes(b)
-  }, function(a, b, e, f) {
-    for(var a = b.evaluate(f, e, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null), b = a.snapshotLength, e = 0, g = null;;) {
-      if(e < b) {
-        f = e + 1, g = cljs.core.cons.call(null, a.snapshotItem(e), g), e = f
-      }else {
-        return g
-      }
-    }
-  })
-};
-domina.xpath.root_element = function() {
-  return goog.dom.getElementsByTagNameAndClass("html")[0]
-};
-domina.xpath.xpath = function() {
-  var a = null, b = function(b) {
-    return a.call(null, domina.xpath.root_element.call(null), b)
-  }, c = function(b, c) {
-    void 0 === domina.xpath.t13563 && (domina.xpath.t13563 = function(a, b, c, d) {
-      this.expr = a;
-      this.base = b;
-      this.xpath = c;
-      this.meta13564 = d;
-      this.cljs$lang$protocol_mask$partition1$ = 0;
-      this.cljs$lang$protocol_mask$partition0$ = 393216
-    }, domina.xpath.t13563.cljs$lang$type = !0, domina.xpath.t13563.cljs$lang$ctorPrSeq = function() {
-      return cljs.core.list.call(null, "domina.xpath/t13563")
-    }, domina.xpath.t13563.prototype.domina$DomContent$ = !0, domina.xpath.t13563.prototype.domina$DomContent$nodes$arity$1 = function() {
-      return cljs.core.mapcat.call(null, cljs.core.partial.call(null, domina.xpath.select_nodes, this.expr), domina.nodes.call(null, this.base))
-    }, domina.xpath.t13563.prototype.domina$DomContent$single_node$arity$1 = function() {
-      return cljs.core.first.call(null, cljs.core.filter.call(null, cljs.core.complement.call(null, cljs.core.nil_QMARK_), cljs.core.map.call(null, cljs.core.partial.call(null, domina.xpath.select_node, this.expr), domina.nodes.call(null, this.base))))
-    }, domina.xpath.t13563.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
-      return this.meta13564
-    }, domina.xpath.t13563.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(a, b) {
-      return new domina.xpath.t13563(this.expr, this.base, this.xpath, b)
-    }, domina.xpath.t13563);
-    return new domina.xpath.t13563(c, b, a, null)
-  }, a = function(a, e) {
-    switch(arguments.length) {
-      case 1:
-        return b.call(this, a);
-      case 2:
-        return c.call(this, a, e)
-    }
-    throw"Invalid arity: " + arguments.length;
-  };
-  a.cljs$lang$arity$1 = b;
-  a.cljs$lang$arity$2 = c;
-  return a
-}();
 goog.structs.Set = function(a) {
   this.map_ = new goog.structs.Map;
   a && this.addAll(a)
@@ -18524,569 +18929,66 @@ goog.net.XhrIo.prototype.formatMsg_ = function(a) {
 goog.debug.entryPointRegistry.register(function(a) {
   goog.net.XhrIo.prototype.onReadyStateChangeEntryPoint_ = a(goog.net.XhrIo.prototype.onReadyStateChangeEntryPoint_)
 });
-goog.functions = {};
-goog.functions.constant = function(a) {
-  return function() {
-    return a
+domina.xpath = {};
+domina.xpath.select_node_STAR_ = function(a, b, c, d) {
+  var e = goog.dom.getOwnerDocument(b);
+  if(cljs.core.truth_(function() {
+    var a = b.selectSingleNode;
+    return cljs.core.truth_(a) ? e.setProperty : a
+  }())) {
+    return e.setProperty("SelectionLanguage", "XPath"), c.call(null, b, a)
   }
-};
-goog.functions.FALSE = goog.functions.constant(!1);
-goog.functions.TRUE = goog.functions.constant(!0);
-goog.functions.NULL = goog.functions.constant(null);
-goog.functions.identity = function(a) {
-  return a
-};
-goog.functions.error = function(a) {
-  return function() {
-    throw Error(a);
+  if(cljs.core.truth_(e.evaluate)) {
+    return d.call(null, null, e, b, a)
   }
+  throw Error("Could not find XPath support in this browser.");
 };
-goog.functions.lock = function(a) {
-  return function() {
-    return a.call(this)
-  }
+domina.xpath.select_node = function(a, b) {
+  return domina.xpath.select_node_STAR_.call(null, a, b, function(a, b) {
+    return a.selectSingleNode(b)
+  }, function(a, b, e, f) {
+    return b.evaluate(f, e, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue
+  })
 };
-goog.functions.withReturnValue = function(a, b) {
-  return goog.functions.sequence(a, goog.functions.constant(b))
-};
-goog.functions.compose = function(a) {
-  var b = arguments, c = b.length;
-  return function() {
-    var a;
-    c && (a = b[c - 1].apply(this, arguments));
-    for(var e = c - 2;0 <= e;e--) {
-      a = b[e].call(this, a)
-    }
-    return a
-  }
-};
-goog.functions.sequence = function(a) {
-  var b = arguments, c = b.length;
-  return function() {
-    for(var a, e = 0;e < c;e++) {
-      a = b[e].apply(this, arguments)
-    }
-    return a
-  }
-};
-goog.functions.and = function(a) {
-  var b = arguments, c = b.length;
-  return function() {
-    for(var a = 0;a < c;a++) {
-      if(!b[a].apply(this, arguments)) {
-        return!1
-      }
-    }
-    return!0
-  }
-};
-goog.functions.or = function(a) {
-  var b = arguments, c = b.length;
-  return function() {
-    for(var a = 0;a < c;a++) {
-      if(b[a].apply(this, arguments)) {
-        return!0
-      }
-    }
-    return!1
-  }
-};
-goog.functions.not = function(a) {
-  return function() {
-    return!a.apply(this, arguments)
-  }
-};
-goog.functions.create = function(a, b) {
-  var c = function() {
-  };
-  c.prototype = a.prototype;
-  c = new c;
-  a.apply(c, Array.prototype.slice.call(arguments, 1));
-  return c
-};
-/*
- Portions of this code are from the Dojo Toolkit, received by
- The Closure Library Authors under the BSD license. All other code is
- Copyright 2005-2009 The Closure Library Authors. All Rights Reserved.
-
-The "New" BSD License:
-
-Copyright (c) 2005-2009, The Dojo Foundation
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
- Redistributions of source code must retain the above copyright notice, this
-    list of conditions and the following disclaimer.
- Redistributions in binary form must reproduce the above copyright notice,
-    this list of conditions and the following disclaimer in the documentation
-    and/or other materials provided with the distribution.
- Neither the name of the Dojo Foundation nor the names of its contributors
-    may be used to endorse or promote products derived from this software
-    without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
-goog.dom.query = function() {
-  function a(a, b) {
-    var c = b || [];
-    a && c.push(a);
-    return c
-  }
-  var b = goog.userAgent.WEBKIT && "BackCompat" == goog.dom.getDocument().compatMode, c = goog.dom.getDocument().firstChild.children ? "children" : "childNodes", d = !1, e = function(a) {
-    for(var a = 0 <= ">~+".indexOf(a.slice(-1)) ? a + " * " : a + " ", b = function(b, c) {
-      return goog.string.trim(a.slice(b, c))
-    }, c = [], e = -1, f = -1, g = -1, h = -1, i = -1, j = -1, k = -1, m = "", l = "", o, n = 0, q = a.length, p = null, r = null, s = function() {
-      0 <= j && (p.id = b(j, n).replace(/\\/g, ""), j = -1);
-      if(0 <= k) {
-        var a = k == n ? null : b(k, n);
-        0 > ">~+".indexOf(a) ? p.tag = a : p.oper = a;
-        k = -1
-      }
-      0 <= i && (p.classes.push(b(i + 1, n).replace(/\\/g, "")), i = -1)
-    };m = l, l = a.charAt(n), n < q;n++) {
-      if("\\" != m) {
-        if(p || (o = n, p = {query:null, pseudos:[], attrs:[], classes:[], tag:null, oper:null, id:null, getTag:function() {
-          return d ? this.otag : this.tag
-        }}, k = n), 0 <= e) {
-          if("]" == l) {
-            r.attr ? r.matchFor = b(g || e + 1, n) : r.attr = b(e + 1, n);
-            if((e = r.matchFor) && ('"' == e.charAt(0) || "'" == e.charAt(0))) {
-              r.matchFor = e.slice(1, -1)
-            }
-            p.attrs.push(r);
-            r = null;
-            e = g = -1
-          }else {
-            "=" == l && (g = 0 <= "|~^$*".indexOf(m) ? m : "", r.type = g + l, r.attr = b(e + 1, n - g.length), g = n + 1)
-          }
-        }else {
-          0 <= f ? ")" == l && (0 <= h && (r.value = b(f + 1, n)), h = f = -1) : "#" == l ? (s(), j = n + 1) : "." == l ? (s(), i = n) : ":" == l ? (s(), h = n) : "[" == l ? (s(), e = n, r = {}) : "(" == l ? (0 <= h && (r = {name:b(h + 1, n), value:null}, p.pseudos.push(r)), f = n) : " " == l && m != l && (s(), 0 <= h && p.pseudos.push({name:b(h + 1, n)}), p.loops = p.pseudos.length || p.attrs.length || p.classes.length, p.oquery = p.query = b(o, n), p.otag = p.tag = p.oper ? null : p.tag || "*", 
-          p.tag && (p.tag = p.tag.toUpperCase()), c.length && c[c.length - 1].oper && (p.infixOper = c.pop(), p.query = p.infixOper.query + " " + p.query), c.push(p), p = null)
-        }
-      }
-    }
-    return c
-  }, f = function(a, b) {
-    return!a ? b : !b ? a : function() {
-      return a.apply(window, arguments) && b.apply(window, arguments)
-    }
-  }, g = function(a) {
-    return 1 == a.nodeType
-  }, h = function(a, b) {
-    return!a ? "" : "class" == b ? a.className || "" : "for" == b ? a.htmlFor || "" : "style" == b ? a.style.cssText || "" : (d ? a.getAttribute(b) : a.getAttribute(b, 2)) || ""
-  }, i = {"*=":function(a, b) {
-    return function(c) {
-      return 0 <= h(c, a).indexOf(b)
-    }
-  }, "^=":function(a, b) {
-    return function(c) {
-      return 0 == h(c, a).indexOf(b)
-    }
-  }, "$=":function(a, b) {
-    return function(c) {
-      c = " " + h(c, a);
-      return c.lastIndexOf(b) == c.length - b.length
-    }
-  }, "~=":function(a, b) {
-    var c = " " + b + " ";
-    return function(b) {
-      return 0 <= (" " + h(b, a) + " ").indexOf(c)
-    }
-  }, "|=":function(a, b) {
-    b = " " + b;
-    return function(c) {
-      c = " " + h(c, a);
-      return c == b || 0 == c.indexOf(b + "-")
-    }
-  }, "=":function(a, b) {
-    return function(c) {
-      return h(c, a) == b
-    }
-  }}, j = "undefined" == typeof goog.dom.getDocument().firstChild.nextElementSibling, k = !j ? "nextElementSibling" : "nextSibling", m = !j ? "previousElementSibling" : "previousSibling", l = j ? g : goog.functions.TRUE, o = function(a) {
-    for(;a = a[m];) {
-      if(l(a)) {
-        return!1
-      }
-    }
-    return!0
-  }, n = function(a) {
-    for(;a = a[k];) {
-      if(l(a)) {
-        return!1
-      }
-    }
-    return!0
-  }, q = function(a) {
-    var b = a.parentNode, d = 0, e = b[c], f = a._i || -1, g = b._l || -1;
-    if(!e) {
-      return-1
-    }
-    e = e.length;
-    if(g == e && 0 <= f && 0 <= g) {
-      return f
-    }
-    b._l = e;
-    f = -1;
-    for(b = b.firstElementChild || b.firstChild;b;b = b[k]) {
-      l(b) && (b._i = ++d, a === b && (f = d))
-    }
-    return f
-  }, p = function(a) {
-    return!(q(a) % 2)
-  }, s = function(a) {
-    return q(a) % 2
-  }, t = {checked:function() {
-    return function(a) {
-      return a.checked || a.attributes.checked
-    }
-  }, "first-child":function() {
-    return o
-  }, "last-child":function() {
-    return n
-  }, "only-child":function() {
-    return function(a) {
-      return!o(a) || !n(a) ? !1 : !0
-    }
-  }, empty:function() {
-    return function(a) {
-      for(var b = a.childNodes, a = a.childNodes.length - 1;0 <= a;a--) {
-        var c = b[a].nodeType;
-        if(1 === c || 3 == c) {
-          return!1
-        }
-      }
-      return!0
-    }
-  }, contains:function(a, b) {
-    var c = b.charAt(0);
-    if('"' == c || "'" == c) {
-      b = b.slice(1, -1)
-    }
-    return function(a) {
-      return 0 <= a.innerHTML.indexOf(b)
-    }
-  }, not:function(a, b) {
-    var c = e(b)[0], d = {el:1};
-    "*" != c.tag && (d.tag = 1);
-    c.classes.length || (d.classes = 1);
-    var f = H(c, d);
-    return function(a) {
-      return!f(a)
-    }
-  }, "nth-child":function(a, b) {
-    if("odd" == b) {
-      return s
-    }
-    if("even" == b) {
-      return p
-    }
-    if(-1 != b.indexOf("n")) {
-      var c = b.split("n", 2), d = c[0] ? "-" == c[0] ? -1 : parseInt(c[0], 10) : 1, e = c[1] ? parseInt(c[1], 10) : 0, f = 0, g = -1;
-      0 < d ? 0 > e ? e = e % d && d + e % d : 0 < e && (e >= d && (f = e - e % d), e %= d) : 0 > d && (d *= -1, 0 < e && (g = e, e %= d));
-      if(0 < d) {
-        return function(a) {
-          a = q(a);
-          return a >= f && (g < 0 || a <= g) && a % d == e
-        }
-      }
-      b = e
-    }
-    var h = parseInt(b, 10);
-    return function(a) {
-      return q(a) == h
-    }
-  }}, r = goog.userAgent.IE ? function(a) {
-    var b = a.toLowerCase();
-    "class" == b && (a = "className");
-    return function(c) {
-      return d ? c.getAttribute(a) : c[a] || c[b]
-    }
-  } : function(a) {
-    return function(b) {
-      return b && b.getAttribute && b.hasAttribute(a)
-    }
-  }, H = function(a, b) {
-    if(!a) {
-      return goog.functions.TRUE
-    }
-    var b = b || {}, c = null;
-    b.el || (c = f(c, g));
-    b.tag || "*" != a.tag && (c = f(c, function(b) {
-      return b && b.tagName == a.getTag()
-    }));
-    b.classes || goog.array.forEach(a.classes, function(a, b) {
-      var d = RegExp("(?:^|\\s)" + a + "(?:\\s|$)");
-      c = f(c, function(a) {
-        return d.test(a.className)
-      });
-      c.count = b
-    });
-    b.pseudos || goog.array.forEach(a.pseudos, function(a) {
-      var b = a.name;
-      t[b] && (c = f(c, t[b](b, a.value)))
-    });
-    b.attrs || goog.array.forEach(a.attrs, function(a) {
-      var b, d = a.attr;
-      a.type && i[a.type] ? b = i[a.type](d, a.matchFor) : d.length && (b = r(d));
-      b && (c = f(c, b))
-    });
-    b.id || a.id && (c = f(c, function(b) {
-      return!!b && b.id == a.id
-    }));
-    !c && !("default" in b) && (c = goog.functions.TRUE);
-    return c
-  }, N = function(a) {
-    return function(b, c, d) {
-      for(;b = b[k];) {
-        if(!j || g(b)) {
-          (!d || I(b, d)) && a(b) && c.push(b);
-          break
-        }
-      }
-      return c
-    }
-  }, S = function(a) {
-    return function(b, c, d) {
-      for(b = b[k];b;) {
-        if(l(b)) {
-          if(d && !I(b, d)) {
-            break
-          }
-          a(b) && c.push(b)
-        }
-        b = b[k]
-      }
-      return c
-    }
-  }, v = function(a) {
-    a = a || goog.functions.TRUE;
-    return function(b, d, e) {
-      for(var f = 0, g = b[c];b = g[f++];) {
-        l(b) && ((!e || I(b, e)) && a(b, f)) && d.push(b)
-      }
-      return d
-    }
-  }, w = {}, y = function(c) {
-    var d = w[c.query];
-    if(d) {
-      return d
-    }
-    var e = c.infixOper, e = e ? e.oper : "", f = H(c, {el:1}), g = "*" == c.tag, h = goog.dom.getDocument().getElementsByClassName;
-    if(e) {
-      h = {el:1}, g && (h.tag = 1), f = H(c, h), "+" == e ? d = N(f) : "~" == e ? d = S(f) : ">" == e && (d = v(f))
-    }else {
-      if(c.id) {
-        f = !c.loops && g ? goog.functions.TRUE : H(c, {el:1, id:1}), d = function(b, d) {
-          var e = goog.dom.getDomHelper(b).getElement(c.id);
-          if(e && f(e)) {
-            if(9 == b.nodeType) {
-              return a(e, d)
-            }
-            for(var g = e.parentNode;g && g != b;) {
-              g = g.parentNode
-            }
-            if(g) {
-              return a(e, d)
-            }
-          }
-        }
+domina.xpath.select_nodes = function(a, b) {
+  return domina.xpath.select_node_STAR_.call(null, a, b, function(a, b) {
+    return a.selectNodes(b)
+  }, function(a, b, e, f) {
+    for(var a = b.evaluate(f, e, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null), b = a.snapshotLength, e = 0, g = null;;) {
+      if(e < b) {
+        f = e + 1, g = cljs.core.cons.call(null, a.snapshotItem(e), g), e = f
       }else {
-        if(h && /\{\s*\[native code\]\s*\}/.test("" + h) && c.classes.length && !b) {
-          var f = H(c, {el:1, classes:1, id:1}), i = c.classes.join(" "), d = function(b, c) {
-            for(var d = a(0, c), e, g = 0, h = b.getElementsByClassName(i);e = h[g++];) {
-              f(e, b) && d.push(e)
-            }
-            return d
-          }
-        }else {
-          !g && !c.loops ? d = function(b, d) {
-            for(var e = a(0, d), f, g = 0, h = b.getElementsByTagName(c.getTag());f = h[g++];) {
-              e.push(f)
-            }
-            return e
-          } : (f = H(c, {el:1, tag:1, id:1}), d = function(b, d) {
-            for(var e = a(0, d), g, h = 0, i = b.getElementsByTagName(c.getTag());g = i[h++];) {
-              f(g, b) && e.push(g)
-            }
-            return e
-          })
-        }
+        return g
       }
     }
-    return w[c.query] = d
-  }, C = {}, D = {}, E = function(b) {
-    var c = e(goog.string.trim(b));
-    if(1 == c.length) {
-      var d = y(c[0]);
-      return function(a) {
-        if(a = d(a, [])) {
-          a.nozip = !0
-        }
-        return a
-      }
-    }
-    return function(b) {
-      for(var b = a(b), d, e, f = c.length, g, h, i = 0;i < f;i++) {
-        h = [];
-        d = c[i];
-        e = b.length - 1;
-        0 < e && (g = {}, h.nozip = !0);
-        e = y(d);
-        for(var j = 0;d = b[j];j++) {
-          e(d, h, g)
-        }
-        if(!h.length) {
-          break
-        }
-        b = h
-      }
-      return h
-    }
-  }, F = !!goog.dom.getDocument().querySelectorAll && (!goog.userAgent.WEBKIT || goog.userAgent.isVersion("526")), G = function(a, c) {
-    if(F) {
-      var d = D[a];
-      if(d && !c) {
-        return d
-      }
-    }
-    if(d = C[a]) {
-      return d
-    }
-    var d = a.charAt(0), e = -1 == a.indexOf(" ");
-    0 <= a.indexOf("#") && e && (c = !0);
-    if(F && !c && -1 == ">~+".indexOf(d) && (!goog.userAgent.IE || -1 == a.indexOf(":")) && !(b && 0 <= a.indexOf(".")) && -1 == a.indexOf(":contains") && -1 == a.indexOf("|=")) {
-      var f = 0 <= ">~+".indexOf(a.charAt(a.length - 1)) ? a + " *" : a;
-      return D[a] = function(b) {
-        try {
-          if(!(9 == b.nodeType || e)) {
-            throw"";
-          }
-          var c = b.querySelectorAll(f);
-          goog.userAgent.IE ? c.commentStrip = !0 : c.nozip = !0;
-          return c
-        }catch(d) {
-          return G(a, !0)(b)
-        }
-      }
-    }
-    var g = a.split(/\s*,\s*/);
-    return C[a] = 2 > g.length ? E(a) : function(a) {
-      for(var b = 0, c = [], d;d = g[b++];) {
-        c = c.concat(E(d)(a))
-      }
-      return c
-    }
-  }, z = 0, J = goog.userAgent.IE ? function(a) {
-    return d ? a.getAttribute("_uid") || a.setAttribute("_uid", ++z) || z : a.uniqueID
-  } : function(a) {
-    return a._uid || (a._uid = ++z)
-  }, I = function(a, b) {
-    if(!b) {
-      return 1
-    }
-    var c = J(a);
-    return!b[c] ? b[c] = 1 : 0
-  }, K = function(a) {
-    if(a && a.nozip) {
-      return a
-    }
-    var b = [];
-    if(!a || !a.length) {
-      return b
-    }
-    a[0] && b.push(a[0]);
-    if(2 > a.length) {
-      return b
-    }
-    z++;
-    if(goog.userAgent.IE && d) {
-      var c = z + "";
-      a[0].setAttribute("_zipIdx", c);
-      for(var e = 1, f;f = a[e];e++) {
-        a[e].getAttribute("_zipIdx") != c && b.push(f), f.setAttribute("_zipIdx", c)
-      }
-    }else {
-      if(goog.userAgent.IE && a.commentStrip) {
-        try {
-          for(e = 1;f = a[e];e++) {
-            g(f) && b.push(f)
-          }
-        }catch(h) {
-        }
-      }else {
-        a[0] && (a[0]._zipIdx = z);
-        for(e = 1;f = a[e];e++) {
-          a[e]._zipIdx != z && b.push(f), f._zipIdx = z
-        }
-      }
-    }
-    return b
-  }, L = function(a, b) {
-    if(!a) {
-      return[]
-    }
-    if(a.constructor == Array) {
-      return a
-    }
-    if(!goog.isString(a)) {
-      return[a]
-    }
-    if(goog.isString(b) && (b = goog.dom.getElement(b), !b)) {
-      return[]
-    }
-    var b = b || goog.dom.getDocument(), c = b.ownerDocument || b.documentElement;
-    d = b.contentType && "application/xml" == b.contentType || goog.userAgent.OPERA && (b.doctype || "[object XMLDocument]" == c.toString()) || !!c && (goog.userAgent.IE ? c.xml : b.xmlVersion || c.xmlVersion);
-    return(c = G(a)(b)) && c.nozip ? c : K(c)
-  };
-  L.pseudos = t;
-  return L
-}();
-goog.exportSymbol("goog.dom.query", goog.dom.query);
-goog.exportSymbol("goog.dom.query.pseudos", goog.dom.query.pseudos);
-domina.css = {};
-domina.css.root_element = function() {
+  })
+};
+domina.xpath.root_element = function() {
   return goog.dom.getElementsByTagNameAndClass("html")[0]
 };
-domina.css.sel = function() {
+domina.xpath.xpath = function() {
   var a = null, b = function(b) {
-    return a.call(null, domina.css.root_element.call(null), b)
+    return a.call(null, domina.xpath.root_element.call(null), b)
   }, c = function(b, c) {
-    void 0 === domina.css.t12903 && (domina.css.t12903 = function(a, b, c, d) {
+    void 0 === domina.xpath.t13574 && (domina.xpath.t13574 = function(a, b, c, d) {
       this.expr = a;
       this.base = b;
-      this.sel = c;
-      this.meta12904 = d;
+      this.xpath = c;
+      this.meta13575 = d;
       this.cljs$lang$protocol_mask$partition1$ = 0;
       this.cljs$lang$protocol_mask$partition0$ = 393216
-    }, domina.css.t12903.cljs$lang$type = !0, domina.css.t12903.cljs$lang$ctorPrSeq = function() {
-      return cljs.core.list.call(null, "domina.css/t12903")
-    }, domina.css.t12903.prototype.domina$DomContent$ = !0, domina.css.t12903.prototype.domina$DomContent$nodes$arity$1 = function() {
-      var a = this;
-      return cljs.core.mapcat.call(null, function(b) {
-        return domina.normalize_seq.call(null, goog.dom.query(a.expr, b))
-      }, domina.nodes.call(null, a.base))
-    }, domina.css.t12903.prototype.domina$DomContent$single_node$arity$1 = function() {
-      var a = this;
-      return cljs.core.first.call(null, cljs.core.filter.call(null, cljs.core.complement.call(null, cljs.core.nil_QMARK_), cljs.core.mapcat.call(null, function(b) {
-        return domina.normalize_seq.call(null, goog.dom.query(a.expr, b))
-      }, domina.nodes.call(null, a.base))))
-    }, domina.css.t12903.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
-      return this.meta12904
-    }, domina.css.t12903.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(a, b) {
-      return new domina.css.t12903(this.expr, this.base, this.sel, b)
-    }, domina.css.t12903);
-    return new domina.css.t12903(c, b, a, null)
+    }, domina.xpath.t13574.cljs$lang$type = !0, domina.xpath.t13574.cljs$lang$ctorPrSeq = function() {
+      return cljs.core.list.call(null, "domina.xpath/t13574")
+    }, domina.xpath.t13574.prototype.domina$DomContent$ = !0, domina.xpath.t13574.prototype.domina$DomContent$nodes$arity$1 = function() {
+      return cljs.core.mapcat.call(null, cljs.core.partial.call(null, domina.xpath.select_nodes, this.expr), domina.nodes.call(null, this.base))
+    }, domina.xpath.t13574.prototype.domina$DomContent$single_node$arity$1 = function() {
+      return cljs.core.first.call(null, cljs.core.filter.call(null, cljs.core.complement.call(null, cljs.core.nil_QMARK_), cljs.core.map.call(null, cljs.core.partial.call(null, domina.xpath.select_node, this.expr), domina.nodes.call(null, this.base))))
+    }, domina.xpath.t13574.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
+      return this.meta13575
+    }, domina.xpath.t13574.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(a, b) {
+      return new domina.xpath.t13574(this.expr, this.base, this.xpath, b)
+    }, domina.xpath.t13574);
+    return new domina.xpath.t13574(c, b, a, null)
   }, a = function(a, e) {
     switch(arguments.length) {
       case 1:
@@ -19100,6 +19002,62 @@ domina.css.sel = function() {
   a.cljs$lang$arity$2 = c;
   return a
 }();
+domina.css = {};
+domina.css.root_element = function() {
+  return goog.dom.getElementsByTagNameAndClass("html")[0]
+};
+domina.css.sel = function() {
+  var a = null, b = function(b) {
+    return a.call(null, domina.css.root_element.call(null), b)
+  }, c = function(b, c) {
+    void 0 === domina.css.t12914 && (domina.css.t12914 = function(a, b, c, d) {
+      this.expr = a;
+      this.base = b;
+      this.sel = c;
+      this.meta12915 = d;
+      this.cljs$lang$protocol_mask$partition1$ = 0;
+      this.cljs$lang$protocol_mask$partition0$ = 393216
+    }, domina.css.t12914.cljs$lang$type = !0, domina.css.t12914.cljs$lang$ctorPrSeq = function() {
+      return cljs.core.list.call(null, "domina.css/t12914")
+    }, domina.css.t12914.prototype.domina$DomContent$ = !0, domina.css.t12914.prototype.domina$DomContent$nodes$arity$1 = function() {
+      var a = this;
+      return cljs.core.mapcat.call(null, function(b) {
+        return domina.normalize_seq.call(null, goog.dom.query(a.expr, b))
+      }, domina.nodes.call(null, a.base))
+    }, domina.css.t12914.prototype.domina$DomContent$single_node$arity$1 = function() {
+      var a = this;
+      return cljs.core.first.call(null, cljs.core.filter.call(null, cljs.core.complement.call(null, cljs.core.nil_QMARK_), cljs.core.mapcat.call(null, function(b) {
+        return domina.normalize_seq.call(null, goog.dom.query(a.expr, b))
+      }, domina.nodes.call(null, a.base))))
+    }, domina.css.t12914.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
+      return this.meta12915
+    }, domina.css.t12914.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(a, b) {
+      return new domina.css.t12914(this.expr, this.base, this.sel, b)
+    }, domina.css.t12914);
+    return new domina.css.t12914(c, b, a, null)
+  }, a = function(a, e) {
+    switch(arguments.length) {
+      case 1:
+        return b.call(this, a);
+      case 2:
+        return c.call(this, a, e)
+    }
+    throw"Invalid arity: " + arguments.length;
+  };
+  a.cljs$lang$arity$1 = b;
+  a.cljs$lang$arity$2 = c;
+  return a
+}();
+goog.fx.easing = {};
+goog.fx.easing.easeIn = function(a) {
+  return a * a * a
+};
+goog.fx.easing.easeOut = function(a) {
+  return 1 - Math.pow(1 - a, 3)
+};
+goog.fx.easing.inAndOut = function(a) {
+  return 3 * a * a - 2 * a * a * a
+};
 enfocus.core = {};
 enfocus.core.ISelector = {};
 enfocus.core.select = function() {
@@ -20610,7 +20568,7 @@ cljs.reader.parse_and_validate_timestamp = function() {
       cljs.core.nth.call(null, k, 0, null);
       cljs.core.nth.call(null, k, 1, null);
       cljs.core.nth.call(null, k, 2, null);
-      var m = cljs.core.map.call(null, function(a) {
+      var l = cljs.core.map.call(null, function(a) {
         return cljs.core.map.call(null, function(a) {
           return parseInt(a, 10)
         }, a)
@@ -20618,11 +20576,11 @@ cljs.reader.parse_and_validate_timestamp = function() {
         return cljs.core.update_in.call(null, b, cljs.core.PersistentVector.fromArray([0], !0), a)
       }, cljs.core.PersistentVector.fromArray([cljs.core.constantly.call(null, null), function(a) {
         return cljs.core._EQ_.call(null, a, "-") ? "-1" : "1"
-      }], !0), d)), l = cljs.core.nth.call(null, m, 0, null);
-      cljs.core.nth.call(null, l, 0, null);
-      var d = cljs.core.nth.call(null, l, 1, null), k = cljs.core.nth.call(null, l, 2, null), o = cljs.core.nth.call(null, l, 3, null), n = cljs.core.nth.call(null, l, 4, null), q = cljs.core.nth.call(null, l, 5, null), p = cljs.core.nth.call(null, l, 6, null), l = cljs.core.nth.call(null, l, 7, null), s = cljs.core.nth.call(null, m, 1, null), m = cljs.core.nth.call(null, s, 0, null), t = cljs.core.nth.call(null, s, 1, null), s = cljs.core.nth.call(null, s, 2, null);
+      }], !0), d)), m = cljs.core.nth.call(null, l, 0, null);
+      cljs.core.nth.call(null, m, 0, null);
+      var d = cljs.core.nth.call(null, m, 1, null), k = cljs.core.nth.call(null, m, 2, null), o = cljs.core.nth.call(null, m, 3, null), n = cljs.core.nth.call(null, m, 4, null), q = cljs.core.nth.call(null, m, 5, null), p = cljs.core.nth.call(null, m, 6, null), m = cljs.core.nth.call(null, m, 7, null), s = cljs.core.nth.call(null, l, 1, null), l = cljs.core.nth.call(null, s, 0, null), t = cljs.core.nth.call(null, s, 1, null), s = cljs.core.nth.call(null, s, 2, null);
       return cljs.core.PersistentVector.fromArray([cljs.core.not.call(null, c) ? 1970 : d, cljs.core.not.call(null, f) ? 1 : b.call(null, 1, k, 12, "timestamp month field must be in range 1..12"), cljs.core.not.call(null, g) ? 1 : b.call(null, 1, o, cljs.reader.days_in_month.call(null, k, cljs.reader.leap_year_QMARK_.call(null, d)), "timestamp day field must be in range 1..last day in month"), cljs.core.not.call(null, h) ? 0 : b.call(null, 0, n, 23, "timestamp hour field must be in range 0..23"), 
-      cljs.core.not.call(null, i) ? 0 : b.call(null, 0, q, 59, "timestamp minute field must be in range 0..59"), cljs.core.not.call(null, j) ? 0 : b.call(null, 0, p, cljs.core._EQ_.call(null, q, 59) ? 60 : 59, "timestamp second field must be in range 0..60"), cljs.core.not.call(null, e) ? 0 : b.call(null, 0, l, 999, "timestamp millisecond field must be in range 0..999"), m * (60 * t + s)], !0)
+      cljs.core.not.call(null, i) ? 0 : b.call(null, 0, q, 59, "timestamp minute field must be in range 0..59"), cljs.core.not.call(null, j) ? 0 : b.call(null, 0, p, cljs.core._EQ_.call(null, q, 59) ? 60 : 59, "timestamp second field must be in range 0..60"), cljs.core.not.call(null, e) ? 0 : b.call(null, 0, m, 999, "timestamp millisecond field must be in range 0..999"), l * (60 * t + s)], !0)
     }
     return null
   }
@@ -20658,208 +20616,6 @@ cljs.reader.deregister_tag_parser_BANG_ = function(a) {
   var a = cljs.core.name.call(null, a), b = cljs.core._lookup.call(null, cljs.core.deref.call(null, cljs.reader._STAR_tag_table_STAR_), a, null);
   cljs.core.swap_BANG_.call(null, cljs.reader._STAR_tag_table_STAR_, cljs.core.dissoc, a);
   return b
-};
-com.ewen.cle_usb_cljs.model = {};
-com.ewen.cle_usb_cljs.model.Passwords = function(a, b) {
-  this.__meta = a;
-  this.__extmap = b;
-  this.cljs$lang$protocol_mask$partition1$ = 0;
-  this.cljs$lang$protocol_mask$partition0$ = 619054858;
-  0 < arguments.length ? (this.__meta = a, this.__extmap = b) : this.__extmap = this.__meta = null
-};
-com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$IHash$_hash$arity$1 = function(a) {
-  var b = this.__hash;
-  return null != b ? b : this.__hash = a = cljs.core.hash_imap.call(null, a)
-};
-com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$ILookup$_lookup$arity$2 = function(a, b) {
-  return a.cljs$core$ILookup$_lookup$arity$3(a, b, null)
-};
-com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$ILookup$_lookup$arity$3 = function(a, b, c) {
-  return cljs.core._lookup.call(null, this.__extmap, b, c)
-};
-com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$IAssociative$_assoc$arity$3 = function(a, b, c) {
-  return new com.ewen.cle_usb_cljs.model.Passwords(this.__meta, cljs.core.assoc.call(null, this.__extmap, b, c), null)
-};
-com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$ICollection$_conj$arity$2 = function(a, b) {
-  return cljs.core.vector_QMARK_.call(null, b) ? a.cljs$core$IAssociative$_assoc$arity$3(a, cljs.core._nth.call(null, b, 0), cljs.core._nth.call(null, b, 1)) : cljs.core.reduce.call(null, cljs.core._conj, a, b)
-};
-com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$ISeqable$_seq$arity$1 = function() {
-  return cljs.core.seq.call(null, cljs.core.concat.call(null, cljs.core.PersistentVector.EMPTY, this.__extmap))
-};
-com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$IPrintable$_pr_seq$arity$2 = function(a, b) {
-  return cljs.core.pr_sequential.call(null, function(a) {
-    return cljs.core.pr_sequential.call(null, cljs.core.pr_seq, "", " ", "", b, a)
-  }, [cljs.core.str("#"), cljs.core.str("Passwords"), cljs.core.str("{")].join(""), ", ", "}", b, cljs.core.concat.call(null, cljs.core.PersistentVector.EMPTY, this.__extmap))
-};
-com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$ICounted$_count$arity$1 = function() {
-  return 0 + cljs.core.count.call(null, this.__extmap)
-};
-com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$IEquiv$_equiv$arity$2 = function(a, b) {
-  return cljs.core.truth_(function() {
-    if(cljs.core.truth_(b)) {
-      var c = a.constructor === b.constructor;
-      return c ? cljs.core.equiv_map.call(null, a, b) : c
-    }
-    return b
-  }()) ? !0 : !1
-};
-com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(a, b) {
-  return new com.ewen.cle_usb_cljs.model.Passwords(b, this.__extmap, this.__hash)
-};
-com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
-  return this.__meta
-};
-com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$IMap$_dissoc$arity$2 = function(a, b) {
-  return cljs.core.contains_QMARK_.call(null, cljs.core.PersistentHashSet.EMPTY, b) ? cljs.core.dissoc.call(null, cljs.core.with_meta.call(null, cljs.core.into.call(null, cljs.core.ObjMap.EMPTY, a), this.__meta), b) : new com.ewen.cle_usb_cljs.model.Passwords(this.__meta, cljs.core.not_empty.call(null, cljs.core.dissoc.call(null, this.__extmap, b)), null)
-};
-com.ewen.cle_usb_cljs.model.Passwords.cljs$lang$type = !0;
-com.ewen.cle_usb_cljs.model.Passwords.cljs$lang$ctorPrSeq = function() {
-  return cljs.core.list.call(null, "com.ewen.cle-usb-cljs.model/Passwords")
-};
-com.ewen.cle_usb_cljs.model.__GT_Passwords = function() {
-  return new com.ewen.cle_usb_cljs.model.Passwords
-};
-com.ewen.cle_usb_cljs.model.map__GT_Passwords = function(a) {
-  return new com.ewen.cle_usb_cljs.model.Passwords(null, cljs.core.dissoc.call(null, a))
-};
-com.ewen.cle_usb_cljs.model.Passwords;
-com.ewen.cle_usb_cljs.model.passwords_str = '{:SECTION1 [{:title "password1" :logo ""}] :SECTION2 [{:title "password2" :logo ""}{:title "password3" :logo ""}]}';
-com.ewen.cle_usb_cljs.model.passwords = cljs.core.atom.call(null, com.ewen.cle_usb_cljs.model.map__GT_Passwords.call(null, cljs.reader.read_string.call(null, com.ewen.cle_usb_cljs.model.passwords_str)));
-com.ewen.cle_usb_cljs.model.get_sections = function(a) {
-  return cljs.core.map.call(null, cljs.core.comp.call(null, cljs.core.name, cljs.core.first), a)
-};
-com.ewen.cle_usb_cljs.model.get_pwd_labels = function(a, b) {
-  return cljs.core.map.call(null, "\ufdd0'title", cljs.core.keyword.call(null, b).call(null, a))
-};
-com.ewen.cle_usb_cljs.model.add_password = function(a, b) {
-  return cljs.core.swap_BANG_.call(null, com.ewen.cle_usb_cljs.model.passwords, function(c) {
-    return cljs.core.update_in.call(null, c, cljs.core.PersistentVector.fromArray([cljs.core.keyword.call(null, a)], !0), cljs.core.conj, cljs.core.ObjMap.fromObject(["\ufdd0'title", "\ufdd0'logo"], {"\ufdd0'title":"" + cljs.core.str(b), "\ufdd0'logo":""}))
-  })
-};
-com.ewen.cle_usb_cljs.layouts = {};
-domina.array_like_QMARK_ = function(a) {
-  if(cljs.core.truth_(a)) {
-    var b = cljs.core.not.call(null, a.name);
-    return b ? a.length : b
-  }
-  return a
-};
-if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
-  var vec__209873__209874 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body"><p /><img class="section-body-logo" /></div></div></div></section></body></html>'), 
-  sym__6436__auto____209875 = cljs.core.nth.call(null, vec__209873__209874, 0, null), txt__6437__auto____209876 = cljs.core.nth.call(null, vec__209873__209874, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "section-bodyresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____209875, txt__6437__auto____209876], !0))
-}
-com.ewen.cle_usb_cljs.layouts.section_body = function(a) {
-  var b = cljs.core.seq_QMARK_.call(null, a) ? cljs.core.apply.call(null, cljs.core.hash_map, a) : a, a = cljs.core._lookup.call(null, b, "\ufdd0'title", null), b = cljs.core._lookup.call(null, b, "\ufdd0'logo", null), c = function() {
-    return enfocus.core.get_cached_snippet.call(null, "section-bodyresources/public/passwords.html", cljs.core.PersistentVector.fromArray([".section-body:first-of-type"], !0))
-  }.call(null), d = cljs.core.nth.call(null, c, 0, null), c = cljs.core.nth.call(null, c, 1, null), c = enfocus.core.create_hidden_dom.call(null, c);
-  enfocus.core.i_at.call(null, d, c, cljs.core.PersistentVector.fromArray(["p"], !0), enfocus.core.en_prepend.call(null, a), cljs.core.PersistentVector.fromArray([".section-body-logo"], !0), enfocus.core.en_set_attr.call(null, "src", b));
-  enfocus.core.reset_ids.call(null, d, c);
-  return enfocus.core.remove_node_return_child.call(null, c)
-};
-if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
-  var vec__209901__209902 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body"><p /><img class="section-body-logo" /></div></div></div></section></body></html>'), 
-  sym__6436__auto____209903 = cljs.core.nth.call(null, vec__209901__209902, 0, null), txt__6437__auto____209904 = cljs.core.nth.call(null, vec__209901__209902, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "sectionresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____209903, txt__6437__auto____209904], !0))
-}
-com.ewen.cle_usb_cljs.layouts.section = function(a, b) {
-  var c = function() {
-    return enfocus.core.get_cached_snippet.call(null, "sectionresources/public/passwords.html", cljs.core.PersistentVector.fromArray([".section:first-of-type"], !0))
-  }.call(null), d = cljs.core.nth.call(null, c, 0, null), c = cljs.core.nth.call(null, c, 1, null), c = enfocus.core.create_hidden_dom.call(null, c);
-  enfocus.core.i_at.call(null, d, c, cljs.core.PersistentVector.fromArray([".section-header > h2:first-of-type"], !0), enfocus.core.en_content.call(null, cljs.core.name.call(null, a)), cljs.core.PersistentVector.fromArray([".section"], !0), enfocus.core.en_set_attr.call(null, "\ufdd0'id", cljs.core.name.call(null, a)), cljs.core.PersistentVector.fromArray([".section-body"], !0), enfocus.core.en_substitute.call(null, cljs.core.map.call(null, com.ewen.cle_usb_cljs.layouts.section_body, b)), cljs.core.PersistentVector.fromArray([".section-body"], 
-  !0), enfocus.core.en_set_attr.call(null, "\ufdd0'id", cljs.core.name.call(null, a)));
-  enfocus.core.reset_ids.call(null, d, c);
-  return enfocus.core.remove_node_return_child.call(null, c)
-};
-if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
-  var vec__209917__209918 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body"><p /><img class="section-body-logo" /></div></div></div></section></body></html>'), 
-  sym__6436__auto____209919 = cljs.core.nth.call(null, vec__209917__209918, 0, null), txt__6437__auto____209920 = cljs.core.nth.call(null, vec__209917__209918, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "list-pwdresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____209919, txt__6437__auto____209920], !0))
-}
-com.ewen.cle_usb_cljs.layouts.list_pwd = function(a) {
-  var b = function() {
-    return enfocus.core.get_cached_snippet.call(null, "list-pwdresources/public/passwords.html", cljs.core.PersistentVector.fromArray(["#list-pwd"], !0))
-  }.call(null), c = cljs.core.nth.call(null, b, 0, null), b = cljs.core.nth.call(null, b, 1, null), b = enfocus.core.create_hidden_dom.call(null, b);
-  enfocus.core.i_at.call(null, c, b, cljs.core.PersistentVector.fromArray(["#list-pwd"], !0), enfocus.core.en_content.call(null, cljs.core.map.call(null, function(a) {
-    return cljs.core.apply.call(null, com.ewen.cle_usb_cljs.layouts.section, a)
-  }, a)));
-  enfocus.core.reset_ids.call(null, c, b);
-  return enfocus.core.remove_node_return_child.call(null, b)
-};
-if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
-  var vec__209933__209934 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body"><p /><img class="section-body-logo" /></div></div></div></section></body></html>'), 
-  sym__6436__auto____209935 = cljs.core.nth.call(null, vec__209933__209934, 0, null), txt__6437__auto____209936 = cljs.core.nth.call(null, vec__209933__209934, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-passwordsresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____209935, txt__6437__auto____209936], !0))
-}
-com.ewen.cle_usb_cljs.layouts.template_passwords = function(a) {
-  var b = function() {
-    return enfocus.core.get_cached_dom.call(null, "template-passwordsresources/public/passwords.html")
-  }.call(null), c = cljs.core.nth.call(null, b, 0, null), b = cljs.core.nth.call(null, b, 1, null), b = enfocus.core.create_hidden_dom.call(null, b);
-  enfocus.core.i_at.call(null, c, b, cljs.core.PersistentVector.fromArray(["#list-pwd"], !0), enfocus.core.en_substitute.call(null, flapjax.core.B__GT_Node.call(null, flapjax.core.liftB.call(null, com.ewen.cle_usb_cljs.layouts.list_pwd, a))));
-  enfocus.core.reset_ids.call(null, c, b);
-  return enfocus.core.remove_node_return_child.call(null, b)
-};
-if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/edit-passwords.html")) {
-  var vec__209949__209950 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="edit-passwords"><div class="section-header"><h2>Edit passwords</h2></div><div class="section-body" id="new-password"><p>New password</p><img class="section-body-logo"></div></div></div></section></body></html>'), 
-  sym__6436__auto____209951 = cljs.core.nth.call(null, vec__209949__209950, 0, null), txt__6437__auto____209952 = cljs.core.nth.call(null, vec__209949__209950, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-edit-passwordsresources/public/edit-passwords.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____209951, txt__6437__auto____209952], !0))
-}
-com.ewen.cle_usb_cljs.layouts.template_edit_passwords = function() {
-  var a = function() {
-    return enfocus.core.get_cached_dom.call(null, "template-edit-passwordsresources/public/edit-passwords.html")
-  }.call(null), b = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null), a = enfocus.core.create_hidden_dom.call(null, a);
-  enfocus.core.i_at.call(null, b, a);
-  enfocus.core.reset_ids.call(null, b, a);
-  return enfocus.core.remove_node_return_child.call(null, a)
-};
-if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/new-password.html")) {
-  var vec__209965__209966 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
-  sym__6436__auto____209967 = cljs.core.nth.call(null, vec__209965__209966, 0, null), txt__6437__auto____209968 = cljs.core.nth.call(null, vec__209965__209966, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "section-optresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____209967, txt__6437__auto____209968], !0))
-}
-com.ewen.cle_usb_cljs.layouts.section_opt = function(a) {
-  var b = function() {
-    return enfocus.core.get_cached_snippet.call(null, "section-optresources/public/new-password.html", cljs.core.PersistentVector.fromArray(["#already-existing-sections option:first-of-type"], !0))
-  }.call(null), c = cljs.core.nth.call(null, b, 0, null), b = cljs.core.nth.call(null, b, 1, null), b = enfocus.core.create_hidden_dom.call(null, b);
-  enfocus.core.i_at.call(null, c, b, cljs.core.PersistentVector.fromArray(["option"], !0), enfocus.core.en_content.call(null, cljs.core.name.call(null, a)));
-  enfocus.core.reset_ids.call(null, c, b);
-  return enfocus.core.remove_node_return_child.call(null, b)
-};
-if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/new-password.html")) {
-  var vec__209981__209982 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
-  sym__6436__auto____209983 = cljs.core.nth.call(null, vec__209981__209982, 0, null), txt__6437__auto____209984 = cljs.core.nth.call(null, vec__209981__209982, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "list-sections-optresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____209983, txt__6437__auto____209984], !0))
-}
-com.ewen.cle_usb_cljs.layouts.list_sections_opt = function(a) {
-  var b = function() {
-    return enfocus.core.get_cached_snippet.call(null, "list-sections-optresources/public/new-password.html", cljs.core.PersistentVector.fromArray(["#already-existing-sections"], !0))
-  }.call(null), c = cljs.core.nth.call(null, b, 0, null), b = cljs.core.nth.call(null, b, 1, null), b = enfocus.core.create_hidden_dom.call(null, b);
-  enfocus.core.i_at.call(null, c, b, cljs.core.PersistentVector.fromArray(["#already-existing-sections"], !0), enfocus.core.en_content.call(null, cljs.core.map.call(null, com.ewen.cle_usb_cljs.layouts.section_opt, com.ewen.cle_usb_cljs.model.get_sections.call(null, a))));
-  enfocus.core.reset_ids.call(null, c, b);
-  return enfocus.core.remove_node_return_child.call(null, b)
-};
-if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/new-password.html")) {
-  var vec__209997__209998 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
-  sym__6436__auto____209999 = cljs.core.nth.call(null, vec__209997__209998, 0, null), txt__6437__auto____210000 = cljs.core.nth.call(null, vec__209997__209998, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-new-passwordresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6436__auto____209999, txt__6437__auto____210000], !0))
-}
-com.ewen.cle_usb_cljs.layouts.template_new_password = function(a) {
-  var b = function() {
-    return enfocus.core.get_cached_dom.call(null, "template-new-passwordresources/public/new-password.html")
-  }.call(null), c = cljs.core.nth.call(null, b, 0, null), b = cljs.core.nth.call(null, b, 1, null), b = enfocus.core.create_hidden_dom.call(null, b);
-  enfocus.core.i_at.call(null, c, b, cljs.core.PersistentVector.fromArray(["#already-existing-sections"], !0), enfocus.core.en_substitute.call(null, flapjax.core.B__GT_Node.call(null, flapjax.core.liftB.call(null, com.ewen.cle_usb_cljs.layouts.list_sections_opt, a))));
-  enfocus.core.reset_ids.call(null, c, b);
-  return enfocus.core.remove_node_return_child.call(null, b)
-};
-com.ewen.cle_usb_cljs.layouts.tml_frag__GT_node = function(a) {
-  return cljs.core.second.call(null, a.childNodes)
-};
-com.ewen.cle_usb_cljs.layouts.layouts = cljs.core.ObjMap.fromObject(["\ufdd0'passwords", "\ufdd0'edit-passwords", "\ufdd0'new-password"], {"\ufdd0'passwords":com.ewen.cle_usb_cljs.layouts.tml_frag__GT_node.call(null, com.ewen.cle_usb_cljs.layouts.template_passwords.call(null, flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.model.passwords))), "\ufdd0'edit-passwords":com.ewen.cle_usb_cljs.layouts.tml_frag__GT_node.call(null, com.ewen.cle_usb_cljs.layouts.template_edit_passwords.call(null)), 
-"\ufdd0'new-password":com.ewen.cle_usb_cljs.layouts.tml_frag__GT_node.call(null, com.ewen.cle_usb_cljs.layouts.template_new_password.call(null, flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.model.passwords)))});
-com.ewen.cle_usb_cljs.passwords_scripts = {};
-com.ewen.cle_usb_cljs.passwords_scripts.layout = (new cljs.core.Keyword("\ufdd0'passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts);
-com.ewen.cle_usb_cljs.passwords_scripts.get_navigation_events = function() {
-  return com.ewen.cle_usb_cljs.scripts.get_events_with_value.call(null, com.ewen.cle_usb_cljs.passwords_scripts.layout, "#navigation-forward", cljs.core.PersistentVector.fromArray(["\ufdd0'passwords", "\ufdd0'navigation-forward"], !0), "click")
 };
 goog.net.xpc = {};
 goog.net.xpc.TransportTypes = {NATIVE_MESSAGING:1, FRAME_ELEMENT_METHOD:2, IFRAME_RELAY:3, IFRAME_POLLING:4, FLASH:5, NIX:6};
@@ -21788,14 +21544,6 @@ goog.net.xpc.IframePollingTransport.Receiver.prototype.receive = function() {
   }
   return!1
 };
-com.ewen.cle_usb_cljs.edit_passwords_scripts = {};
-com.ewen.cle_usb_cljs.edit_passwords_scripts.layout = (new cljs.core.Keyword("\ufdd0'edit-passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts);
-com.ewen.cle_usb_cljs.edit_passwords_scripts.get_navigation_events = function() {
-  return com.ewen.cle_usb_cljs.scripts.get_events_with_value.call(null, com.ewen.cle_usb_cljs.edit_passwords_scripts.layout, "#navigation-backward", cljs.core.PersistentVector.fromArray(["\ufdd0'edit-passwords", "\ufdd0'navigation-backward"], !0), "click")
-};
-com.ewen.cle_usb_cljs.edit_passwords_scripts.get_new_password_events = function() {
-  return com.ewen.cle_usb_cljs.scripts.get_events_with_value.call(null, com.ewen.cle_usb_cljs.edit_passwords_scripts.layout, "#new-password", cljs.core.PersistentVector.fromArray(["\ufdd0'edit-passwords", "\ufdd0'new-password"], !0), "click")
-};
 goog.net.xpc.FrameElementMethodTransport = function(a, b) {
   goog.net.xpc.Transport.call(this, b);
   this.channel_ = a;
@@ -22370,13 +22118,13 @@ clojure.browser.net.transmit = function() {
     if(a ? a.clojure$browser$net$IConnection$transmit$arity$6 : a) {
       return a.clojure$browser$net$IConnection$transmit$arity$6(a, b, c, d, e, f)
     }
-    var l;
-    l = clojure.browser.net.transmit[goog.typeOf(null == a ? null : a)];
-    if(!l && (l = clojure.browser.net.transmit._, !l)) {
+    var m;
+    m = clojure.browser.net.transmit[goog.typeOf(null == a ? null : a)];
+    if(!m && (m = clojure.browser.net.transmit._, !m)) {
       throw cljs.core.missing_protocol.call(null, "IConnection.transmit", a);
     }
-    return l.call(null, a, b, c, d, e, f)
-  }, a = function(a, h, i, j, k, m) {
+    return m.call(null, a, b, c, d, e, f)
+  }, a = function(a, h, i, j, k, l) {
     switch(arguments.length) {
       case 2:
         return b.call(this, a, h);
@@ -22387,7 +22135,7 @@ clojure.browser.net.transmit = function() {
       case 5:
         return e.call(this, a, h, i, j, k);
       case 6:
-        return f.call(this, a, h, i, j, k, m)
+        return f.call(this, a, h, i, j, k, l)
     }
     throw"Invalid arity: " + arguments.length;
   };
@@ -22525,104 +22273,329 @@ clojure.browser.net.xpc_connection = function() {
   a.cljs$lang$arity$1 = c;
   return a
 }();
-com.ewen.cle_usb_cljs.new_password_scripts = {};
-com.ewen.cle_usb_cljs.new_password_scripts.layout = (new cljs.core.Keyword("\ufdd0'new-password")).call(null, com.ewen.cle_usb_cljs.layouts.layouts);
-com.ewen.cle_usb_cljs.new_password_scripts.canonicalize = function(a) {
-  return clojure.string.upper_case.call(null, com.ewen.cle_usb_cljs.utils.space_to_dash.call(null, "" + cljs.core.str(a)))
+var com = {ewen:{}};
+com.ewen.cle_usb_cljs = {};
+com.ewen.cle_usb_cljs.utils = {};
+com.ewen.cle_usb_cljs.utils.log = function(a) {
+  return console.log(a)
 };
-com.ewen.cle_usb_cljs.new_password_scripts.validate_button_elt = com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#new-password-button");
-com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt = com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#switch-section-selection");
-com.ewen.cle_usb_cljs.new_password_scripts.validate_button_E = flapjax.core.extractValueE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validate_button_elt);
-com.ewen.cle_usb_cljs.new_password_scripts.switch_section_E = flapjax.core.extractValueE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt);
-com.ewen.cle_usb_cljs.new_password_scripts.is_active_existing_section_B = flapjax.core.startsWith.call(null, flapjax.core.mapE.call(null, cljs.core.partial.call(null, cljs.core._EQ_, "Choose existing section"), com.ewen.cle_usb_cljs.new_password_scripts.switch_section_E), !0);
-com.ewen.cle_usb_cljs.new_password_scripts.is_active_new_section_B = flapjax.core.startsWith.call(null, flapjax.core.mapE.call(null, cljs.core.partial.call(null, cljs.core._EQ_, "Create a new section"), com.ewen.cle_usb_cljs.new_password_scripts.switch_section_E), !1);
-com.ewen.cle_usb_cljs.new_password_scripts.new_section_elt = com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#new-section");
-com.ewen.cle_usb_cljs.new_password_scripts.existing_section_elt = com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#already-existing-sections");
-flapjax.core.liftB.call(null, domina.set_attr_BANG_, com.ewen.cle_usb_cljs.new_password_scripts.new_section_elt, "active", com.ewen.cle_usb_cljs.new_password_scripts.is_active_new_section_B);
-flapjax.core.liftB.call(null, function(a, b) {
-  return com.ewen.cle_usb_cljs.new_password_scripts.existing_section_elt.setAttribute(a, b)
-}, "active", com.ewen.cle_usb_cljs.new_password_scripts.is_active_existing_section_B);
-com.ewen.cle_usb_cljs.new_password_scripts.section_name_B = flapjax.core.liftB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.canonicalize, flapjax.core.ifB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.is_active_existing_section_B, flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#already-existing-sections")), flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#new-section"))));
-com.ewen.cle_usb_cljs.new_password_scripts.pwd_label_B = flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#password-label"));
-com.ewen.cle_usb_cljs.new_password_scripts.pwd_val_B = flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#password-value"));
-com.ewen.cle_usb_cljs.new_password_scripts.enable_validate_button_B = flapjax.core.liftB.call(null, function(a) {
-  return cljs.core.not.call(null, cljs.core.some.call(null, cljs.core.empty_QMARK_, a))
-}, flapjax.core.liftB.call(null, cljs.core.vector, com.ewen.cle_usb_cljs.new_password_scripts.section_name_B, com.ewen.cle_usb_cljs.new_password_scripts.pwd_label_B, com.ewen.cle_usb_cljs.new_password_scripts.pwd_val_B));
-flapjax.core.liftB.call(null, function(a) {
-  return cljs.core.truth_(a) ? domina.remove_attr_BANG_.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validate_button_elt, "disabled") : domina.set_attr_BANG_.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validate_button_elt, "disabled", "disabled")
-}, com.ewen.cle_usb_cljs.new_password_scripts.enable_validate_button_B);
-com.ewen.cle_usb_cljs.new_password_scripts.change_button_val = function() {
-  return cljs.core._EQ_.call(null, domina.attr.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt, "\ufdd0'value"), "Choose existing section") ? domina.set_attr_BANG_.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt, "\ufdd0'value", "Create a new section") : cljs.core._EQ_.call(null, domina.attr.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt, "\ufdd0'value"), "Create a new section") ? domina.set_attr_BANG_.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt, 
-  "\ufdd0'value", "Choose existing section") : null
+com.ewen.cle_usb_cljs.utils.space_to_dash = function(a) {
+  return clojure.string.replace.call(null, a, " ", "-")
 };
-flapjax.core.mapE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.change_button_val, flapjax.core.clicksE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt));
-com.ewen.cle_usb_cljs.new_password_scripts.validation = function(a, b) {
-  var c = com.ewen.cle_usb_cljs.new_password_scripts.canonicalize.call(null, a), d = com.ewen.cle_usb_cljs.new_password_scripts.canonicalize.call(null, b);
-  return cljs.core.every_QMARK_.call(null, cljs.core.partial.call(null, cljs.core.not_EQ_, d), cljs.core.map.call(null, com.ewen.cle_usb_cljs.new_password_scripts.canonicalize, com.ewen.cle_usb_cljs.model.get_pwd_labels.call(null, cljs.core.deref.call(null, com.ewen.cle_usb_cljs.model.passwords), c))) ? cljs.core.PersistentVector.fromArray([!0], !0) : cljs.core.PersistentVector.fromArray([!1, "Password already exists !"], !0)
+com.ewen.cle_usb_cljs.utils.get_load_fn = function() {
+  return"function" === goog.typeOf(window.onload) ? window.onload : function() {
+    return cljs.core.List.EMPTY
+  }
 };
-com.ewen.cle_usb_cljs.new_password_scripts.validation_filter = function(a, b, c) {
-  var d = com.ewen.cle_usb_cljs.new_password_scripts.validation.call(null, a, b);
-  return cljs.core.truth_(cljs.core.first.call(null, d)) ? cljs.core.PersistentVector.fromArray([a, b, c], !0) : d
+com.ewen.cle_usb_cljs.utils.add_load_event = function(a) {
+  var b = com.ewen.cle_usb_cljs.utils.get_load_fn.call(null);
+  return window.onload = function() {
+    b.call(null);
+    return a.call(null)
+  }
 };
-com.ewen.cle_usb_cljs.new_password_scripts.new_pwd_data_E = flapjax.core.snapshotE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validate_button_E, flapjax.core.liftB.call(null, cljs.core.vector, com.ewen.cle_usb_cljs.new_password_scripts.section_name_B, com.ewen.cle_usb_cljs.new_password_scripts.pwd_label_B, com.ewen.cle_usb_cljs.new_password_scripts.pwd_val_B));
-com.ewen.cle_usb_cljs.new_password_scripts.validated_new_pwd_data_E = flapjax.core.mapE.call(null, function(a) {
-  return cljs.core.apply.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validation_filter, a)
-}, com.ewen.cle_usb_cljs.new_password_scripts.new_pwd_data_E);
-com.ewen.cle_usb_cljs.new_password_scripts.get_navigation_events = function() {
-  return com.ewen.cle_usb_cljs.scripts.get_events_with_value.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout, "#navigation-backward", cljs.core.PersistentVector.fromArray(["\ufdd0'new-password", "\ufdd0'navigation-backward"], !0), "click")
+com.ewen.cle_usb_cljs.model = {};
+com.ewen.cle_usb_cljs.model.Passwords = function(a, b) {
+  this.__meta = a;
+  this.__extmap = b;
+  this.cljs$lang$protocol_mask$partition1$ = 0;
+  this.cljs$lang$protocol_mask$partition0$ = 619054858;
+  0 < arguments.length ? (this.__meta = a, this.__extmap = b) : this.__extmap = this.__meta = null
 };
-com.ewen.cle_usb_cljs.controller = {};
-com.ewen.cle_usb_cljs.controller.change_layout_events = null;
-com.ewen.cle_usb_cljs.controller.init_change_layout_events = function() {
-  com.ewen.cle_usb_cljs.controller.change_layout_events = flapjax.core.mergeE.call(null, com.ewen.cle_usb_cljs.passwords_scripts.get_navigation_events.call(null), com.ewen.cle_usb_cljs.edit_passwords_scripts.get_navigation_events.call(null), com.ewen.cle_usb_cljs.edit_passwords_scripts.get_new_password_events.call(null), com.ewen.cle_usb_cljs.new_password_scripts.get_navigation_events.call(null));
-  return flapjax.core.mapE.call(null, function(a) {
-    return cljs.core.apply.call(null, com.ewen.cle_usb_cljs.controller.change_layout, a)
-  }, com.ewen.cle_usb_cljs.controller.change_layout_events)
+com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$IHash$_hash$arity$1 = function(a) {
+  var b = this.__hash;
+  return null != b ? b : this.__hash = a = cljs.core.hash_imap.call(null, a)
 };
-com.ewen.cle_usb_cljs.controller.init_change_layout_events.call(null);
-com.ewen.cle_usb_cljs.controller.new_pwd_E = flapjax.core.filterE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validated_new_pwd_data_E, function(a) {
-  return!1 !== cljs.core.first.call(null, a)
-});
-flapjax.core.mapE.call(null, function(a) {
-  cljs.core.apply.call(null, com.ewen.cle_usb_cljs.model.add_password, a);
-  return com.ewen.cle_usb_cljs.controller.change_layout.call(null, "\ufdd0'new-password", "\ufdd0'new-pwd-added")
-}, flapjax.core.mapE.call(null, function(a) {
-  return cljs.core.subvec.call(null, a, 0, 2)
-}, com.ewen.cle_usb_cljs.controller.new_pwd_E));
-com.ewen.cle_usb_cljs.controller.prepare_layout_header = function() {
-  return enfocus.core.at.call(null, document, cljs.core.PersistentVector.fromArray(["head .page-only-css"], !0), enfocus.core.en_content.call(null, null))
+com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$ILookup$_lookup$arity$2 = function(a, b) {
+  return a.cljs$core$ILookup$_lookup$arity$3(a, b, null)
 };
-com.ewen.cle_usb_cljs.controller.layout_body = function(a) {
-  return enfocus.core.at.call(null, document, cljs.core.PersistentVector.fromArray(["section"], !0), enfocus.core.en_substitute.call(null, a))
+com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$ILookup$_lookup$arity$3 = function(a, b, c) {
+  return cljs.core._lookup.call(null, this.__extmap, b, c)
 };
-com.ewen.cle_usb_cljs.controller.build_layout = function(a) {
-  com.ewen.cle_usb_cljs.controller.prepare_layout_header.call(null);
-  return com.ewen.cle_usb_cljs.controller.layout_body.call(null, a)
+com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$IAssociative$_assoc$arity$3 = function(a, b, c) {
+  return new com.ewen.cle_usb_cljs.model.Passwords(this.__meta, cljs.core.assoc.call(null, this.__extmap, b, c), null)
 };
-com.ewen.cle_usb_cljs.controller.change_layout = function() {
-  var a = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY), b = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY), c = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY), d = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY), e = cljs.core._lookup.call(null, cljs.core.ObjMap.EMPTY, "\ufdd0'hierarchy", cljs.core.global_hierarchy);
-  return new cljs.core.MultiFn("change-layout", function(a, b) {
-    return cljs.core.PersistentVector.fromArray([cljs.core.keyword.call(null, a), cljs.core.keyword.call(null, b)], !0)
-  }, "\ufdd0'default", e, a, b, c, d)
+com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$ICollection$_conj$arity$2 = function(a, b) {
+  return cljs.core.vector_QMARK_.call(null, b) ? a.cljs$core$IAssociative$_assoc$arity$3(a, cljs.core._nth.call(null, b, 0), cljs.core._nth.call(null, b, 1)) : cljs.core.reduce.call(null, cljs.core._conj, a, b)
+};
+com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$ISeqable$_seq$arity$1 = function() {
+  return cljs.core.seq.call(null, cljs.core.concat.call(null, cljs.core.PersistentVector.EMPTY, this.__extmap))
+};
+com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$IPrintable$_pr_seq$arity$2 = function(a, b) {
+  return cljs.core.pr_sequential.call(null, function(a) {
+    return cljs.core.pr_sequential.call(null, cljs.core.pr_seq, "", " ", "", b, a)
+  }, [cljs.core.str("#"), cljs.core.str("Passwords"), cljs.core.str("{")].join(""), ", ", "}", b, cljs.core.concat.call(null, cljs.core.PersistentVector.EMPTY, this.__extmap))
+};
+com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$ICounted$_count$arity$1 = function() {
+  return 0 + cljs.core.count.call(null, this.__extmap)
+};
+com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$IEquiv$_equiv$arity$2 = function(a, b) {
+  return cljs.core.truth_(function() {
+    if(cljs.core.truth_(b)) {
+      var c = a.constructor === b.constructor;
+      return c ? cljs.core.equiv_map.call(null, a, b) : c
+    }
+    return b
+  }()) ? !0 : !1
+};
+com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(a, b) {
+  return new com.ewen.cle_usb_cljs.model.Passwords(b, this.__extmap, this.__hash)
+};
+com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$IMeta$_meta$arity$1 = function() {
+  return this.__meta
+};
+com.ewen.cle_usb_cljs.model.Passwords.prototype.cljs$core$IMap$_dissoc$arity$2 = function(a, b) {
+  return cljs.core.contains_QMARK_.call(null, cljs.core.PersistentHashSet.EMPTY, b) ? cljs.core.dissoc.call(null, cljs.core.with_meta.call(null, cljs.core.into.call(null, cljs.core.ObjMap.EMPTY, a), this.__meta), b) : new com.ewen.cle_usb_cljs.model.Passwords(this.__meta, cljs.core.not_empty.call(null, cljs.core.dissoc.call(null, this.__extmap, b)), null)
+};
+com.ewen.cle_usb_cljs.model.Passwords.cljs$lang$type = !0;
+com.ewen.cle_usb_cljs.model.Passwords.cljs$lang$ctorPrSeq = function() {
+  return cljs.core.list.call(null, "com.ewen.cle-usb-cljs.model/Passwords")
+};
+com.ewen.cle_usb_cljs.model.__GT_Passwords = function() {
+  return new com.ewen.cle_usb_cljs.model.Passwords
+};
+com.ewen.cle_usb_cljs.model.map__GT_Passwords = function(a) {
+  return new com.ewen.cle_usb_cljs.model.Passwords(null, cljs.core.dissoc.call(null, a))
+};
+com.ewen.cle_usb_cljs.model.Passwords;
+com.ewen.cle_usb_cljs.model.passwords_str = '{:SECTION1 [{:title "password1" :logo ""}] :SECTION2 [{:title "password2" :logo ""}{:title "password3" :logo ""}]}';
+com.ewen.cle_usb_cljs.model.passwords = cljs.core.atom.call(null, com.ewen.cle_usb_cljs.model.map__GT_Passwords.call(null, cljs.reader.read_string.call(null, com.ewen.cle_usb_cljs.model.passwords_str)));
+com.ewen.cle_usb_cljs.model.get_sections = function(a) {
+  return cljs.core.map.call(null, cljs.core.comp.call(null, cljs.core.name, cljs.core.first), a)
+};
+com.ewen.cle_usb_cljs.model.get_pwd_labels = function(a, b) {
+  return cljs.core.map.call(null, "\ufdd0'title", cljs.core.keyword.call(null, b).call(null, a))
+};
+com.ewen.cle_usb_cljs.model.add_password = function(a, b) {
+  return cljs.core.swap_BANG_.call(null, com.ewen.cle_usb_cljs.model.passwords, function(c) {
+    return cljs.core.update_in.call(null, c, cljs.core.PersistentVector.fromArray([cljs.core.keyword.call(null, a)], !0), cljs.core.conj, cljs.core.ObjMap.fromObject(["\ufdd0'title", "\ufdd0'logo"], {"\ufdd0'title":"" + cljs.core.str(b), "\ufdd0'logo":""}))
+  })
+};
+com.ewen.cle_usb_cljs.layouts = {};
+domina.array_like_QMARK_ = function(a) {
+  if(cljs.core.truth_(a)) {
+    var b = cljs.core.not.call(null, a.name);
+    return b ? a.length : b
+  }
+  return a
+};
+if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
+  var vec__108355__108356 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body" draggable="draggable"><p /><img class="section-body-logo" /></div></div></div><div enabled="false" id="pwd-trash"><img id="pwd-trash-logo" src="img/5-content-discard.png" /></div></section></body></html>'), 
+  sym__6628__auto____108357 = cljs.core.nth.call(null, vec__108355__108356, 0, null), txt__6629__auto____108358 = cljs.core.nth.call(null, vec__108355__108356, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "section-bodyresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6628__auto____108357, txt__6629__auto____108358], !0))
+}
+com.ewen.cle_usb_cljs.layouts.section_body = function() {
+  var a = function() {
+    return enfocus.core.get_cached_snippet.call(null, "section-bodyresources/public/passwords.html", cljs.core.PersistentVector.fromArray([".section-body"], !0))
+  }.call(null), b = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null), a = enfocus.core.create_hidden_dom.call(null, a);
+  enfocus.core.i_at.call(null, b, a, cljs.core.PersistentVector.EMPTY);
+  enfocus.core.reset_ids.call(null, b, a);
+  return enfocus.core.remove_node_return_child.call(null, a)
+};
+if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
+  var vec__108371__108372 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body" draggable="draggable"><p /><img class="section-body-logo" /></div></div></div><div enabled="false" id="pwd-trash"><img id="pwd-trash-logo" src="img/5-content-discard.png" /></div></section></body></html>'), 
+  sym__6628__auto____108373 = cljs.core.nth.call(null, vec__108371__108372, 0, null), txt__6629__auto____108374 = cljs.core.nth.call(null, vec__108371__108372, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "section-bodyresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6628__auto____108373, txt__6629__auto____108374], !0))
+}
+com.ewen.cle_usb_cljs.layouts.section_body = function(a) {
+  var b = cljs.core.seq_QMARK_.call(null, a) ? cljs.core.apply.call(null, cljs.core.hash_map, a) : a, a = cljs.core._lookup.call(null, b, "\ufdd0'title", null), b = cljs.core._lookup.call(null, b, "\ufdd0'logo", null), c = function() {
+    return enfocus.core.get_cached_snippet.call(null, "section-bodyresources/public/passwords.html", cljs.core.PersistentVector.fromArray([".section-body"], !0))
+  }.call(null), d = cljs.core.nth.call(null, c, 0, null), c = cljs.core.nth.call(null, c, 1, null), c = enfocus.core.create_hidden_dom.call(null, c);
+  enfocus.core.i_at.call(null, d, c, cljs.core.PersistentVector.fromArray(["p"], !0), enfocus.core.en_prepend.call(null, a), cljs.core.PersistentVector.fromArray([".section-body-logo"], !0), enfocus.core.en_set_attr.call(null, "src", b));
+  enfocus.core.reset_ids.call(null, d, c);
+  return enfocus.core.remove_node_return_child.call(null, c)
+};
+if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
+  var vec__108399__108400 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body" draggable="draggable"><p /><img class="section-body-logo" /></div></div></div><div enabled="false" id="pwd-trash"><img id="pwd-trash-logo" src="img/5-content-discard.png" /></div></section></body></html>'), 
+  sym__6628__auto____108401 = cljs.core.nth.call(null, vec__108399__108400, 0, null), txt__6629__auto____108402 = cljs.core.nth.call(null, vec__108399__108400, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "sectionresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6628__auto____108401, txt__6629__auto____108402], !0))
+}
+com.ewen.cle_usb_cljs.layouts.section = function(a, b) {
+  var c = function() {
+    return enfocus.core.get_cached_snippet.call(null, "sectionresources/public/passwords.html", cljs.core.PersistentVector.fromArray([".section"], !0))
+  }.call(null), d = cljs.core.nth.call(null, c, 0, null), c = cljs.core.nth.call(null, c, 1, null), c = enfocus.core.create_hidden_dom.call(null, c);
+  enfocus.core.i_at.call(null, d, c, cljs.core.PersistentVector.fromArray([".section-header > h2:first-of-type"], !0), enfocus.core.en_content.call(null, cljs.core.name.call(null, a)), cljs.core.PersistentVector.fromArray([".section"], !0), enfocus.core.en_set_attr.call(null, "\ufdd0'id", cljs.core.name.call(null, a)), cljs.core.PersistentVector.fromArray([".section-body"], !0), enfocus.core.en_substitute.call(null, cljs.core.map.call(null, com.ewen.cle_usb_cljs.layouts.section_body, b)), cljs.core.PersistentVector.fromArray([".section-body"], 
+  !0), enfocus.core.en_set_attr.call(null, "\ufdd0'id", cljs.core.name.call(null, a)));
+  enfocus.core.reset_ids.call(null, d, c);
+  return enfocus.core.remove_node_return_child.call(null, c)
+};
+if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
+  var vec__108415__108416 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body" draggable="draggable"><p /><img class="section-body-logo" /></div></div></div><div enabled="false" id="pwd-trash"><img id="pwd-trash-logo" src="img/5-content-discard.png" /></div></section></body></html>'), 
+  sym__6628__auto____108417 = cljs.core.nth.call(null, vec__108415__108416, 0, null), txt__6629__auto____108418 = cljs.core.nth.call(null, vec__108415__108416, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "list-pwdresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6628__auto____108417, txt__6629__auto____108418], !0))
+}
+com.ewen.cle_usb_cljs.layouts.list_pwd = function(a) {
+  var b = function() {
+    return enfocus.core.get_cached_snippet.call(null, "list-pwdresources/public/passwords.html", cljs.core.PersistentVector.fromArray(["#list-pwd"], !0))
+  }.call(null), c = cljs.core.nth.call(null, b, 0, null), b = cljs.core.nth.call(null, b, 1, null), b = enfocus.core.create_hidden_dom.call(null, b);
+  enfocus.core.i_at.call(null, c, b, cljs.core.PersistentVector.fromArray(["#list-pwd"], !0), enfocus.core.en_content.call(null, cljs.core.map.call(null, function(a) {
+    return cljs.core.apply.call(null, com.ewen.cle_usb_cljs.layouts.section, a)
+  }, a)));
+  enfocus.core.reset_ids.call(null, c, b);
+  return enfocus.core.remove_node_return_child.call(null, b)
+};
+if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
+  var vec__108431__108432 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body" draggable="draggable"><p /><img class="section-body-logo" /></div></div></div><div enabled="false" id="pwd-trash"><img id="pwd-trash-logo" src="img/5-content-discard.png" /></div></section></body></html>'), 
+  sym__6628__auto____108433 = cljs.core.nth.call(null, vec__108431__108432, 0, null), txt__6629__auto____108434 = cljs.core.nth.call(null, vec__108431__108432, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-passwordsresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6628__auto____108433, txt__6629__auto____108434], !0))
+}
+com.ewen.cle_usb_cljs.layouts.template_passwords = function(a) {
+  var b = function() {
+    return enfocus.core.get_cached_dom.call(null, "template-passwordsresources/public/passwords.html")
+  }.call(null), c = cljs.core.nth.call(null, b, 0, null), b = cljs.core.nth.call(null, b, 1, null), b = enfocus.core.create_hidden_dom.call(null, b);
+  enfocus.core.i_at.call(null, c, b, cljs.core.PersistentVector.fromArray(["#list-pwd"], !0), enfocus.core.en_substitute.call(null, flapjax.core.B__GT_Node.call(null, flapjax.core.liftB.call(null, com.ewen.cle_usb_cljs.layouts.list_pwd, a))));
+  enfocus.core.reset_ids.call(null, c, b);
+  return enfocus.core.remove_node_return_child.call(null, b)
+};
+if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/edit-passwords.html")) {
+  var vec__108447__108448 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="edit-passwords"><div class="section-header"><h2>Edit passwords</h2></div><div class="section-body" id="new-password"><p>New password</p><img class="section-body-logo"></div></div></div></section></body></html>'), 
+  sym__6628__auto____108449 = cljs.core.nth.call(null, vec__108447__108448, 0, null), txt__6629__auto____108450 = cljs.core.nth.call(null, vec__108447__108448, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-edit-passwordsresources/public/edit-passwords.html", cljs.core.PersistentVector.fromArray([sym__6628__auto____108449, txt__6629__auto____108450], !0))
+}
+com.ewen.cle_usb_cljs.layouts.template_edit_passwords = function() {
+  var a = function() {
+    return enfocus.core.get_cached_dom.call(null, "template-edit-passwordsresources/public/edit-passwords.html")
+  }.call(null), b = cljs.core.nth.call(null, a, 0, null), a = cljs.core.nth.call(null, a, 1, null), a = enfocus.core.create_hidden_dom.call(null, a);
+  enfocus.core.i_at.call(null, b, a);
+  enfocus.core.reset_ids.call(null, b, a);
+  return enfocus.core.remove_node_return_child.call(null, a)
+};
+if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/new-password.html")) {
+  var vec__108463__108464 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
+  sym__6628__auto____108465 = cljs.core.nth.call(null, vec__108463__108464, 0, null), txt__6629__auto____108466 = cljs.core.nth.call(null, vec__108463__108464, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "section-optresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6628__auto____108465, txt__6629__auto____108466], !0))
+}
+com.ewen.cle_usb_cljs.layouts.section_opt = function(a) {
+  var b = function() {
+    return enfocus.core.get_cached_snippet.call(null, "section-optresources/public/new-password.html", cljs.core.PersistentVector.fromArray(["#already-existing-sections option:first-of-type"], !0))
+  }.call(null), c = cljs.core.nth.call(null, b, 0, null), b = cljs.core.nth.call(null, b, 1, null), b = enfocus.core.create_hidden_dom.call(null, b);
+  enfocus.core.i_at.call(null, c, b, cljs.core.PersistentVector.fromArray(["option"], !0), enfocus.core.en_content.call(null, cljs.core.name.call(null, a)));
+  enfocus.core.reset_ids.call(null, c, b);
+  return enfocus.core.remove_node_return_child.call(null, b)
+};
+if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/new-password.html")) {
+  var vec__108479__108480 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
+  sym__6628__auto____108481 = cljs.core.nth.call(null, vec__108479__108480, 0, null), txt__6629__auto____108482 = cljs.core.nth.call(null, vec__108479__108480, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "list-sections-optresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6628__auto____108481, txt__6629__auto____108482], !0))
+}
+com.ewen.cle_usb_cljs.layouts.list_sections_opt = function(a) {
+  var b = function() {
+    return enfocus.core.get_cached_snippet.call(null, "list-sections-optresources/public/new-password.html", cljs.core.PersistentVector.fromArray(["#already-existing-sections"], !0))
+  }.call(null), c = cljs.core.nth.call(null, b, 0, null), b = cljs.core.nth.call(null, b, 1, null), b = enfocus.core.create_hidden_dom.call(null, b);
+  enfocus.core.i_at.call(null, c, b, cljs.core.PersistentVector.fromArray(["#already-existing-sections"], !0), enfocus.core.en_content.call(null, cljs.core.map.call(null, com.ewen.cle_usb_cljs.layouts.section_opt, com.ewen.cle_usb_cljs.model.get_sections.call(null, a))));
+  enfocus.core.reset_ids.call(null, c, b);
+  return enfocus.core.remove_node_return_child.call(null, b)
+};
+if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/new-password.html")) {
+  var vec__108495__108496 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
+  sym__6628__auto____108497 = cljs.core.nth.call(null, vec__108495__108496, 0, null), txt__6629__auto____108498 = cljs.core.nth.call(null, vec__108495__108496, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-new-passwordresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6628__auto____108497, txt__6629__auto____108498], !0))
+}
+com.ewen.cle_usb_cljs.layouts.template_new_password = function(a) {
+  var b = function() {
+    return enfocus.core.get_cached_dom.call(null, "template-new-passwordresources/public/new-password.html")
+  }.call(null), c = cljs.core.nth.call(null, b, 0, null), b = cljs.core.nth.call(null, b, 1, null), b = enfocus.core.create_hidden_dom.call(null, b);
+  enfocus.core.i_at.call(null, c, b, cljs.core.PersistentVector.fromArray(["#already-existing-sections"], !0), enfocus.core.en_substitute.call(null, flapjax.core.B__GT_Node.call(null, flapjax.core.liftB.call(null, com.ewen.cle_usb_cljs.layouts.list_sections_opt, a))));
+  enfocus.core.reset_ids.call(null, c, b);
+  return enfocus.core.remove_node_return_child.call(null, b)
+};
+com.ewen.cle_usb_cljs.layouts.tml_frag__GT_node = function(a) {
+  return cljs.core.second.call(null, a.childNodes)
+};
+com.ewen.cle_usb_cljs.layouts.layouts = cljs.core.ObjMap.fromObject(["\ufdd0'passwords", "\ufdd0'edit-passwords", "\ufdd0'new-password"], {"\ufdd0'passwords":com.ewen.cle_usb_cljs.layouts.tml_frag__GT_node.call(null, com.ewen.cle_usb_cljs.layouts.template_passwords.call(null, flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.model.passwords))), "\ufdd0'edit-passwords":com.ewen.cle_usb_cljs.layouts.tml_frag__GT_node.call(null, com.ewen.cle_usb_cljs.layouts.template_edit_passwords.call(null)), 
+"\ufdd0'new-password":com.ewen.cle_usb_cljs.layouts.tml_frag__GT_node.call(null, com.ewen.cle_usb_cljs.layouts.template_new_password.call(null, flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.model.passwords)))});
+com.ewen.cle_usb_cljs.scripts = {};
+com.ewen.cle_usb_cljs.scripts.get_events_with_value = function() {
+  var a = null, b = function(b, c, f) {
+    return a.call(null, dom.getElementsByTagNameAndClass.call(null, "html")[0], b, c, f)
+  }, c = function(a, b, c, g) {
+    a = a.querySelector(b);
+    g = flapjax.core.extractEventE.call(null, a, g);
+    c = flapjax.core.constantB.call(null, c);
+    return flapjax.core.snapshotE.call(null, g, c)
+  }, a = function(a, e, f, g) {
+    switch(arguments.length) {
+      case 3:
+        return b.call(this, a, e, f);
+      case 4:
+        return c.call(this, a, e, f, g)
+    }
+    throw"Invalid arity: " + arguments.length;
+  };
+  a.cljs$lang$arity$3 = b;
+  a.cljs$lang$arity$4 = c;
+  return a
 }();
-cljs.core._add_method.call(null, com.ewen.cle_usb_cljs.controller.change_layout, cljs.core.PersistentVector.fromArray(["\ufdd0'passwords", "\ufdd0'navigation-forward"], !0), function() {
-  return com.ewen.cle_usb_cljs.controller.build_layout.call(null, (new cljs.core.Keyword("\ufdd0'edit-passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts))
-});
-cljs.core._add_method.call(null, com.ewen.cle_usb_cljs.controller.change_layout, cljs.core.PersistentVector.fromArray(["\ufdd0'edit-passwords", "\ufdd0'navigation-backward"], !0), function() {
-  return com.ewen.cle_usb_cljs.controller.build_layout.call(null, (new cljs.core.Keyword("\ufdd0'passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts))
-});
-cljs.core._add_method.call(null, com.ewen.cle_usb_cljs.controller.change_layout, cljs.core.PersistentVector.fromArray(["\ufdd0'edit-passwords", "\ufdd0'new-password"], !0), function() {
-  return com.ewen.cle_usb_cljs.controller.build_layout.call(null, (new cljs.core.Keyword("\ufdd0'new-password")).call(null, com.ewen.cle_usb_cljs.layouts.layouts))
-});
-cljs.core._add_method.call(null, com.ewen.cle_usb_cljs.controller.change_layout, cljs.core.PersistentVector.fromArray(["\ufdd0'new-password", "\ufdd0'navigation-backward"], !0), function() {
-  return com.ewen.cle_usb_cljs.controller.build_layout.call(null, (new cljs.core.Keyword("\ufdd0'edit-passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts))
-});
-cljs.core._add_method.call(null, com.ewen.cle_usb_cljs.controller.change_layout, cljs.core.PersistentVector.fromArray(["\ufdd0'new-password", "\ufdd0'new-pwd-added"], !0), function() {
-  return com.ewen.cle_usb_cljs.controller.build_layout.call(null, (new cljs.core.Keyword("\ufdd0'passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts))
-});
-com.ewen.cle_usb_cljs.utils.add_load_event.call(null, function() {
-  return com.ewen.cle_usb_cljs.controller.build_layout.call(null, (new cljs.core.Keyword("\ufdd0'passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts))
-});
+com.ewen.cle_usb_cljs.passwords_scripts = {};
+com.ewen.cle_usb_cljs.passwords_scripts.layout = (new cljs.core.Keyword("\ufdd0'passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts);
+com.ewen.cle_usb_cljs.passwords_scripts.draggable_elts = com.ewen.cle_usb_cljs.passwords_scripts.layout.querySelectorAll('div[draggable="draggable"]');
+com.ewen.cle_usb_cljs.passwords_scripts.drag_E = function(a) {
+  var b = flapjax.core.mapE.call(null, function(b) {
+    b.preventDefault();
+    return flapjax.core.mapE.call(null, function(b) {
+      b.preventDefault();
+      return cljs.core.ObjMap.fromObject(["\ufdd0'drag", "\ufdd0'left", "\ufdd0'top"], {"\ufdd0'drag":a, "\ufdd0'left":b.changedTouches.item(0).pageX, "\ufdd0'top":b.changedTouches.item(0).pageY})
+    }, flapjax.core.calmE.call(null, flapjax.core.extractEventE.call(null, a, "touchmove"), flapjax.core.constantB.call(null, 5)))
+  }, flapjax.core.extractEventE.call(null, a, "touchstart")), c = flapjax.core.mapE.call(null, function(b) {
+    b.preventDefault();
+    return flapjax.core.oneE.call(null, cljs.core.ObjMap.fromObject(["\ufdd0'drop", "\ufdd0'left", "\ufdd0'top"], {"\ufdd0'drop":a, "\ufdd0'left":b.pageX, "\ufdd0'top":b.pageY}))
+  }, flapjax.core.extractEventE.call(null, a, "touchend"));
+  return flapjax.core.switchE.call(null, flapjax.core.mergeE.call(null, b, c))
+};
+com.ewen.cle_usb_cljs.passwords_scripts.drag_start_E = function(a) {
+  return flapjax.core.filterE.call(null, flapjax.core.filterRepeatsE.call(null, a), function(a) {
+    return(new cljs.core.Keyword("\ufdd0'drag")).call(null, a)
+  })
+};
+com.ewen.cle_usb_cljs.passwords_scripts.drag_stop_E = function(a) {
+  return flapjax.core.filterE.call(null, a, function(a) {
+    return(new cljs.core.Keyword("\ufdd0'drop")).call(null, a)
+  })
+};
+var G__131331__131332 = cljs.core.seq.call(null, com.ewen.cle_usb_cljs.passwords_scripts.draggable_elts);
+if(G__131331__131332) {
+  for(var elt__131333 = cljs.core.first.call(null, G__131331__131332), G__131331__131334 = G__131331__131332;;) {
+    var elt_pos__131335 = function(a) {
+      return function(b) {
+        return b - a.offsetHeight / 2
+      }
+    }(elt__131333, G__131331__131334);
+    flapjax.core.mapE.call(null, function(a) {
+      return function() {
+        domina.set_attr_BANG_.call(null, a, "is-enabled-drag", "true");
+        return domina.set_attr_BANG_.call(null, com.ewen.cle_usb_cljs.passwords_scripts.layout.querySelector("#pwd-trash"), "enabled", "true")
+      }
+    }(elt__131333, G__131331__131334, elt_pos__131335), com.ewen.cle_usb_cljs.passwords_scripts.drag_start_E.call(null, com.ewen.cle_usb_cljs.passwords_scripts.drag_E.call(null, elt__131333)));
+    flapjax.core.mapE.call(null, function(a) {
+      return function() {
+        domina.remove_attr_BANG_.call(null, a, "is-enabled-drag");
+        return domina.set_attr_BANG_.call(null, com.ewen.cle_usb_cljs.passwords_scripts.layout.querySelector("#pwd-trash"), "enabled", "false")
+      }
+    }(elt__131333, G__131331__131334, elt_pos__131335), com.ewen.cle_usb_cljs.passwords_scripts.drag_stop_E.call(null, com.ewen.cle_usb_cljs.passwords_scripts.drag_E.call(null, elt__131333)));
+    flapjax.core.insertValueE.call(null, flapjax.core.mapE.call(null, function(a, b, c) {
+      return function(a) {
+        return c.call(null, (new cljs.core.Keyword("\ufdd0'top")).call(null, a))
+      }
+    }(elt__131333, G__131331__131334, elt_pos__131335), com.ewen.cle_usb_cljs.passwords_scripts.drag_E.call(null, elt__131333)), elt__131333, "style", "top");
+    var temp__3974__auto____131336 = cljs.core.next.call(null, G__131331__131334);
+    if(temp__3974__auto____131336) {
+      var G__131331__131337 = temp__3974__auto____131336, G__131338 = cljs.core.first.call(null, G__131331__131337), G__131339 = G__131331__131337, elt__131333 = G__131338, G__131331__131334 = G__131339
+    }else {
+      break
+    }
+  }
+}
+com.ewen.cle_usb_cljs.passwords_scripts.get_navigation_events = function() {
+  return com.ewen.cle_usb_cljs.scripts.get_events_with_value.call(null, com.ewen.cle_usb_cljs.passwords_scripts.layout, "#navigation-forward", cljs.core.PersistentVector.fromArray(["\ufdd0'passwords", "\ufdd0'navigation-forward"], !0), "touchend")
+};
+com.ewen.cle_usb_cljs.edit_passwords_scripts = {};
+com.ewen.cle_usb_cljs.edit_passwords_scripts.layout = (new cljs.core.Keyword("\ufdd0'edit-passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts);
+com.ewen.cle_usb_cljs.edit_passwords_scripts.get_navigation_events = function() {
+  return com.ewen.cle_usb_cljs.scripts.get_events_with_value.call(null, com.ewen.cle_usb_cljs.edit_passwords_scripts.layout, "#navigation-backward", cljs.core.PersistentVector.fromArray(["\ufdd0'edit-passwords", "\ufdd0'navigation-backward"], !0), "touchend")
+};
+com.ewen.cle_usb_cljs.edit_passwords_scripts.get_new_password_events = function() {
+  return com.ewen.cle_usb_cljs.scripts.get_events_with_value.call(null, com.ewen.cle_usb_cljs.edit_passwords_scripts.layout, "#new-password", cljs.core.PersistentVector.fromArray(["\ufdd0'edit-passwords", "\ufdd0'new-password"], !0), "click")
+};
 clojure.browser.repl = {};
 clojure.browser.repl.xpc_connection = cljs.core.atom.call(null, null);
 clojure.browser.repl.repl_print = function(a) {
@@ -22705,3 +22678,101 @@ com.ewen.cle_usb_cljs.dev = {};
 com.ewen.cle_usb_cljs.dev.connect_repl = function() {
   return clojure.browser.repl.connect.call(null, "http://localhost:9000/repl")
 };
+com.ewen.cle_usb_cljs.new_password_scripts = {};
+com.ewen.cle_usb_cljs.new_password_scripts.layout = (new cljs.core.Keyword("\ufdd0'new-password")).call(null, com.ewen.cle_usb_cljs.layouts.layouts);
+com.ewen.cle_usb_cljs.new_password_scripts.canonicalize = function(a) {
+  return clojure.string.upper_case.call(null, com.ewen.cle_usb_cljs.utils.space_to_dash.call(null, "" + cljs.core.str(a)))
+};
+com.ewen.cle_usb_cljs.new_password_scripts.validate_button_elt = com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#new-password-button");
+com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt = com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#switch-section-selection");
+com.ewen.cle_usb_cljs.new_password_scripts.validate_button_E = flapjax.core.extractValueE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validate_button_elt);
+com.ewen.cle_usb_cljs.new_password_scripts.switch_section_E = flapjax.core.extractValueE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt);
+com.ewen.cle_usb_cljs.new_password_scripts.is_active_existing_section_B = flapjax.core.startsWith.call(null, flapjax.core.mapE.call(null, cljs.core.partial.call(null, cljs.core._EQ_, "Choose existing section"), com.ewen.cle_usb_cljs.new_password_scripts.switch_section_E), !0);
+com.ewen.cle_usb_cljs.new_password_scripts.is_active_new_section_B = flapjax.core.startsWith.call(null, flapjax.core.mapE.call(null, cljs.core.partial.call(null, cljs.core._EQ_, "Create a new section"), com.ewen.cle_usb_cljs.new_password_scripts.switch_section_E), !1);
+com.ewen.cle_usb_cljs.new_password_scripts.new_section_elt = com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#new-section");
+com.ewen.cle_usb_cljs.new_password_scripts.existing_section_elt = com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#already-existing-sections");
+flapjax.core.liftB.call(null, domina.set_attr_BANG_, com.ewen.cle_usb_cljs.new_password_scripts.new_section_elt, "active", com.ewen.cle_usb_cljs.new_password_scripts.is_active_new_section_B);
+flapjax.core.liftB.call(null, function(a, b) {
+  return com.ewen.cle_usb_cljs.new_password_scripts.existing_section_elt.setAttribute(a, b)
+}, "active", com.ewen.cle_usb_cljs.new_password_scripts.is_active_existing_section_B);
+com.ewen.cle_usb_cljs.new_password_scripts.section_name_B = flapjax.core.liftB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.canonicalize, flapjax.core.ifB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.is_active_existing_section_B, flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#already-existing-sections")), flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#new-section"))));
+com.ewen.cle_usb_cljs.new_password_scripts.pwd_label_B = flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#password-label"));
+com.ewen.cle_usb_cljs.new_password_scripts.pwd_val_B = flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#password-value"));
+com.ewen.cle_usb_cljs.new_password_scripts.enable_validate_button_B = flapjax.core.liftB.call(null, function(a) {
+  return cljs.core.not.call(null, cljs.core.some.call(null, cljs.core.empty_QMARK_, a))
+}, flapjax.core.liftB.call(null, cljs.core.vector, com.ewen.cle_usb_cljs.new_password_scripts.section_name_B, com.ewen.cle_usb_cljs.new_password_scripts.pwd_label_B, com.ewen.cle_usb_cljs.new_password_scripts.pwd_val_B));
+flapjax.core.liftB.call(null, function(a) {
+  return cljs.core.truth_(a) ? domina.remove_attr_BANG_.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validate_button_elt, "disabled") : domina.set_attr_BANG_.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validate_button_elt, "disabled", "disabled")
+}, com.ewen.cle_usb_cljs.new_password_scripts.enable_validate_button_B);
+com.ewen.cle_usb_cljs.new_password_scripts.change_button_val = function() {
+  return cljs.core._EQ_.call(null, domina.attr.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt, "\ufdd0'value"), "Choose existing section") ? domina.set_attr_BANG_.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt, "\ufdd0'value", "Create a new section") : cljs.core._EQ_.call(null, domina.attr.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt, "\ufdd0'value"), "Create a new section") ? domina.set_attr_BANG_.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt, 
+  "\ufdd0'value", "Choose existing section") : null
+};
+flapjax.core.mapE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.change_button_val, flapjax.core.clicksE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt));
+com.ewen.cle_usb_cljs.new_password_scripts.validation = function(a, b) {
+  var c = com.ewen.cle_usb_cljs.new_password_scripts.canonicalize.call(null, a), d = com.ewen.cle_usb_cljs.new_password_scripts.canonicalize.call(null, b);
+  return cljs.core.every_QMARK_.call(null, cljs.core.partial.call(null, cljs.core.not_EQ_, d), cljs.core.map.call(null, com.ewen.cle_usb_cljs.new_password_scripts.canonicalize, com.ewen.cle_usb_cljs.model.get_pwd_labels.call(null, cljs.core.deref.call(null, com.ewen.cle_usb_cljs.model.passwords), c))) ? cljs.core.PersistentVector.fromArray([!0], !0) : cljs.core.PersistentVector.fromArray([!1, "Password already exists !"], !0)
+};
+com.ewen.cle_usb_cljs.new_password_scripts.validation_filter = function(a, b, c) {
+  var d = com.ewen.cle_usb_cljs.new_password_scripts.validation.call(null, a, b);
+  return cljs.core.truth_(cljs.core.first.call(null, d)) ? cljs.core.PersistentVector.fromArray([a, b, c], !0) : d
+};
+com.ewen.cle_usb_cljs.new_password_scripts.new_pwd_data_E = flapjax.core.snapshotE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validate_button_E, flapjax.core.liftB.call(null, cljs.core.vector, com.ewen.cle_usb_cljs.new_password_scripts.section_name_B, com.ewen.cle_usb_cljs.new_password_scripts.pwd_label_B, com.ewen.cle_usb_cljs.new_password_scripts.pwd_val_B));
+com.ewen.cle_usb_cljs.new_password_scripts.validated_new_pwd_data_E = flapjax.core.mapE.call(null, function(a) {
+  return cljs.core.apply.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validation_filter, a)
+}, com.ewen.cle_usb_cljs.new_password_scripts.new_pwd_data_E);
+com.ewen.cle_usb_cljs.new_password_scripts.get_navigation_events = function() {
+  return com.ewen.cle_usb_cljs.scripts.get_events_with_value.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout, "#navigation-backward", cljs.core.PersistentVector.fromArray(["\ufdd0'new-password", "\ufdd0'navigation-backward"], !0), "touchend")
+};
+com.ewen.cle_usb_cljs.controller = {};
+com.ewen.cle_usb_cljs.controller.change_layout_events = null;
+com.ewen.cle_usb_cljs.controller.init_change_layout_events = function() {
+  com.ewen.cle_usb_cljs.controller.change_layout_events = flapjax.core.mergeE.call(null, com.ewen.cle_usb_cljs.passwords_scripts.get_navigation_events.call(null), com.ewen.cle_usb_cljs.edit_passwords_scripts.get_navigation_events.call(null), com.ewen.cle_usb_cljs.edit_passwords_scripts.get_new_password_events.call(null), com.ewen.cle_usb_cljs.new_password_scripts.get_navigation_events.call(null));
+  return flapjax.core.mapE.call(null, function(a) {
+    return cljs.core.apply.call(null, com.ewen.cle_usb_cljs.controller.change_layout, a)
+  }, com.ewen.cle_usb_cljs.controller.change_layout_events)
+};
+com.ewen.cle_usb_cljs.controller.init_change_layout_events.call(null);
+com.ewen.cle_usb_cljs.controller.new_pwd_E = flapjax.core.filterE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validated_new_pwd_data_E, function(a) {
+  return!1 !== cljs.core.first.call(null, a)
+});
+flapjax.core.mapE.call(null, function(a) {
+  cljs.core.apply.call(null, com.ewen.cle_usb_cljs.model.add_password, a);
+  return com.ewen.cle_usb_cljs.controller.change_layout.call(null, "\ufdd0'new-password", "\ufdd0'new-pwd-added")
+}, flapjax.core.mapE.call(null, function(a) {
+  return cljs.core.subvec.call(null, a, 0, 2)
+}, com.ewen.cle_usb_cljs.controller.new_pwd_E));
+com.ewen.cle_usb_cljs.controller.prepare_layout_header = function() {
+  return enfocus.core.at.call(null, document, cljs.core.PersistentVector.fromArray(["head .page-only-css"], !0), enfocus.core.en_content.call(null, null))
+};
+com.ewen.cle_usb_cljs.controller.layout_body = function(a) {
+  return enfocus.core.at.call(null, document, cljs.core.PersistentVector.fromArray(["section"], !0), enfocus.core.en_substitute.call(null, a))
+};
+com.ewen.cle_usb_cljs.controller.build_layout = function(a) {
+  com.ewen.cle_usb_cljs.controller.prepare_layout_header.call(null);
+  return com.ewen.cle_usb_cljs.controller.layout_body.call(null, a)
+};
+com.ewen.cle_usb_cljs.controller.change_layout = function() {
+  var a = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY), b = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY), c = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY), d = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY), e = cljs.core._lookup.call(null, cljs.core.ObjMap.EMPTY, "\ufdd0'hierarchy", cljs.core.global_hierarchy);
+  return new cljs.core.MultiFn("change-layout", function(a, b) {
+    return cljs.core.PersistentVector.fromArray([cljs.core.keyword.call(null, a), cljs.core.keyword.call(null, b)], !0)
+  }, "\ufdd0'default", e, a, b, c, d)
+}();
+cljs.core._add_method.call(null, com.ewen.cle_usb_cljs.controller.change_layout, cljs.core.PersistentVector.fromArray(["\ufdd0'passwords", "\ufdd0'navigation-forward"], !0), function() {
+  return com.ewen.cle_usb_cljs.controller.build_layout.call(null, (new cljs.core.Keyword("\ufdd0'edit-passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts))
+});
+cljs.core._add_method.call(null, com.ewen.cle_usb_cljs.controller.change_layout, cljs.core.PersistentVector.fromArray(["\ufdd0'edit-passwords", "\ufdd0'navigation-backward"], !0), function() {
+  return com.ewen.cle_usb_cljs.controller.build_layout.call(null, (new cljs.core.Keyword("\ufdd0'passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts))
+});
+cljs.core._add_method.call(null, com.ewen.cle_usb_cljs.controller.change_layout, cljs.core.PersistentVector.fromArray(["\ufdd0'edit-passwords", "\ufdd0'new-password"], !0), function() {
+  return com.ewen.cle_usb_cljs.controller.build_layout.call(null, (new cljs.core.Keyword("\ufdd0'new-password")).call(null, com.ewen.cle_usb_cljs.layouts.layouts))
+});
+cljs.core._add_method.call(null, com.ewen.cle_usb_cljs.controller.change_layout, cljs.core.PersistentVector.fromArray(["\ufdd0'new-password", "\ufdd0'navigation-backward"], !0), function() {
+  return com.ewen.cle_usb_cljs.controller.build_layout.call(null, (new cljs.core.Keyword("\ufdd0'edit-passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts))
+});
+cljs.core._add_method.call(null, com.ewen.cle_usb_cljs.controller.change_layout, cljs.core.PersistentVector.fromArray(["\ufdd0'new-password", "\ufdd0'new-pwd-added"], !0), function() {
+  return com.ewen.cle_usb_cljs.controller.build_layout.call(null, (new cljs.core.Keyword("\ufdd0'passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts))
+});
+com.ewen.cle_usb_cljs.utils.add_load_event.call(null, function() {
+  return com.ewen.cle_usb_cljs.controller.build_layout.call(null, (new cljs.core.Keyword("\ufdd0'passwords")).call(null, com.ewen.cle_usb_cljs.layouts.layouts))
+});

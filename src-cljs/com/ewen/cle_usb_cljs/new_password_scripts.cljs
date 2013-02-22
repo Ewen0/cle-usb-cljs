@@ -153,5 +153,5 @@
 
 (defn get-navigation-events []
   (scripts/get-events-with-value layout "#navigation-backward" 
-    [:new-password :navigation-backward] "click"))
+    [:new-password :navigation-backward] "touchend"))
 

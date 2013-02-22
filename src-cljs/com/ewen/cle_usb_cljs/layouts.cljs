@@ -30,12 +30,15 @@ have control over the domina version since it is imported through enfocus.")
 
 ;; ## Passwords page template
 
-(em/defsnippet section-body :compiled "resources/public/passwords.html" [".section-body:first-of-type"]
+(em/defsnippet section-body :compiled "resources/public/passwords.html" [".section-body"]
+  [] [])
+
+(em/defsnippet section-body :compiled "resources/public/passwords.html" [".section-body"]
   [{pwd-label :title logo-path :logo}]
   ["p"] (em/prepend pwd-label)
   [".section-body-logo"] (em/set-attr "src" logo-path))
 
-(em/defsnippet section :compiled "resources/public/passwords.html" [".section:first-of-type"]
+(em/defsnippet section :compiled "resources/public/passwords.html" [".section"]
   [section-name section-pwds]
   [".section-header > h2:first-of-type"] (em/content (name section-name))
   [".section"] (em/set-attr :id (name section-name))

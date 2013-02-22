@@ -248,6 +248,8 @@
 (def insertDomB js/insertDomB)
 (def insertValueB js/insertValueB)
 
+(def insertValueE js/insertValueE)
+
 (def TEXT2 js/TEXT2)
 
 (def DIV js/DIV)

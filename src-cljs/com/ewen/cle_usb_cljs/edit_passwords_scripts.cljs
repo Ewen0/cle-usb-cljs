@@ -11,7 +11,7 @@
 
 (defn get-navigation-events []
   (scripts/get-events-with-value layout "#navigation-backward" 
-    [:edit-passwords :navigation-backward] "click"))
+    [:edit-passwords :navigation-backward] "touchend"))
 
 (defn get-new-password-events []
   (scripts/get-events-with-value layout "#new-password" 

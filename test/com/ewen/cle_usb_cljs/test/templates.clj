@@ -14,8 +14,8 @@
                          (enlive/append 
                           (apply enlive/html-snippet 
                                  (html (javascript-tag 
-"com.ewen.cle_usb_cljs.utils.add_load_event.call(null, function() {com.ewen.cle_usb_cljs.dev.connect_repl.call(null);});"
-))))))))
+                                        "com.ewen.cle_usb_cljs.utils.add_load_event.call(null, function() {com.ewen.cle_usb_cljs.dev.connect_repl.call(null);});"
+                                        ))))))))
 
 
 

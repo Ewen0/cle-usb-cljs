@@ -1,9 +1,11 @@
 (ns com.ewen.cle-usb-cljs.test.test
-  (:require [com.ewen.cle-usb-cljs.test.handler :refer [app]]
+  (:require [com.ewen.cle-usb-cljs.test.handler :as handler-test]
+            [com.ewen.cle-usb-cljs.handlers :as handlers]
             [ring.util.serve :refer [serve-headless stop-server]]
             [cljs.repl.browser]))
 
-(serve-headless app)
+(serve-headless handler-test/app)
+(serve-headless handlers/app)
 
 (stop-server)
 
