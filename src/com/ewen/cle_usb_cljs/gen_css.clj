@@ -39,8 +39,7 @@ Ex : (.-outerHTML (css [:#myId {:background-image \"url(../img/image.jpeg)\"}][:
 
 ->`\"<style type=\"text/css\">#myId{background-image:url(../img/image.jpeg);}.myClass{left:50%;margin-left:-80px;position:relative;}</style>\"` "
   [& rules]
-  (html [:style {:type "text/css"}
-         (apply str (map css-rule rules))]))
+  (html (apply str (map css-rule rules))))
 
 
 (defn create-image [path]
