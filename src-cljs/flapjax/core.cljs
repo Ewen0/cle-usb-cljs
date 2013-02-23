@@ -3,7 +3,7 @@
 
  
 
-(declare receiverE sendE)
+(declare receiverE sendEvent)
 
  
 
@@ -17,19 +17,11 @@
 
  
 
-(defn startsWith
-
-[streamE v]
-
-(.startsWith streamE v))
+(def startsWith js/startsWith)
 
  
 
-(defn changes
-
-[sourceB]
-
-(.changes sourceB))
+(def changes js/changes)
 
  
 
@@ -47,51 +39,27 @@
 
  
 
-(defn switchE
-
-[streamE]
-
-(.switchE streamE))
+(def switchE js/switchE)
 
  
 
-(defn filterE
-
-[streamE pred]
-
-(.filterE streamE pred))
+(def filterE js/filterE)
 
  
 
-(defn constantE
-
-[streamE v]
-
-(.constantE streamE v))
+(def constantE js/constantE)
 
  
 
-(defn collectE
-
-[streamE init f]
-
-(.collectE streamE init f))
+(def collectE js/collectE)
 
  
 
-(defn notE
-
-[streamE]
-
-(.notE streamE))
+(def notE js/notE)
 
  
 
-(defn filterRepeatsE
-
-[streamE]
-
-(.filterRepeatsE streamE))
+(def filterRepeatsE js/filterRepeatsE)
 
 (def ifE js/ifE)
 
@@ -99,15 +67,9 @@
 
 (def receiverE js/receiverE)
 
-(def sendEvent js/sendEvent)
-
  
 
-(defn sendE
-
-[streamE v]
-
-(.sendEvent streamE v))
+(def sendEvent js/sendEvent)
 
  
 
@@ -115,43 +77,23 @@
 
  
 
-(defn onceE
-
-[streamE]
-
-(.onceE streamE))
+(def onceE js/onceE)
 
  
 
-(defn skipFirstE
-
-[streamE]
-
-(.skipFirstE streamE))
+(def skipFirstE js/skipFirstE)
 
  
 
-(defn delayE
-
-[streamE intervalB]
-
-(.delayE streamE intervalB))
+(def delayE js/delayE)
 
  
 
-(defn blindE
-
-[streamE intervalB]
-
-(.blindE streamE intervalB))
+(def blindE js/blindE)
 
  
 
-(defn calmE
-
-[streamE intervalB]
-
-(.calmE streamE intervalB))
+(def calmE js/calmE)
 
  
 
@@ -171,27 +113,15 @@
 
  
 
-(defn delayB
-
-[sourceB intervalB]
-
-(.delayB sourceB intervalB))
+(def delayB js/delayB)
 
  
 
-(defn valueNow
-
-[sourceB]
-
-(.valueNow sourceB))
+(def valueNow js/valueNow)
 
  
 
-(defn switchB
-
-[sourceBB]
-
-(.switchB sourceBB))
+(def switchB js/switchB)
 
  
 
@@ -201,11 +131,7 @@
 
  
 
-(defn notB
-
-[valueB]
-
-(.notB valueB))
+(def notB js/notB)
 
  
 
@@ -215,11 +141,7 @@
 
  
 
-(defn ifB
-
-[predicateB consequentB alternativeB]
-
-(.ifB predicateB consequentB alternativeB))
+(def ifB js/ifB)
 
  
 
@@ -227,19 +149,11 @@
 
  
 
-(defn blindB
-
-[sourceB intervalB]
-
-(.blindB sourceB intervalB))
+(def blindB js/blindB)
 
  
 
-(defn calmB
-
-  [sourceB intervalB]
-
-  (.calmB sourceB intervalB))
+(def calmB js/calmB)
 
 
 

@@ -8,6 +8,7 @@ var mapE = function() {};
 var mergeE = function() {};
 var getElementsByClass = function() {};
 var insertDomB = function() {};
+var insertValueE = function(){};
 var oneE = function() {};
 var zeroE = function() {};
 var switchE = function() {};
@@ -21,7 +22,7 @@ var orE = function() {};
 var notE = function() {};
 var filterRepeatsE = function() {};
 var receiverE = function() {};
-var sendE = function() {};
+var sendEvent = function(){};
 var snapshotE = function() {};
 var onceE = function() {};
 var skipFirstE = function() {};
@@ -47,4 +48,10 @@ var B = function() {};
 var A = function() {};
 var P = function() {};
 var $ = function() {};
+var DIV = function() {};
+var TEXT = function() {};
+var TEXTB = function() {};
+
+
+
 
