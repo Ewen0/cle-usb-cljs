@@ -18,7 +18,8 @@
                      [lein-marginalia "0.7.1"]]
   :plugins [[lein-cljsbuild "0.2.9"]
             [lein-marginalia "0.7.1"]
-            [lein-deps-tree "0.1.2"]]
+            [lein-deps-tree "0.1.2" 
+             :exclusions [org.clojure/clojure com.cemerick/pomegranate]]]
   :cljsbuild {:builds [{:id "dev"
                         :source-path "src-cljs"
                         :compiler {:output-to "resources/public/js/cljs.js"
