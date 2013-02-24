@@ -16,8 +16,8 @@
                            [:div#list-pwd.list
                             [:div.section 
                              [:div.section-header [:h2]]
-                             [:div.section-body {:draggable "draggable"} [:p] [:img.section-body-logo]]]]
-                           [:div#pwd-trash {:enabled "false"} [:img#pwd-trash-logo {:src "img/5-content-discard.png"}]]]])))
+                             [:div.section-body.draggable [:p] [:img.section-body-logo]]]]
+                           [:div#pwd-trash [:img#pwd-trash-logo {:src "img/5-content-discard.png"}]]]])))
 
 (defn edit-pwd-tml [] (html5 [:body   
                               [:section                            

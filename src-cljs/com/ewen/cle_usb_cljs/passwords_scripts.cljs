@@ -4,7 +4,7 @@
             [com.ewen.cle-usb-cljs.model :refer [passwords]]
             [com.ewen.cle-usb-cljs.scripts :as scripts]
             [com.ewen.cle-usb-cljs.layouts :refer [layouts]]
-            [domina :refer [nodes single-node attr set-attr! remove-attr!]]
+            [domina :refer [nodes single-node attr set-attr! remove-attr! add-class! remove-class!]]
             [domina.css :refer [sel]]))
 
 (def layout (:passwords layouts))
@@ -71,20 +71,30 @@
 (defn drag-stop-E [drag-events]
   (F/filterE drag-events (fn [p] (:drop p))))
 
+(def remove-pwd-E (F/receiverE))
+
 (F/liftB 
  (fn [] 
-   (let [draggable-elts (.querySelectorAll layout "div[draggable=\"draggable\"]")] 
+   (let [draggable-elts (.querySelectorAll layout "div.draggable")] 
      (doseq [elt draggable-elts]
        (let [elt-pos (fn [touch-pos] 
                        (- touch-pos (/ (.-offsetHeight elt) 2)))]
-         (F/mapE #(do (set-attr! elt "is-enabled-drag" "true")
-                      (set-attr! (.querySelector layout "#pwd-trash") "enabled" "true")) 
+         (F/mapE #(do (add-class! elt "is-enabled-drag")
+                      (add-class! (.querySelector layout "#pwd-trash") "enabled")) 
                  (-> elt (drag-E) (drag-start-E)))
          (comment "Be carefull of the order of functions call when applying side effects functions to same events")
-         (F/mapE #(log "over") (over-E elt (.querySelector layout "#pwd-trash")))
-         (F/mapE #(log "dropped") (drop-E elt (.querySelector layout "#pwd-trash")))
-         (F/mapE #(do (remove-attr! elt "is-enabled-drag")
-                      (set-attr! (.querySelector layout "#pwd-trash") "enabled" "false")) 
+         (F/mapE #(remove-class! (.querySelector layout "#pwd-trash") "over") (drag-E elt))
+         (F/mapE #(add-class! (.querySelector layout "#pwd-trash") "over") 
+                 (over-E elt (.querySelector layout "#pwd-trash")))
+         (F/mapE #(when (js/confirm 
+                         (str "Really delete password \"" 
+                              (.-innerHTML (.querySelector elt "p")) 
+                              "\"?")) 
+                    (F/sendEvent remove-pwd-E 
+                                 [(scripts/canonicalize (attr elt "section")) (.-innerHTML (.querySelector elt "p"))])) 
+                 (drop-E elt (.querySelector layout "#pwd-trash")))
+         (F/mapE #(do (remove-class! elt "is-enabled-drag")
+                      (remove-class! (.querySelector layout "#pwd-trash") "enabled")) 
                  (-> elt (drag-E) (drag-stop-E)))
          (F/insertValueE (F/mapE (fn [p] (-> p (:top) (elt-pos))) (drag-E elt)) 
                          elt "style" "top")))))

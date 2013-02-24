@@ -43,7 +43,7 @@ have control over the domina version since it is imported through enfocus.")
   [".section-header > h2:first-of-type"] (em/content (name section-name))
   [".section"] (em/set-attr :id (name section-name))
   [".section-body"] (em/substitute (map section-body section-pwds))
-  [".section-body"] (em/set-attr :id (name section-name)))
+  [".section-body"] (em/set-attr :section (name section-name)))
 
 (em/defsnippet list-pwd :compiled "resources/public/passwords.html" ["#list-pwd"] [passwords]
   ["#list-pwd"] (em/content (map #(apply section %) passwords)))

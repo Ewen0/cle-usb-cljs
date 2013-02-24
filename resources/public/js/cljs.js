@@ -13368,6 +13368,9 @@ cljs.core.swap_BANG_.call(null, flapjax.core.extractValueB.method_table, functio
   return cljs.core.assoc.call(null, a, cljs.core.Atom, flapjax.core.extractValueB_Atom)
 });
 com.ewen.cle_usb_cljs.scripts = {};
+com.ewen.cle_usb_cljs.scripts.canonicalize = function(a) {
+  return clojure.string.upper_case.call(null, com.ewen.cle_usb_cljs.utils.space_to_dash.call(null, "" + cljs.core.str(a)))
+};
 com.ewen.cle_usb_cljs.scripts.get_events_with_value = function() {
   var a = null, b = function(b, c, f) {
     return a.call(null, dom.getElementsByTagNameAndClass.call(null, "html")[0], b, c, f)
@@ -20694,6 +20697,18 @@ com.ewen.cle_usb_cljs.model.add_password = function(a, b) {
     return cljs.core.update_in.call(null, c, cljs.core.PersistentVector.fromArray([cljs.core.keyword.call(null, a)], !0), cljs.core.conj, cljs.core.ObjMap.fromObject(["\ufdd0'title", "\ufdd0'logo"], {"\ufdd0'title":"" + cljs.core.str(b), "\ufdd0'logo":""}))
   })
 };
+com.ewen.cle_usb_cljs.model.rem_password = function(a, b) {
+  cljs.core.swap_BANG_.call(null, com.ewen.cle_usb_cljs.model.passwords, function(c) {
+    return cljs.core.update_in.call(null, c, cljs.core.PersistentVector.fromArray([cljs.core.keyword.call(null, a)], !0), function(a, b) {
+      return cljs.core.filterv.call(null, b, a)
+    }, function(a) {
+      return cljs.core.not_EQ_.call(null, b, (new cljs.core.Keyword("\ufdd0'title")).call(null, a))
+    })
+  });
+  return cljs.core.swap_BANG_.call(null, com.ewen.cle_usb_cljs.model.passwords, function(a) {
+    return com.ewen.cle_usb_cljs.model.map__GT_Passwords.call(null, cljs.core.into.call(null, cljs.core.ObjMap.EMPTY, cljs.core.filter.call(null, cljs.core.comp.call(null, cljs.core.comp.call(null, cljs.core.not, cljs.core.empty_QMARK_), cljs.core.second), a)))
+  })
+};
 com.ewen.cle_usb_cljs.layouts = {};
 domina.array_like_QMARK_ = function(a) {
   if(cljs.core.truth_(a)) {
@@ -20703,9 +20718,9 @@ domina.array_like_QMARK_ = function(a) {
   return a
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
-  var vec__8145__8146 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body" draggable="draggable"><p /><img class="section-body-logo" /></div></div></div><div enabled="false" id="pwd-trash"><img id="pwd-trash-logo" src="img/5-content-discard.png" /></div></section></body></html>'), 
-  sym__6437__auto____8147 = cljs.core.nth.call(null, vec__8145__8146, 0, null), txt__6438__auto____8148 = cljs.core.nth.call(null, vec__8145__8146, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "section-bodyresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____8147, txt__6438__auto____8148], !0))
+  var vec__103365__103366 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body draggable"><p /><img class="section-body-logo" /></div></div></div><div enabled="false" id="pwd-trash"><img id="pwd-trash-logo" src="img/5-content-discard.png" /></div></section></body></html>'), 
+  sym__6437__auto____103367 = cljs.core.nth.call(null, vec__103365__103366, 0, null), txt__6438__auto____103368 = cljs.core.nth.call(null, vec__103365__103366, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "section-bodyresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____103367, txt__6438__auto____103368], !0))
 }
 com.ewen.cle_usb_cljs.layouts.section_body = function() {
   var a = function() {
@@ -20716,9 +20731,9 @@ com.ewen.cle_usb_cljs.layouts.section_body = function() {
   return enfocus.core.remove_node_return_child.call(null, a)
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
-  var vec__8161__8162 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body" draggable="draggable"><p /><img class="section-body-logo" /></div></div></div><div enabled="false" id="pwd-trash"><img id="pwd-trash-logo" src="img/5-content-discard.png" /></div></section></body></html>'), 
-  sym__6437__auto____8163 = cljs.core.nth.call(null, vec__8161__8162, 0, null), txt__6438__auto____8164 = cljs.core.nth.call(null, vec__8161__8162, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "section-bodyresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____8163, txt__6438__auto____8164], !0))
+  var vec__103381__103382 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body draggable"><p /><img class="section-body-logo" /></div></div></div><div enabled="false" id="pwd-trash"><img id="pwd-trash-logo" src="img/5-content-discard.png" /></div></section></body></html>'), 
+  sym__6437__auto____103383 = cljs.core.nth.call(null, vec__103381__103382, 0, null), txt__6438__auto____103384 = cljs.core.nth.call(null, vec__103381__103382, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "section-bodyresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____103383, txt__6438__auto____103384], !0))
 }
 com.ewen.cle_usb_cljs.layouts.section_body = function(a) {
   var b = cljs.core.seq_QMARK_.call(null, a) ? cljs.core.apply.call(null, cljs.core.hash_map, a) : a, a = cljs.core._lookup.call(null, b, "\ufdd0'title", null), b = cljs.core._lookup.call(null, b, "\ufdd0'logo", null), c = function() {
@@ -20729,23 +20744,23 @@ com.ewen.cle_usb_cljs.layouts.section_body = function(a) {
   return enfocus.core.remove_node_return_child.call(null, c)
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
-  var vec__8189__8190 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body" draggable="draggable"><p /><img class="section-body-logo" /></div></div></div><div enabled="false" id="pwd-trash"><img id="pwd-trash-logo" src="img/5-content-discard.png" /></div></section></body></html>'), 
-  sym__6437__auto____8191 = cljs.core.nth.call(null, vec__8189__8190, 0, null), txt__6438__auto____8192 = cljs.core.nth.call(null, vec__8189__8190, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "sectionresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____8191, txt__6438__auto____8192], !0))
+  var vec__103409__103410 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body draggable"><p /><img class="section-body-logo" /></div></div></div><div enabled="false" id="pwd-trash"><img id="pwd-trash-logo" src="img/5-content-discard.png" /></div></section></body></html>'), 
+  sym__6437__auto____103411 = cljs.core.nth.call(null, vec__103409__103410, 0, null), txt__6438__auto____103412 = cljs.core.nth.call(null, vec__103409__103410, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "sectionresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____103411, txt__6438__auto____103412], !0))
 }
 com.ewen.cle_usb_cljs.layouts.section = function(a, b) {
   var c = function() {
     return enfocus.core.get_cached_snippet.call(null, "sectionresources/public/passwords.html", cljs.core.PersistentVector.fromArray([".section"], !0))
   }.call(null), d = cljs.core.nth.call(null, c, 0, null), c = cljs.core.nth.call(null, c, 1, null), c = enfocus.core.create_hidden_dom.call(null, c);
   enfocus.core.i_at.call(null, d, c, cljs.core.PersistentVector.fromArray([".section-header > h2:first-of-type"], !0), enfocus.core.en_content.call(null, cljs.core.name.call(null, a)), cljs.core.PersistentVector.fromArray([".section"], !0), enfocus.core.en_set_attr.call(null, "\ufdd0'id", cljs.core.name.call(null, a)), cljs.core.PersistentVector.fromArray([".section-body"], !0), enfocus.core.en_substitute.call(null, cljs.core.map.call(null, com.ewen.cle_usb_cljs.layouts.section_body, b)), cljs.core.PersistentVector.fromArray([".section-body"], 
-  !0), enfocus.core.en_set_attr.call(null, "\ufdd0'id", cljs.core.name.call(null, a)));
+  !0), enfocus.core.en_set_attr.call(null, "\ufdd0'section", cljs.core.name.call(null, a)));
   enfocus.core.reset_ids.call(null, d, c);
   return enfocus.core.remove_node_return_child.call(null, c)
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
-  var vec__8205__8206 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body" draggable="draggable"><p /><img class="section-body-logo" /></div></div></div><div enabled="false" id="pwd-trash"><img id="pwd-trash-logo" src="img/5-content-discard.png" /></div></section></body></html>'), 
-  sym__6437__auto____8207 = cljs.core.nth.call(null, vec__8205__8206, 0, null), txt__6438__auto____8208 = cljs.core.nth.call(null, vec__8205__8206, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "list-pwdresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____8207, txt__6438__auto____8208], !0))
+  var vec__103425__103426 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body draggable"><p /><img class="section-body-logo" /></div></div></div><div enabled="false" id="pwd-trash"><img id="pwd-trash-logo" src="img/5-content-discard.png" /></div></section></body></html>'), 
+  sym__6437__auto____103427 = cljs.core.nth.call(null, vec__103425__103426, 0, null), txt__6438__auto____103428 = cljs.core.nth.call(null, vec__103425__103426, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "list-pwdresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____103427, txt__6438__auto____103428], !0))
 }
 com.ewen.cle_usb_cljs.layouts.list_pwd = function(a) {
   var b = function() {
@@ -20758,9 +20773,9 @@ com.ewen.cle_usb_cljs.layouts.list_pwd = function(a) {
   return enfocus.core.remove_node_return_child.call(null, b)
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/passwords.html")) {
-  var vec__8221__8222 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body" draggable="draggable"><p /><img class="section-body-logo" /></div></div></div><div enabled="false" id="pwd-trash"><img id="pwd-trash-logo" src="img/5-content-discard.png" /></div></section></body></html>'), 
-  sym__6437__auto____8223 = cljs.core.nth.call(null, vec__8221__8222, 0, null), txt__6438__auto____8224 = cljs.core.nth.call(null, vec__8221__8222, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-passwordsresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____8223, txt__6438__auto____8224], !0))
+  var vec__103441__103442 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-forward" src="img/1_navigation_forward.png"></div><div class="list" id="list-pwd"><div class="section"><div class="section-header"><h2></h2></div><div class="section-body draggable"><p /><img class="section-body-logo" /></div></div></div><div enabled="false" id="pwd-trash"><img id="pwd-trash-logo" src="img/5-content-discard.png" /></div></section></body></html>'), 
+  sym__6437__auto____103443 = cljs.core.nth.call(null, vec__103441__103442, 0, null), txt__6438__auto____103444 = cljs.core.nth.call(null, vec__103441__103442, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-passwordsresources/public/passwords.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____103443, txt__6438__auto____103444], !0))
 }
 com.ewen.cle_usb_cljs.layouts.template_passwords = function(a) {
   var b = function() {
@@ -20771,9 +20786,9 @@ com.ewen.cle_usb_cljs.layouts.template_passwords = function(a) {
   return enfocus.core.remove_node_return_child.call(null, b)
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/edit-passwords.html")) {
-  var vec__8237__8238 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="edit-passwords"><div class="section-header"><h2>Edit passwords</h2></div><div class="section-body" id="new-password"><p>New password</p><img class="section-body-logo"></div></div></div></section></body></html>'), 
-  sym__6437__auto____8239 = cljs.core.nth.call(null, vec__8237__8238, 0, null), txt__6438__auto____8240 = cljs.core.nth.call(null, vec__8237__8238, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-edit-passwordsresources/public/edit-passwords.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____8239, txt__6438__auto____8240], !0))
+  var vec__103457__103458 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="edit-passwords"><div class="section-header"><h2>Edit passwords</h2></div><div class="section-body" id="new-password"><p>New password</p><img class="section-body-logo"></div></div></div></section></body></html>'), 
+  sym__6437__auto____103459 = cljs.core.nth.call(null, vec__103457__103458, 0, null), txt__6438__auto____103460 = cljs.core.nth.call(null, vec__103457__103458, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-edit-passwordsresources/public/edit-passwords.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____103459, txt__6438__auto____103460], !0))
 }
 com.ewen.cle_usb_cljs.layouts.template_edit_passwords = function() {
   var a = function() {
@@ -20784,9 +20799,9 @@ com.ewen.cle_usb_cljs.layouts.template_edit_passwords = function() {
   return enfocus.core.remove_node_return_child.call(null, a)
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/new-password.html")) {
-  var vec__8253__8254 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
-  sym__6437__auto____8255 = cljs.core.nth.call(null, vec__8253__8254, 0, null), txt__6438__auto____8256 = cljs.core.nth.call(null, vec__8253__8254, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "section-optresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____8255, txt__6438__auto____8256], !0))
+  var vec__103473__103474 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
+  sym__6437__auto____103475 = cljs.core.nth.call(null, vec__103473__103474, 0, null), txt__6438__auto____103476 = cljs.core.nth.call(null, vec__103473__103474, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "section-optresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____103475, txt__6438__auto____103476], !0))
 }
 com.ewen.cle_usb_cljs.layouts.section_opt = function(a) {
   var b = function() {
@@ -20797,9 +20812,9 @@ com.ewen.cle_usb_cljs.layouts.section_opt = function(a) {
   return enfocus.core.remove_node_return_child.call(null, b)
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/new-password.html")) {
-  var vec__8269__8270 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
-  sym__6437__auto____8271 = cljs.core.nth.call(null, vec__8269__8270, 0, null), txt__6438__auto____8272 = cljs.core.nth.call(null, vec__8269__8270, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "list-sections-optresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____8271, txt__6438__auto____8272], !0))
+  var vec__103489__103490 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
+  sym__6437__auto____103491 = cljs.core.nth.call(null, vec__103489__103490, 0, null), txt__6438__auto____103492 = cljs.core.nth.call(null, vec__103489__103490, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "list-sections-optresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____103491, txt__6438__auto____103492], !0))
 }
 com.ewen.cle_usb_cljs.layouts.list_sections_opt = function(a) {
   var b = function() {
@@ -20810,9 +20825,9 @@ com.ewen.cle_usb_cljs.layouts.list_sections_opt = function(a) {
   return enfocus.core.remove_node_return_child.call(null, b)
 };
 if(null == cljs.core.deref.call(null, enfocus.core.tpl_cache).call(null, "resources/public/new-password.html")) {
-  var vec__8285__8286 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
-  sym__6437__auto____8287 = cljs.core.nth.call(null, vec__8285__8286, 0, null), txt__6438__auto____8288 = cljs.core.nth.call(null, vec__8285__8286, 1, null);
-  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-new-passwordresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____8287, txt__6438__auto____8288], !0))
+  var vec__103505__103506 = enfocus.core.replace_ids.call(null, '<!DOCTYPE html>\n<html><body><section><div id="action-bar"><img id="logo-action-bar" src="img/logo_action_bar.png"><img id="action-bar-divider" src="img/action_bar_divider.png"><img id="action-bar-title" src="img/action_bar_title.png"><img class="navigation" id="navigation-backward" src="img/1_navigation_back.png"></div><div class="list" id="list-actions"><div class="section" id="section-wrapper"><div class="section-header"><h2>Section</h2></div><select id="already-existing-sections"><option>example-option</option></select><input id="new-section" placeholder="Section" type="text"><br><input id="switch-section-selection" type="button" value="Create a new section"></div><div class="section" id="password-label-wrapper"><div class="section-header"><h2>Password label</h2></div><input id="password-label" placeholder="Password label" type="text"></div><div class="section" id="password-value-wrapper"><div class="section-header"><h2>Password</h2></div><input id="password-value" placeholder="Password value" type="password"></div><div class="action-buttons"><input disabled="disabled" id="new-password-button" type="button" value="Validate"></div><p id="err-msg"></div></section></body></html>\n'), 
+  sym__6437__auto____103507 = cljs.core.nth.call(null, vec__103505__103506, 0, null), txt__6438__auto____103508 = cljs.core.nth.call(null, vec__103505__103506, 1, null);
+  cljs.core.swap_BANG_.call(null, enfocus.core.tpl_cache, cljs.core.assoc, "template-new-passwordresources/public/new-password.html", cljs.core.PersistentVector.fromArray([sym__6437__auto____103507, txt__6438__auto____103508], !0))
 }
 com.ewen.cle_usb_cljs.layouts.template_new_password = function(a) {
   var b = function() {
@@ -20877,8 +20892,9 @@ com.ewen.cle_usb_cljs.passwords_scripts.drag_stop_E = function(a) {
     return(new cljs.core.Keyword("\ufdd0'drop")).call(null, a)
   })
 };
+com.ewen.cle_usb_cljs.passwords_scripts.remove_pwd_E = flapjax.core.receiverE.call(null);
 flapjax.core.liftB.call(null, function() {
-  var a = com.ewen.cle_usb_cljs.passwords_scripts.layout.querySelectorAll('div[draggable="draggable"]'), b = cljs.core.seq.call(null, a);
+  var a = com.ewen.cle_usb_cljs.passwords_scripts.layout.querySelectorAll("div.draggable"), b = cljs.core.seq.call(null, a);
   if(b) {
     for(a = cljs.core.first.call(null, b);;) {
       var c = function(a) {
@@ -20888,24 +20904,29 @@ flapjax.core.liftB.call(null, function() {
       }(a, b);
       flapjax.core.mapE.call(null, function(a) {
         return function() {
-          domina.set_attr_BANG_.call(null, a, "is-enabled-drag", "true");
-          return domina.set_attr_BANG_.call(null, com.ewen.cle_usb_cljs.passwords_scripts.layout.querySelector("#pwd-trash"), "enabled", "true")
+          domina.add_class_BANG_.call(null, a, "is-enabled-drag");
+          return domina.add_class_BANG_.call(null, com.ewen.cle_usb_cljs.passwords_scripts.layout.querySelector("#pwd-trash"), "enabled")
         }
       }(a, b, c), com.ewen.cle_usb_cljs.passwords_scripts.drag_start_E.call(null, com.ewen.cle_usb_cljs.passwords_scripts.drag_E.call(null, a)));
       flapjax.core.mapE.call(null, function() {
         return function() {
-          return com.ewen.cle_usb_cljs.utils.log.call(null, "over")
+          return domina.remove_class_BANG_.call(null, com.ewen.cle_usb_cljs.passwords_scripts.layout.querySelector("#pwd-trash"), "over")
         }
-      }(a, b, c), com.ewen.cle_usb_cljs.passwords_scripts.over_E.call(null, a, com.ewen.cle_usb_cljs.passwords_scripts.layout.querySelector("#pwd-trash")));
+      }(a, b, c), com.ewen.cle_usb_cljs.passwords_scripts.drag_E.call(null, a));
       flapjax.core.mapE.call(null, function() {
         return function() {
-          return com.ewen.cle_usb_cljs.utils.log.call(null, "dropped")
+          return domina.add_class_BANG_.call(null, com.ewen.cle_usb_cljs.passwords_scripts.layout.querySelector("#pwd-trash"), "over")
+        }
+      }(a, b, c), com.ewen.cle_usb_cljs.passwords_scripts.over_E.call(null, a, com.ewen.cle_usb_cljs.passwords_scripts.layout.querySelector("#pwd-trash")));
+      flapjax.core.mapE.call(null, function(a) {
+        return function() {
+          return cljs.core.truth_(confirm([cljs.core.str('Really delete password "'), cljs.core.str(a.querySelector("p").innerHTML), cljs.core.str('"?')].join(""))) ? flapjax.core.sendEvent.call(null, com.ewen.cle_usb_cljs.passwords_scripts.remove_pwd_E, cljs.core.PersistentVector.fromArray([com.ewen.cle_usb_cljs.scripts.canonicalize.call(null, domina.attr.call(null, a, "section")), a.querySelector("p").innerHTML], !0)) : null
         }
       }(a, b, c), com.ewen.cle_usb_cljs.passwords_scripts.drop_E.call(null, a, com.ewen.cle_usb_cljs.passwords_scripts.layout.querySelector("#pwd-trash")));
       flapjax.core.mapE.call(null, function(a) {
         return function() {
-          domina.remove_attr_BANG_.call(null, a, "is-enabled-drag");
-          return domina.set_attr_BANG_.call(null, com.ewen.cle_usb_cljs.passwords_scripts.layout.querySelector("#pwd-trash"), "enabled", "false")
+          domina.remove_class_BANG_.call(null, a, "is-enabled-drag");
+          return domina.remove_class_BANG_.call(null, com.ewen.cle_usb_cljs.passwords_scripts.layout.querySelector("#pwd-trash"), "enabled")
         }
       }(a, b, c), com.ewen.cle_usb_cljs.passwords_scripts.drag_stop_E.call(null, com.ewen.cle_usb_cljs.passwords_scripts.drag_E.call(null, a)));
       flapjax.core.insertValueE.call(null, flapjax.core.mapE.call(null, function(a, b, c) {
@@ -22592,9 +22613,6 @@ clojure.browser.net.xpc_connection = function() {
 }();
 com.ewen.cle_usb_cljs.new_password_scripts = {};
 com.ewen.cle_usb_cljs.new_password_scripts.layout = (new cljs.core.Keyword("\ufdd0'new-password")).call(null, com.ewen.cle_usb_cljs.layouts.layouts);
-com.ewen.cle_usb_cljs.new_password_scripts.canonicalize = function(a) {
-  return clojure.string.upper_case.call(null, com.ewen.cle_usb_cljs.utils.space_to_dash.call(null, "" + cljs.core.str(a)))
-};
 com.ewen.cle_usb_cljs.new_password_scripts.validate_button_elt = com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#new-password-button");
 com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt = com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#switch-section-selection");
 com.ewen.cle_usb_cljs.new_password_scripts.validate_button_E = flapjax.core.extractValueE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.validate_button_elt);
@@ -22607,7 +22625,7 @@ flapjax.core.liftB.call(null, domina.set_attr_BANG_, com.ewen.cle_usb_cljs.new_p
 flapjax.core.liftB.call(null, function(a, b) {
   return com.ewen.cle_usb_cljs.new_password_scripts.existing_section_elt.setAttribute(a, b)
 }, "active", com.ewen.cle_usb_cljs.new_password_scripts.is_active_existing_section_B);
-com.ewen.cle_usb_cljs.new_password_scripts.section_name_B = flapjax.core.liftB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.canonicalize, flapjax.core.ifB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.is_active_existing_section_B, flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#already-existing-sections")), flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#new-section"))));
+com.ewen.cle_usb_cljs.new_password_scripts.section_name_B = flapjax.core.liftB.call(null, com.ewen.cle_usb_cljs.scripts.canonicalize, flapjax.core.ifB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.is_active_existing_section_B, flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#already-existing-sections")), flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#new-section"))));
 com.ewen.cle_usb_cljs.new_password_scripts.pwd_label_B = flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#password-label"));
 com.ewen.cle_usb_cljs.new_password_scripts.pwd_val_B = flapjax.core.extractValueB.call(null, com.ewen.cle_usb_cljs.new_password_scripts.layout.querySelector("#password-value"));
 com.ewen.cle_usb_cljs.new_password_scripts.enable_validate_button_B = flapjax.core.liftB.call(null, function(a) {
@@ -22622,8 +22640,8 @@ com.ewen.cle_usb_cljs.new_password_scripts.change_button_val = function() {
 };
 flapjax.core.mapE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.change_button_val, flapjax.core.clicksE.call(null, com.ewen.cle_usb_cljs.new_password_scripts.switch_section_elt));
 com.ewen.cle_usb_cljs.new_password_scripts.validation = function(a, b) {
-  var c = com.ewen.cle_usb_cljs.new_password_scripts.canonicalize.call(null, a), d = com.ewen.cle_usb_cljs.new_password_scripts.canonicalize.call(null, b);
-  return cljs.core.every_QMARK_.call(null, cljs.core.partial.call(null, cljs.core.not_EQ_, d), cljs.core.map.call(null, com.ewen.cle_usb_cljs.new_password_scripts.canonicalize, com.ewen.cle_usb_cljs.model.get_pwd_labels.call(null, cljs.core.deref.call(null, com.ewen.cle_usb_cljs.model.passwords), c))) ? cljs.core.PersistentVector.fromArray([!0], !0) : cljs.core.PersistentVector.fromArray([!1, "Password already exists !"], !0)
+  var c = com.ewen.cle_usb_cljs.scripts.canonicalize.call(null, a), d = com.ewen.cle_usb_cljs.scripts.canonicalize.call(null, b);
+  return cljs.core.every_QMARK_.call(null, cljs.core.partial.call(null, cljs.core.not_EQ_, d), cljs.core.map.call(null, com.ewen.cle_usb_cljs.scripts.canonicalize, com.ewen.cle_usb_cljs.model.get_pwd_labels.call(null, cljs.core.deref.call(null, com.ewen.cle_usb_cljs.model.passwords), c))) ? cljs.core.PersistentVector.fromArray([!0], !0) : cljs.core.PersistentVector.fromArray([!1, "Password already exists !"], !0)
 };
 com.ewen.cle_usb_cljs.new_password_scripts.validation_filter = function(a, b, c) {
   var d = com.ewen.cle_usb_cljs.new_password_scripts.validation.call(null, a, b);
@@ -22654,6 +22672,9 @@ flapjax.core.mapE.call(null, function(a) {
 }, flapjax.core.mapE.call(null, function(a) {
   return cljs.core.subvec.call(null, a, 0, 2)
 }, com.ewen.cle_usb_cljs.controller.new_pwd_E));
+flapjax.core.mapE.call(null, function(a) {
+  return cljs.core.apply.call(null, com.ewen.cle_usb_cljs.model.rem_password, a)
+}, com.ewen.cle_usb_cljs.passwords_scripts.remove_pwd_E);
 com.ewen.cle_usb_cljs.controller.prepare_layout_header = function() {
   return enfocus.core.at.call(null, document, cljs.core.PersistentVector.fromArray(["head .page-only-css"], !0), enfocus.core.en_content.call(null, null))
 };

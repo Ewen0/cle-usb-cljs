@@ -4,7 +4,7 @@ updating data or modifying the dom to switch the screen."
   (:require [com.ewen.cle-usb-cljs.utils :refer [log add-load-event]]
             [enfocus.core :as ef]
             [com.ewen.cle-usb-cljs.layouts :refer [layouts]]
-            [com.ewen.cle-usb-cljs.model :refer [passwords add-password]]
+            [com.ewen.cle-usb-cljs.model :refer [passwords add-password rem-password]]
             [flapjax.core :as F]
             [com.ewen.cle-usb-cljs.passwords-scripts :as pwd-scripts]
             [com.ewen.cle-usb-cljs.edit-passwords-scripts :as 
@@ -57,6 +57,8 @@ from the different screens."
            (apply add-password %)
            (change-layout :new-password :new-pwd-added)) 
         (F/mapE #(subvec % 0 2) new-pwd-E))
+
+(F/mapE #(apply rem-password %) pwd-scripts/remove-pwd-E)
 
 
 

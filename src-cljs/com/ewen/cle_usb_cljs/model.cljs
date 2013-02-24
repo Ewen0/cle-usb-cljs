@@ -13,6 +13,17 @@
 and a `:logo` entry"
    (atom (map->Passwords (read-string passwords-str))))
 
+#_(add-watch passwords 
+           :remove-empty-sections
+           (fn [k r o n] 
+             #_(let [filtered-pwds (->> n (filter (comp (comp not empty?) second))
+                                      (into {}) (map->Passwords))]
+               (log n) (log filtered-pwds)
+               (when (not= n filtered-pwds) (reset! passwords filtered-pwds)))
+(reset! passwords (map->Passwords {}))))
+
+
+
 
 (defn get-sections [pwds]
 "Returns a list of the existing section names.
@@ -30,6 +41,13 @@ Ex. (get-pwd-labels @passwords \"SECTION2\")
 
 (defn add-password [section pwd-label]
   (swap! passwords #(update-in % [(keyword section)] conj {:title (str pwd-label), :logo ""})))
+
+(defn rem-password [section pwd-label]
+  (swap! passwords #(update-in % [(keyword section)] 
+                               (fn [coll pred] (filterv pred coll)) 
+                               (fn [map] (not= pwd-label (:title map)))))
+  (swap! passwords #(->> % (filter (comp (comp not empty?) second))
+                        (into {}) (map->Passwords))))
 
 
 

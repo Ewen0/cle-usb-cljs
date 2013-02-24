@@ -1,22 +1,17 @@
 (ns com.ewen.cle-usb-cljs.new-password-scripts
-  (:require [com.ewen.cle-usb-cljs.utils :refer [log add-load-event space-to-dash]]
+  (:require [com.ewen.cle-usb-cljs.utils :refer [log add-load-event]]
             [flapjax.core :as F]
             [com.ewen.cle-usb-cljs.scripts :as scripts]
             [com.ewen.cle-usb-cljs.layouts :refer [layouts]]
             [com.ewen.cle-usb-cljs.model :refer [passwords get-pwd-labels]]
             [domina :refer [nodes single-node attr set-attr! remove-attr!]]
-            [domina.css :refer [sel]]
-            [clojure.string :refer [upper-case]])
+            [domina.css :refer [sel]])
   (:require-macros [enfocus.macros :as em]))
 
 (def layout (:new-password layouts))
 
 
 
-
-
-(defn canonicalize [in]
-  (-> in (str) (space-to-dash) (upper-case)))
 
 
 
@@ -66,7 +61,7 @@
 
 
 (def section-name-B
-  (F/liftB canonicalize 
+  (F/liftB scripts/canonicalize 
            (F/ifB is-active-existing-section-B 
                   (F/extractValueB (.querySelector layout "#already-existing-sections"))
                   (F/extractValueB (.querySelector layout "#new-section")))))
@@ -111,10 +106,10 @@
 
 
 (defn- validation [section pwd-label]
-  (let [section (canonicalize section)
-        pwd-label (canonicalize pwd-label)
+  (let [section (scripts/canonicalize section)
+        pwd-label (scripts/canonicalize pwd-label)
         valid (every? (partial not= pwd-label) 
-                      (->> (get-pwd-labels @passwords section) (map canonicalize)))]
+                      (->> (get-pwd-labels @passwords section) (map scripts/canonicalize)))]
     (if valid
       [true]
       [false "Password already exists !"])))

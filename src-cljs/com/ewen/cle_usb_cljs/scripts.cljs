@@ -1,7 +1,11 @@
 (ns com.ewen.cle-usb-cljs.scripts
   (:require [com.ewen.cle-usb-cljs.utils :refer 
-             [log add-load-event]]
+             [log add-load-event space-to-dash]]
+            [clojure.string :refer [upper-case]]
             [flapjax.core :as F]))
+
+(defn canonicalize [in]
+  (-> in (str) (space-to-dash) (upper-case)))
 
 (defn get-events-with-value 
   ([dom-sel value event]

@@ -160,7 +160,7 @@ Ex : (.-outerHTML (css [:#myId {:background-image \"url(../img/image.jpeg)\"}][:
                     :padding-bottom "5px"}]
    [:.section-body 'p {:margin-top "0px"}]
    [:.section-body.active {:background-color "#33b5e5"}]
-   [".section-body[draggable=\"draggable\"][is-enabled-drag=\"true\"]" {:position "absolute"}]
+   [".section-body.draggable.is-enabled-drag" {:position "absolute"}]
 
 
 
@@ -169,8 +169,9 @@ Ex : (.-outerHTML (css [:#myId {:background-image \"url(../img/image.jpeg)\"}][:
                  :left "10%"
                  :width "80%" 
                  :background-color "#e6e6e6"}]
-   ["#pwd-trash[enabled=\"true\"]" {:display "block"}]
-   ["#pwd-trash[enabled=\"false\"]" {:display "none"}]
+   ["#pwd-trash.enabled" {:display "block"}]
+   ["#pwd-trash" {:display "none"}]
+   ["#pwd-trash.over" {:background-color "#FF8800"}]
    [:#pwd-trash "#pwd-trash-logo" {:display "block" 
                                    :margin "auto"}]])
 
