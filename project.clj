@@ -2,6 +2,7 @@
   :description "cle-usb client interface"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [com.cemerick/piggieback "0.0.2"]
                  [compojure "1.1.3"]
