@@ -1,7 +1,8 @@
 (ns com.ewen.cle-usb-cljs.layouts
   "Define the layouts of the pages of the GUI."
-  (:require [enfocus.core :as ef]
-            [flapjax.core :as F]
+  (:require [com.ewen.cle-usb-cljs.utils :refer [log]]
+            [enfocus.core :as ef]
+            [com.ewen.flapjax-cljs :as F-cljs]
             [com.ewen.cle-usb-cljs.model :refer 
              [passwords get-sections]]
             [goog.dom :as dom])
@@ -49,7 +50,7 @@ have control over the domina version since it is imported through enfocus.")
   ["#list-pwd"] (em/content (map #(apply section %) passwords)))
 
 (em/deftemplate template-passwords :compiled "resources/public/passwords.html" [passwords]
-  ["#list-pwd"] (em/substitute (F/B->Node (F/liftB list-pwd passwords))))
+  ["#list-pwd"] (em/substitute (F-cljs/B->Node (js/liftB list-pwd passwords))))
 
 
 
@@ -79,7 +80,7 @@ have control over the domina version since it is imported through enfocus.")
 
 (em/deftemplate template-new-password :compiled "resources/public/new-password.html" [passwords]
   ["#already-existing-sections"] 
-  (em/substitute (F/B->Node (F/liftB list-sections-opt passwords))))
+  (em/substitute (F-cljs/B->Node (js/liftB list-sections-opt passwords))))
 
 
 
@@ -108,15 +109,17 @@ We don't need to rebuild layouts after data update since data are manipulated as
 \"time varying values\"" 
   {:passwords (tml-frag->node 
                (template-passwords 
-                (F/extractValueB passwords))) 
+                (F-cljs/extractValueB passwords))) 
    :edit-passwords (tml-frag->node
                     (template-edit-passwords))
    :new-password (tml-frag->node
                   (template-new-password
-                   (F/extractValueB passwords)))})
+                   (F-cljs/extractValueB passwords)))})
 
 
 
+#_(def tt (.createDocumentFragment js/document))
+#_(.appendChild tt (first (domina/html-to-dom "<p></p>")))
 
 
 

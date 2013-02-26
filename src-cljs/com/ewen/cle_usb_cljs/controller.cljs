@@ -5,7 +5,6 @@ updating data or modifying the dom to switch the screen."
             [enfocus.core :as ef]
             [com.ewen.cle-usb-cljs.layouts :refer [layouts]]
             [com.ewen.cle-usb-cljs.model :refer [passwords add-password rem-password]]
-            [flapjax.core :as F]
             [com.ewen.cle-usb-cljs.passwords-scripts :as pwd-scripts]
             [com.ewen.cle-usb-cljs.edit-passwords-scripts :as 
              edit-pwd-scripts]
@@ -34,12 +33,12 @@ updating data or modifying the dom to switch the screen."
   "Init the value of the change-layout-events Var be merging flapjax event streams 
 from the different screens."
   (set! change-layout-events  
-        (F/mergeE 
+        (js/mergeE 
          (pwd-scripts/get-navigation-events)
          (edit-pwd-scripts/get-navigation-events)
          (edit-pwd-scripts/get-new-password-events)
          (new-pwd-scripts/get-navigation-events)))
-  (F/mapE #(apply change-layout %) change-layout-events))
+  (js/mapE #(apply change-layout %) change-layout-events))
 
 (init-change-layout-events)
 
@@ -50,15 +49,15 @@ from the different screens."
 
 
 
-(def new-pwd-E (F/filterE new-pwd-scripts/validated-new-pwd-data-E 
+(def new-pwd-E (js/filterE new-pwd-scripts/validated-new-pwd-data-E 
                                 #(-> % (first) (false?) (not))))
 
-(F/mapE #(do 
+(js/mapE #(do 
            (apply add-password %)
            (change-layout :new-password :new-pwd-added)) 
-        (F/mapE #(subvec % 0 2) new-pwd-E))
+        (js/mapE #(subvec % 0 2) new-pwd-E))
 
-(F/mapE #(apply rem-password %) pwd-scripts/remove-pwd-E)
+(js/mapE #(apply rem-password %) pwd-scripts/remove-pwd-E)
 
 
 

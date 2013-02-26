@@ -1,9 +1,9 @@
 (ns com.ewen.cle-usb-cljs.passwords-scripts
   (:require [com.ewen.cle-usb-cljs.utils :refer [log add-load-event]]
-            [flapjax.core :as F]
             [com.ewen.cle-usb-cljs.model :refer [passwords]]
             [com.ewen.cle-usb-cljs.scripts :as scripts]
             [com.ewen.cle-usb-cljs.layouts :refer [layouts]]
+            [com.ewen.flapjax-cljs :as F-cljs]
             [domina :refer [nodes single-node attr set-attr! remove-attr! add-class! remove-class!]]
             [domina.css :refer [sel]]))
 
@@ -11,7 +11,7 @@
 
 #_(defn bind-list-touch []
   (let [sections (sel ".section-body")]
-    (F/mapE #(add-class! (single-node sections) "active") (F/extractEventE (single-node sections) "touchstart"))))
+    (js/mapE #(add-class! (single-node sections) "active") (js/extractEventE (single-node sections) "touchstart"))))
 
 
 
@@ -27,21 +27,21 @@
   (let [event-X-pos (fn [event] (.-pageX (.item (.-changedTouches event) 0)))
         event-Y-pos (fn [event] (.-pageY (.item (.-changedTouches event) 0)))
         moveEE 
-        (F/mapE 
+        (js/mapE 
          (fn [td] 
            (.preventDefault td)
-           (F/mapE 
+           (js/mapE 
             (fn [tm] 
               (.preventDefault tm)
               {:drag elt :left (.-pageX (.item (.-changedTouches tm) 0)) :top (.-pageY (.item (.-changedTouches tm) 0))})
-            (F/calmE (F/extractEventE elt "touchmove") (F/constantB 5))))
-         (F/extractEventE elt "touchstart"))
+            (js/calmE (js/extractEventE elt "touchmove") (js/constantB 5))))
+         (js/extractEventE elt "touchstart"))
         dropEE
-        (F/mapE (fn [tu] 
+        (js/mapE (fn [tu] 
                   (.preventDefault tu)
-                  (F/oneE {:drop elt :left (event-X-pos tu) :top (event-Y-pos tu)}))
-                (F/extractEventE elt "touchend"))]
-    (F/switchE (F/mergeE moveEE dropEE))))
+                  (js/oneE {:drop elt :left (event-X-pos tu) :top (event-Y-pos tu)}))
+                (js/extractEventE elt "touchend"))]
+    (js/switchE (js/mergeE moveEE dropEE))))
 
 (defn- pos-in-segment? [pos start-seg stop-seg]
   (and (> pos start-seg) (< pos stop-seg)))
@@ -58,47 +58,47 @@
     (and over-elt-horiz? over-elt-vert?)))
 
 (defn over-E [drag-elt drop-elt]
-  (-> (drag-E drag-elt) (F/filterE (fn [p] (:drag p)))
-      (F/filterE (fn [p] (pos-over-elt? [(:left p) (:top p)] drop-elt)))))
+  (-> (drag-E drag-elt) (js/filterE (fn [p] (:drag p)))
+      (js/filterE (fn [p] (pos-over-elt? [(:left p) (:top p)] drop-elt)))))
 
 (defn drop-E [drag-elt drop-elt]
-  (-> (drag-E drag-elt) (F/filterE (fn [p] (:drop p)))
-      (F/filterE (fn [p] (pos-over-elt? [(:left p) (:top p)] drop-elt)))))
+  (-> (drag-E drag-elt) (js/filterE (fn [p] (:drop p)))
+      (js/filterE (fn [p] (pos-over-elt? [(:left p) (:top p)] drop-elt)))))
 
 (defn drag-start-E [drag-events]
-  (F/filterE (F/filterRepeatsE drag-events) (fn [p] (:drag p))))
+  (js/filterE (js/filterRepeatsE drag-events) (fn [p] (:drag p))))
 
 (defn drag-stop-E [drag-events]
-  (F/filterE drag-events (fn [p] (:drop p))))
+  (js/filterE drag-events (fn [p] (:drop p))))
 
-(def remove-pwd-E (F/receiverE))
+(def remove-pwd-E (js/receiverE))
 
-(F/liftB 
+(js/liftB 
  (fn [] 
    (let [draggable-elts (.querySelectorAll layout "div.draggable")] 
      (doseq [elt draggable-elts]
        (let [elt-pos (fn [touch-pos] 
                        (- touch-pos (/ (.-offsetHeight elt) 2)))]
-         (F/mapE #(do (add-class! elt "is-enabled-drag")
+         (js/mapE #(do (add-class! elt "is-enabled-drag")
                       (add-class! (.querySelector layout "#pwd-trash") "enabled")) 
                  (-> elt (drag-E) (drag-start-E)))
          (comment "Be carefull of the order of functions call when applying side effects functions to same events")
-         (F/mapE #(remove-class! (.querySelector layout "#pwd-trash") "over") (drag-E elt))
-         (F/mapE #(add-class! (.querySelector layout "#pwd-trash") "over") 
+         (js/mapE #(remove-class! (.querySelector layout "#pwd-trash") "over") (drag-E elt))
+         (js/mapE #(add-class! (.querySelector layout "#pwd-trash") "over") 
                  (over-E elt (.querySelector layout "#pwd-trash")))
-         (F/mapE #(when (js/confirm 
+         (js/mapE #(when (js/confirm 
                          (str "Really delete password \"" 
                               (.-innerHTML (.querySelector elt "p")) 
                               "\"?")) 
-                    (F/sendEvent remove-pwd-E 
+                    (js/sendEvent remove-pwd-E 
                                  [(scripts/canonicalize (attr elt "section")) (.-innerHTML (.querySelector elt "p"))])) 
                  (drop-E elt (.querySelector layout "#pwd-trash")))
-         (F/mapE #(do (remove-class! elt "is-enabled-drag")
+         (js/mapE #(do (remove-class! elt "is-enabled-drag")
                       (remove-class! (.querySelector layout "#pwd-trash") "enabled")) 
                  (-> elt (drag-E) (drag-stop-E)))
-         (F/insertValueE (F/mapE (fn [p] (-> p (:top) (elt-pos))) (drag-E elt)) 
+         (js/insertValueE (js/mapE (fn [p] (-> p (:top) (elt-pos))) (drag-E elt)) 
                          elt "style" "top")))))
- (F/extractValueB passwords))
+ (F-cljs/extractValueB passwords))
 
 
 

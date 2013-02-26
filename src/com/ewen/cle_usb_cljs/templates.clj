@@ -1,7 +1,5 @@
 (ns com.ewen.cle-usb-cljs.templates
-  (:require [net.cgrand.enlive-html :as enlive]
-            [hiccup.core :refer [html]]
-            [hiccup.element :refer [javascript-tag]]))
+  (:require [net.cgrand.enlive-html :as enlive]))
 
 (defn index-page [in]
   (apply str (enlive/emit* 
