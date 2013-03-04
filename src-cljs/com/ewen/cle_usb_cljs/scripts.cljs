@@ -1,7 +1,7 @@
 (ns com.ewen.cle-usb-cljs.scripts
-  (:require [com.ewen.cle-usb-cljs.utils :refer 
-             [log add-load-event space-to-dash]]
-            [clojure.string :refer [upper-case]]))
+  (:require [com.ewen.utils-cljs.utils :refer [log space-to-dash]]
+            [clojure.string :refer [upper-case]]
+            [com.ewen.flapjax-cljs :as F-cljs]))
 
 (defn canonicalize [in]
   (-> in (str) (space-to-dash) (upper-case)))
@@ -13,7 +13,7 @@
        dom-sel value event))
   ([layout dom-sel value event]
      (let [dom-elt (.querySelector layout dom-sel)
-           events (js/extractEventE dom-elt event)
-           Bvalue (js/constantB value)]
-       (js/snapshotE events Bvalue))))
+           events (F-cljs/extractEventE dom-elt event)
+           Bvalue (F-cljs/constantB value)]
+       (F-cljs/snapshotE events Bvalue))))
 

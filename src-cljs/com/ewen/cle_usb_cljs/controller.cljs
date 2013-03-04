@@ -1,7 +1,7 @@
 (ns com.ewen.cle-usb-cljs.controller
   "Contains the functionalities that perform side effect action such as 
 updating data or modifying the dom to switch the screen."
-  (:require [com.ewen.cle-usb-cljs.utils :refer [log add-load-event]]
+  (:require [com.ewen.utils-cljs.utils :refer [log add-load-event]]
             [enfocus.core :as ef]
             [com.ewen.cle-usb-cljs.layouts :refer [layouts]]
             [com.ewen.cle-usb-cljs.model :refer [passwords add-password rem-password]]
@@ -9,7 +9,8 @@ updating data or modifying the dom to switch the screen."
             [com.ewen.cle-usb-cljs.edit-passwords-scripts :as 
              edit-pwd-scripts]
             [com.ewen.cle-usb-cljs.new-password-scripts :as 
-             new-pwd-scripts])
+             new-pwd-scripts]
+            [com.ewen.flapjax-cljs :as F-cljs])
   (:require-macros [enfocus.macros :as em]))
 
 
@@ -33,12 +34,12 @@ updating data or modifying the dom to switch the screen."
   "Init the value of the change-layout-events Var be merging flapjax event streams 
 from the different screens."
   (set! change-layout-events  
-        (js/mergeE 
+        (F-cljs/mergeE 
          (pwd-scripts/get-navigation-events)
          (edit-pwd-scripts/get-navigation-events)
          (edit-pwd-scripts/get-new-password-events)
          (new-pwd-scripts/get-navigation-events)))
-  (js/mapE #(apply change-layout %) change-layout-events))
+  (F-cljs/mapE #(apply change-layout %) change-layout-events))
 
 (init-change-layout-events)
 
@@ -49,15 +50,15 @@ from the different screens."
 
 
 
-(def new-pwd-E (js/filterE new-pwd-scripts/validated-new-pwd-data-E 
+(def new-pwd-E (F-cljs/filterE new-pwd-scripts/validated-new-pwd-data-E 
                                 #(-> % (first) (false?) (not))))
 
-(js/mapE #(do 
+(F-cljs/mapE #(do 
            (apply add-password %)
            (change-layout :new-password :new-pwd-added)) 
-        (js/mapE #(subvec % 0 2) new-pwd-E))
+        (F-cljs/mapE #(subvec % 0 2) new-pwd-E))
 
-(js/mapE #(apply rem-password %) pwd-scripts/remove-pwd-E)
+(F-cljs/mapE #(apply rem-password %) pwd-scripts/remove-pwd-E)
 
 
 

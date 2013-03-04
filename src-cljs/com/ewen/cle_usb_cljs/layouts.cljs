@@ -1,12 +1,13 @@
 (ns com.ewen.cle-usb-cljs.layouts
   "Define the layouts of the pages of the GUI."
-  (:require [com.ewen.cle-usb-cljs.utils :refer [log]]
+  (:require [com.ewen.utils-cljs.utils :refer [log]]
             [enfocus.core :as ef]
             [com.ewen.flapjax-cljs :as F-cljs]
             [com.ewen.cle-usb-cljs.model :refer 
              [passwords get-sections]]
             [goog.dom :as dom])
-  (:require-macros [enfocus.macros :as em]))
+  (:require-macros [enfocus.macros :as em]
+                   [com.ewen.flapjax-cljs-macros :refer [with-B]]))
 
 
 
@@ -46,11 +47,12 @@ have control over the domina version since it is imported through enfocus.")
   [".section-body"] (em/substitute (map section-body section-pwds))
   [".section-body"] (em/set-attr :section (name section-name)))
 
-(em/defsnippet list-pwd :compiled "resources/public/passwords.html" ["#list-pwd"] [passwords]
-  ["#list-pwd"] (em/content (map #(apply section %) passwords)))
+(with-B
+  (em/defsnippet list-pwd :compiled "resources/public/passwords.html" ["#list-pwd"] [passwords]
+    ["#list-pwd"] (em/content (map #(apply section %) passwords))))
 
 (em/deftemplate template-passwords :compiled "resources/public/passwords.html" [passwords]
-  ["#list-pwd"] (em/substitute (F-cljs/B->Node (js/liftB list-pwd passwords))))
+  ["#list-pwd"] (em/substitute (list-pwd passwords)))
 
 
 
@@ -71,16 +73,17 @@ have control over the domina version since it is imported through enfocus.")
 
 ;; ## New-password page template
 
-(em/defsnippet section-opt :compiled "resources/public/new-password.html" ["#already-existing-sections option:first-of-type"] 
+(em/defsnippet section-opt :compiled "resources/public/new-password.html" ["#already-existing-sections option:first-of-type"]
   [section-name]
   ["option"] (em/content (name section-name)))
 
-(em/defsnippet list-sections-opt :compiled "resources/public/new-password.html" ["#already-existing-sections"] [passwords]
-  ["#already-existing-sections"] (em/content (map section-opt (get-sections passwords))))
+(with-B
+  (em/defsnippet list-sections-opt :compiled "resources/public/new-password.html" ["#already-existing-sections"] [passwords]
+    ["#already-existing-sections"] (em/content (map section-opt (get-sections passwords)))))
 
 (em/deftemplate template-new-password :compiled "resources/public/new-password.html" [passwords]
   ["#already-existing-sections"] 
-  (em/substitute (F-cljs/B->Node (js/liftB list-sections-opt passwords))))
+  (em/substitute (list-sections-opt passwords)))
 
 
 

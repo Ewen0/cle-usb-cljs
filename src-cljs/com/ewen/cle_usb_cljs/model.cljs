@@ -1,6 +1,6 @@
 (ns com.ewen.cle-usb-cljs.model
   "Contains the data used by the GUI."
-  (:require [com.ewen.cle-usb-cljs.utils :refer [log]]
+  (:require [com.ewen.utils-cljs.utils :refer [log add-load-event]]
             [cljs.reader :refer [read-string]])
   (:require-macros [enfocus.macros :as em]))
 

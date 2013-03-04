@@ -1,4 +1,4 @@
-(ns com.ewen.cle-usb-cljs.test.templates
+(ns com.ewen.cle-usb-cljs.test-server.templates
   (:require [net.cgrand.enlive-html :as enlive]
             [hiccup.core :refer [html]]
             [hiccup.element :refer [javascript-tag]])
@@ -8,7 +8,11 @@
   []
   [:head]  (enlive/append (apply enlive/html-snippet (html (include-js "js/dev.js"))))) 
 
-(defn index-page [in]
+#_(enlive/deftemplate index-page (java.io.File. "resources/public/bootstrap.html")
+  []
+  [:body] (enlive/content "e"))
+
+#_(defn index-page [in]
   (apply str (enlive/emit* 
               (enlive/at (enlive/html-resource in) [:head]  
                          (enlive/append 
@@ -16,6 +20,10 @@
                                  (html (javascript-tag 
                                         "com.ewen.cle_usb_cljs.utils.add_load_event.call(null, function() {com.ewen.cle_usb_cljs.dev.connect_repl.call(null);});"
                                         ))))))))
+
+(defn index-page [in]
+  (apply str (enlive/emit* 
+              (enlive/at (enlive/html-resource in) []))))
 
 
 
