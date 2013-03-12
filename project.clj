@@ -16,7 +16,7 @@
                  [ring-refresh "0.1.1" :scope "test"]
                  [enfocus "1.0.1-SNAPSHOT"]
                  [domina "1.0.1"]
-                 [com.ewen.flapjax-cljs "1.0.0-RELEASE"]
+                 [com.ewen.flapjax-cljs "1.0.1-SNAPSHOT"]
                  [com.ewen.utils-cljs "1.0.0-RELEASE"]]
   :dev-dependencies [[lein-cljsbuild "0.3.0"]
                      [lein-marginalia "0.7.1"]]

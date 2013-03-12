@@ -51,6 +51,12 @@
 (defn drag-E [elt]
   (let [event-X-pos (fn [event] (.-pageX (.item (.-changedTouches event) 0)))
         event-Y-pos (fn [event] (.-pageY (.item (.-changedTouches event) 0)))
+        dropEE
+        (F-cljs/mapE (fn [tu] 
+                       (.preventDefault tu)
+                       (F-cljs/oneE {:drop elt :left (event-X-pos tu) :top (event-Y-pos tu)}))
+                     (F-cljs/extractEventE elt "touchend"))
+        false-E (-> dropEE (F-cljs/constantE false))
         moveEE 
         (F-cljs/mapE 
          (fn [ts] 
@@ -61,14 +67,8 @@
              (fn [tm] 
                (.preventDefault tm)
                {:drag elt :left (.-pageX (.item (.-changedTouches tm) 0)) :top (.-pageY (.item (.-changedTouches tm) 0))})
-             (-> elt (F-cljs/extractEventE "touchmove") 
-                 (F-cljs/calmE (F-cljs/constantB 5))))))
-         (F-cljs/extractEventE elt "touchstart"))
-        dropEE
-        (F-cljs/mapE (fn [tu] 
-                       (.preventDefault tu)
-                       (F-cljs/oneE {:drop elt :left (event-X-pos tu) :top (event-Y-pos tu)}))
-                     (F-cljs/extractEventE elt "touchend"))]
+             (-> false-E (F-cljs/startsWith elt) (F-cljs/extractEventE "touchmove")))))
+         (F-cljs/extractEventE elt "touchstart"))]
     (F-cljs/switchE (F-cljs/mergeE moveEE dropEE))))
 
 (defn- pos-in-segment? [pos start-seg stop-seg]
@@ -155,10 +155,6 @@
     [:passwords :navigation-forward] "touchend"))
 
  
-
-
-
-
 
 
 
