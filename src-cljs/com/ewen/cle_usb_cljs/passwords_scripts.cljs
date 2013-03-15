@@ -119,7 +119,7 @@
        (let [elt-pos (fn [touch-pos] 
                        (- touch-pos (/ (.-offsetHeight elt) 2)))]
          (F-cljs/mapE #(do (add-class! elt "is-enabled-drag")
-                           (add-class! (.querySelector layout "#pwd-trash") "enabled")) 
+                           (add-class! (.querySelector layout "#pwd-trash") "enabled") )
                       (-> elt (drag-E) (drag-start-E)))
          (comment "Be carefull of the order of functions call when applying side effects functions to same events")
          (F-cljs/mapE #(remove-class! (.querySelector layout "#pwd-trash") "over") (drag-E elt))

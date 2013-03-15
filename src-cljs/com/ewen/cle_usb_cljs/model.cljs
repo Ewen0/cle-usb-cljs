@@ -6,7 +6,7 @@
 
 (defrecord Passwords [])
 
-(def passwords-str "{:SECTION1 {:password1 {:id \"1\" :logo \"\"}} :SECTION2 {:password2 {:id \"2\" :logo \"\"} :password3 {:id \"3\" :logo \"\"}}}")
+(def passwords-str "{:SECTION1 {:password1 {:id \"1\" :logo nil}} :SECTION2 {:password2 {:id \"2\" :logo nil} :password3 {:id \"3\" :logo nil}}}")
 
 (def passwords
   "The passwords displayed to the user. A password is a map that contains a `:id`

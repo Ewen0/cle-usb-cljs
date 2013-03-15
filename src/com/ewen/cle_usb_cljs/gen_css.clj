@@ -160,7 +160,7 @@ Ex : (.-outerHTML (css [:#myId {:background-image \"url(../img/image.jpeg)\"}][:
                     :padding-bottom "5px"}]
    [:.section-body 'p {:margin-top "0px"}]
    [:.section-body.active {:background-color "#33b5e5"}]
-   [".section-body.draggable.is-enabled-drag" {:position "absolute"}]
+   [".section-body.draggable.is-enabled-drag" {:position "absolute" :width "80%"}]
 
 
 

@@ -13,10 +13,9 @@
 (defroutes app-routes
   (GET "/" [] (index-page (java.io.File. "resources/public/bootstrap.html")))
   (route/files "/" {:root "resources/public"})
-  (route/files "/css" {:root "resources/public/css"})
   (route/not-found "Not Found"))
 
 (def app
-  (-> app-routes (wrap-refresh ["resources/public/js/cljs.js" "resources/public/passwords.html"]) (handler/site)))
+  (-> app-routes (handler/site)))
 
 #_(.. Thread (currentThread) (getContextClassLoader) (getResourceAsStream "public/index.html"))

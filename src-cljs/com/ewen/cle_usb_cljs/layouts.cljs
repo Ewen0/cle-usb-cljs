@@ -38,7 +38,8 @@ have control over the domina version since it is imported through enfocus.")
 (em/defsnippet section-body :compiled "resources/public/passwords.html" [".section-body"]
   [[pwd-label pwd-map]]
   ["p"] (em/prepend (name pwd-label))
-  [".section-body-logo"] (em/set-attr "src" (:logo pwd-map)))
+  [".section-body-logo"] (if (:logo pwd-map) (em/set-attr "src" (:logo pwd-map))
+                             (em/remove-attr "src")))
 
 (em/defsnippet section :compiled "resources/public/passwords.html" [".section"]
   [section-name section-pwds]
