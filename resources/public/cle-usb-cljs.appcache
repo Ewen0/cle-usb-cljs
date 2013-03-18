@@ -1,23 +1,23 @@
 CACHE MANIFEST
 # v3 - 2013-20-02
 # This is a comment.
-http://localhost:3000/js/cljs.js
-http://localhost:3000/img/logo_action_bar.png
-http://localhost:3000/img/action_bar_divider.png
-http://localhost:3000/img/action_bar_title.png
-http://localhost:3000/img/1_navigation_forward.png
-http://localhost:3000/img/1_navigation_back.png
-http://localhost:3000/img/spinner_bg.png
-http://localhost:3000/img/input_text_bg.png
-http://localhost:3000/img/button_bg.png
-http://localhost:3000/img/button_disabled_bg.png
-http://localhost:3000/img/input_text_active_bg.png
-http://localhost:3000/img/button_pressed_bg.png
-http://localhost:3000/img/5-content-discard.png
-http://localhost:3000/img/action_bar.png
-http://localhost:3000/img/section_divider.png
-http://localhost:3000/img/section_body_divider.png
-http://localhost:3000/css/common.css
-http://localhost:3000/font/Roboto-Regular.ttf
-http://localhost:3000/font/Roboto-Black.ttf
+js/cljs.js
+img/logo_action_bar.png
+img/action_bar_divider.png
+img/action_bar_title.png
+img/1_navigation_forward.png
+img/1_navigation_back.png
+img/spinner_bg.png
+img/input_text_bg.png
+img/button_bg.png
+img/button_disabled_bg.png
+img/input_text_active_bg.png
+img/button_pressed_bg.png
+img/5-content-discard.png
+img/action_bar.png
+img/section_divider.png
+img/section_body_divider.png
+css/common.css
+font/Roboto-Regular.ttf
+font/Roboto-Black.ttf
 
