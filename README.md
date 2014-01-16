@@ -8,11 +8,8 @@ The GUI is built on top of [flapjax](http://www.flapjax-lang.org/) (reactive fun
 Try it
 ======
 
-You can try the GUI using chrome 19 or above. You must first enable the "emulate touch events" chrome functionnality. Then follow this [link](http://cle-usb-cljs.herokuapp.com/).
+You can try the GUI using chrome. You must first enable the "emulate touch events" chrome functionnality as explained [here](https://developers.google.com/chrome-developer-tools/docs/mobile-emulation). Then follow this [link](http://cle-usb-cljs.herokuapp.com/).
 
-<p align="center">
-   <img src="https://github.com/Ewen0/cle-usb-cljs/blob/master/img/emulate_touch_events.png?raw=true" alt="Cle Usb schema"/>
-</p>
 
 Tips
 ====
