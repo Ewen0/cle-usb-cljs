@@ -32,7 +32,7 @@ Ex. (get-pwd-labels @passwords \"SECTION2\")
   (keys ((keyword section) pwds)))
 
 (defn add-password [section pwd-label]
-  (swap! passwords #(update-in % [(keyword section)] assoc (keyword pwd-label) {:id "1" :logo ""})))
+  (swap! passwords #(update-in % [(keyword section)] assoc (keyword pwd-label) {:id "1" :logo nil})))
 
 (defn rem-password [section pwd-label]
     (swap! passwords #(update-in % [(keyword section)] 
