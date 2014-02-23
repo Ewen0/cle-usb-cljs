@@ -12,18 +12,29 @@
 (def app-state
   (atom {}))
 
-(om/root app-state
-         (fn [app owner]
+(om/root (fn [app owner]
            (dom/section nil
-            (dom/div #js {:id "action-bar"}
-                    (dom/img #js {:id "logo-action-bar"
-                             :src "img/logo_action_bar.png"})
-                    (dom/img #js {:id "action-bar-divider"
-                             :src "img/action_bar_divider.png"})
-                    (dom/img #js {:id "action-bar-title"
-                             :src "img/action_bar_title.png"})
-                    (dom/img #js {:id "navigation-forward"
-                             :className "navigation"
-                             :src "img/1_navigation_forward.png"} nil))))
-         (-> (sel "#app") single-node))
+                        (dom/div #js {:id "action-bar"}
+                                 (dom/img #js {:id "logo-action-bar"
+                                               :src "img/logo_action_bar.png"})
+                                 (dom/img #js {:id "action-bar-divider"
+                                               :src "img/action_bar_divider.png"})
+                                 (dom/img #js {:id "action-bar-title"
+                                               :src "img/action_bar_title.png"})
+                                 (dom/div #js {:className "dropdown menu"}
+                                          (dom/button #js {:className "navbar-toggle"
+                                                           :data-toggle "collapse"
+                                                           :type "button"
+                                                           :href "#"}
+                                                      (dom/span #js {:className "icon-bar"})
+                                                      (dom/span #js {:className "icon-bar"})
+                                                      (dom/span #js {:className "icon-bar"}))
+                                          (dom/ul #js {:className "dropdown-menu"
+                                                       :role "menu"}
+                                                  (dom/li "e")))
+                                 #_(dom/img #js {:id "navigation-forward"
+                                                 :className "menu"
+                                                 :src "img/1_navigation_forward.png"} nil))))
+         app-state
+         {:target (-> (sel "#app") single-node)})
 
