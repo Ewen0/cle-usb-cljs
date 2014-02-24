@@ -23,15 +23,16 @@
                                                :src "img/action_bar_title.png"})
                                  (dom/div #js {:className "dropdown menu"}
                                           (dom/button #js {:className "navbar-toggle"
-                                                           :data-toggle "collapse"
+                                                           :data-toggle "dropdown"
                                                            :type "button"
                                                            :href "#"}
                                                       (dom/span #js {:className "icon-bar"})
                                                       (dom/span #js {:className "icon-bar"})
                                                       (dom/span #js {:className "icon-bar"}))
                                           (dom/ul #js {:className "dropdown-menu"
-                                                       :role "menu"}
-                                                  (dom/li "e")))
+                                                       :role "menu"
+                                                       :aria-labelledby "dLabel"}
+                                                  (dom/li #js {} (dom/a #js {:href "#"} "e"))))
                                  #_(dom/img #js {:id "navigation-forward"
                                                  :className "menu"
                                                  :src "img/1_navigation_forward.png"} nil))))

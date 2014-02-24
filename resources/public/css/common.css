@@ -193,3 +193,7 @@ input[type=button]:enabled:active
   margin:auto;
   display:block;
 }
+
+.icon-bar{
+  background-color: #888;
+}
