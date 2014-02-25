@@ -12,7 +12,8 @@
                  [compojure "1.1.3"]
                  [ring-serve "0.1.2"]
                  [ring/ring-devel "1.1.6" :scope "test"]
-                 [ring/ring-core "1.1.6"]]
+                 [ring/ring-core "1.1.6"]
+                 [sablono "0.2.6"]]
   :dev-dependencies [[lein-cljsbuild "1.0.1"]]
   :plugins [[lein-cljsbuild "1.0.1"]]
   :cljsbuild {:builds [{:id "dev"

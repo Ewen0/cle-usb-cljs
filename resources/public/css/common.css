@@ -100,7 +100,7 @@ input[type=button]:enabled:active
   width:184px;
 }
 
-.list
+#list-pwd
 {
   width:90%;
   margin-left:5%;
@@ -132,12 +132,25 @@ input[type=button]:enabled:active
   background-repeat:no-repeat;
 }
 
+#list-pwd
+{
+  background-size:100% 2px;
+  width:100%;
+  color:#999999;
+  font-size:0.7em;
+  background-position:bottom left;
+  text-transform:uppercase;
+  font-family:roboto-black;
+  background-image:url(../img/section_divider.png);
+  background-repeat:no-repeat;
+}
+
 .section-header h2
 {
   margin-bottom:0px;
 }
 
-.section-body
+.password
 {
   background-size:100% 1px;
   width:100%;
@@ -149,17 +162,17 @@ input[type=button]:enabled:active
   background-repeat:no-repeat;padding-top:15px;
 }
 
-.section-body p
+.password p
 {
   margin-top:0px;
 }
 
-.section-body.active
+.password.active
 {
   background-color:#33b5e5;
 }
 
-.section-body.draggable.is-enabled-drag
+.password.draggable.is-enabled-drag
 {
   position:absolute;
   width:80%;
@@ -194,6 +207,13 @@ input[type=button]:enabled:active
   display:block;
 }
 
+
+/* Dropdown menu */
+
 .icon-bar{
   background-color: #888;
 }
+
+.navbar-toggle {
+    display: block;
+  }

@@ -5,37 +5,64 @@
             [domina :refer [single-node]]
             [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
-            [goog.style :as gstyle])
+            [goog.style :as gstyle]
+            [sablono.core :as html :refer-macros [html]])
   (:require-macros [cljs.core.async.macros :refer [go go-loop]]))
 
 
-(def app-state
-  (atom {}))
 
-(om/root (fn [app owner]
-           (dom/section nil
-                        (dom/div #js {:id "action-bar"}
-                                 (dom/img #js {:id "logo-action-bar"
-                                               :src "img/logo_action_bar.png"})
-                                 (dom/img #js {:id "action-bar-divider"
-                                               :src "img/action_bar_divider.png"})
-                                 (dom/img #js {:id "action-bar-title"
-                                               :src "img/action_bar_title.png"})
-                                 (dom/div #js {:className "dropdown menu"}
-                                          (dom/button #js {:className "navbar-toggle"
-                                                           :data-toggle "dropdown"
-                                                           :type "button"
-                                                           :href "#"}
-                                                      (dom/span #js {:className "icon-bar"})
-                                                      (dom/span #js {:className "icon-bar"})
-                                                      (dom/span #js {:className "icon-bar"}))
-                                          (dom/ul #js {:className "dropdown-menu"
-                                                       :role "menu"
-                                                       :aria-labelledby "dLabel"}
-                                                  (dom/li #js {} (dom/a #js {:href "#"} "e"))))
-                                 #_(dom/img #js {:id "navigation-forward"
-                                                 :className "menu"
-                                                 :src "img/1_navigation_forward.png"} nil))))
-         app-state
-         {:target (-> (sel "#app") single-node)})
+
+(defn password [password-map owner]
+  (reify
+    om/IRender
+    (render [this]
+      (html [:div.password
+             [:p (:label password-map)]]))))
+
+(defn password-list [password-vect owner]
+  (reify
+    om/IRenderState
+    (render-state [this state]
+      (html [:div#list-pwd
+             (om/build-all password password-vect)]))))
+
+(defn header [app owner]
+  (reify
+    om/IRender
+    (render [this]
+      (html [:div#action-bar
+                   [:img#logo-action-bar
+                    {:src "img/logo_action_bar.png"}]
+                   [:img#action-bar-divider
+                    {:src "img/action_bar_divider.png"}]
+                   [:img#action-bar-title
+                    {:src "img/action_bar_title.png"}]
+                   [:div.dropdown.menu
+                    [:button.navbar-toggle
+                     {:data-toggle "dropdown"
+                      :type "button"
+                      :href "#"}
+                     [:span.icon-bar]
+                     [:span.icon-bar]
+                     [:span.icon-bar]]
+                    [:ul.dropdown-menu
+                     {:role "menu"
+                      :aria-labelledby "dLabel"}
+                     [:li
+                      [:a {:href "#"} "Home"]
+                      [:a {:href "#"} "Add new password"]]]]]))))
+
+
+
+(om/root header {}
+         {:target (-> (sel "#header")
+                      single-node)})
+
+(def app-state
+  (atom [{:id 1 :label "Password1"}
+         {:id 2 :label "Password2"}]))
+
+(om/root password-list app-state
+         {:target (-> (sel "#app")
+                      single-node)})
 
