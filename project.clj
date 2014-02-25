@@ -13,7 +13,8 @@
                  [ring-serve "0.1.2"]
                  [ring/ring-devel "1.1.6" :scope "test"]
                  [ring/ring-core "1.1.6"]
-                 [sablono "0.2.6"]]
+                 [sablono "0.2.6"]
+                 [ewen/dragdrop "0.1.0-SNAPSHOT"]]
   :dev-dependencies [[lein-cljsbuild "1.0.1"]]
   :plugins [[lein-cljsbuild "1.0.1"]]
   :cljsbuild {:builds [{:id "dev"

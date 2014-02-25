@@ -132,19 +132,6 @@ input[type=button]:enabled:active
   background-repeat:no-repeat;
 }
 
-#list-pwd
-{
-  background-size:100% 2px;
-  width:100%;
-  color:#999999;
-  font-size:0.7em;
-  background-position:bottom left;
-  text-transform:uppercase;
-  font-family:roboto-black;
-  background-image:url(../img/section_divider.png);
-  background-repeat:no-repeat;
-}
-
 .section-header h2
 {
   margin-bottom:0px;
