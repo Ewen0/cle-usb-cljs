@@ -2,7 +2,7 @@ cle-usb-cljs
 ============
 
 Graphical user interface for [Cle-usb](https://github.com/Ewen0/cle-usb) written in clojurescript.
-This project compiles down to javascript and can be run on an android device.
+This project compiles to javascript and can be run on an android device.
 The GUI is built on top of [flapjax](http://www.flapjax-lang.org/) (reactive functional programming)
 
 Try it
